@@ -1,0 +1,141 @@
+Player
+	-wood
+	-wheat
+	-stone
+	-sheep	
+	-brick
+	-currentVictoryPoints
+	-numPlayedSoldiors
+	-numPlayedVictoryPoints
+	-inHandVictoryPoints
+	-inHandSoldiors
+	-inHandMonopoply
+	-inHandYearOfPlenty
+	-inHandRoadBuilding
+	-numRoadsUnused
+	-numSettlementsUnused
+	-numCitiesUnused
+	-hasLongestRoad
+	-hasLargestArmy
+
+Settlement (will be all over the nodes)
+	x, y
+	what resources next to it
+	owner (null if empty)
+	harborType
+	type (settlement of city)
+
+Roads
+	(as the edges)
+	x, y
+	owner (null if empty
+
+HarborType enum
+	none
+	3:1
+	sheep
+	brick
+	wheat
+	ore
+	wood
+
+Tile
+	resrouce type
+	6 adjacent settlement locations
+	6 road possitions
+	resource chit value
+	// isTheRobberHere? (or just check the robber variable)
+
+Resource Bank
+	-wood
+	-wheat
+	-stone
+	-sheep
+	-brick
+
+Development Bank
+	-unusedVictoryPoints
+	-unusedSoldiors
+	-unusedMonopoly
+	-unusedYearOfPlenty
+	-unusedRoadBuilding
+
+[process]
+
+load art and stuff
+
+start menu screen
+	pick 3 or 4 players?
+
+
+board setup process (automated)
+	randomize tiles and harbors
+	build and clear the graph
+
+
+player setup process
+	established order of setttlement placement, order of players
+	players place settlements and roads
+	recieve resources for second settlement
+
+
+while(running)
+{
+
+	change/show player turn
+	chance to play dev card
+		show available dev cards
+		user picks one
+		ACTIVATE!
+	check()
+	dice roll
+		chance to play dev card
+		check()
+		trade
+			pick a player
+			show possible resources
+			pick a trade
+		spend resrouces on
+			roads
+				pick a road spot
+				check if spot is valid
+				place
+			check()
+			settlements
+				pick a spot
+				check if spot is valid
+				place
+			check()
+			cities
+				pick a spot
+				check if spot is valid
+				place
+			check()
+			dev cards
+				get random card from dev card bank (decriments bank)
+			check()
+	end turn
+}	
+
+end game screen
+
+release resources
+
+[check]
+
+who has the
+	longest road
+		who currently has it
+			see if they still have it (if sombodey broke it)
+		who has a greater amount than that player (or 2)
+	largest army
+		who currently has it
+		who has a greater amount than that player (or 2)
+
+
+victory points from
+	settlements
+	cities
+	longest road
+	largest army
+	shown victory point cards

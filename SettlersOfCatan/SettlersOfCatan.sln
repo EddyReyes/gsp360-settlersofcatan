@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SettlersOfCatan", "SettlersOfCatan\SettlersOfCatan.vcproj", "{A5D3E7C3-BD69-480B-A510-099063D25EDA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A5D3E7C3-BD69-480B-A510-099063D25EDA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A5D3E7C3-BD69-480B-A510-099063D25EDA}.Debug|Win32.Build.0 = Debug|Win32
+		{A5D3E7C3-BD69-480B-A510-099063D25EDA}.Release|Win32.ActiveCfg = Release|Win32
+		{A5D3E7C3-BD69-480B-A510-099063D25EDA}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

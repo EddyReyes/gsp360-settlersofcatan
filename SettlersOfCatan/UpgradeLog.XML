@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="SettlersOfCatan">
+</Property><Property Name="Solution File" Value="C:\Users\BlackWidow\Documents\HW\GSP 360\gsp360-settlersofcatan\SettlersOfCatan\SettlersOfCatan.sln">
+</Property><Property Name="User Options File" Value="C:\Users\BlackWidow\Documents\HW\GSP 360\gsp360-settlersofcatan\SettlersOfCatan\SettlersOfCatan.suo">
+</Property><Property Name="Date" Value="Monday, September 13, 2010">
+</Property><Property Name="Time" Value="13:35 PM">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="SettlersOfCatan.sln" Description="File successfully backed up as C:\Users\BlackWidow\Documents\HW\GSP 360\gsp360-settlersofcatan\SettlersOfCatan\SettlersOfCatan.sln.old">
+</Event><Event ErrorLevel="0" Project="" Source="SettlersOfCatan.suo" Description="File successfully backed up as C:\Users\BlackWidow\Documents\HW\GSP 360\gsp360-settlersofcatan\SettlersOfCatan\SettlersOfCatan.suo.old">
+</Event><Event ErrorLevel="0" Project="SettlersOfCatan" Source="SettlersOfCatan\SettlersOfCatan.vcproj" Description="Converting project file 'C:\Users\BlackWidow\Documents\HW\GSP 360\gsp360-settlersofcatan\SettlersOfCatan\SettlersOfCatan\SettlersOfCatan.vcproj'.">
+</Event><Event ErrorLevel="1" Project="SettlersOfCatan" Source="SettlersOfCatan\SettlersOfCatan.vcproj" Description="VCWebServiceProxyGeneratorTool is no longer supported. The tool has been removed from your project settings.">
+</Event><Event ErrorLevel="0" Project="SettlersOfCatan" Source="SettlersOfCatan\SettlersOfCatan.vcproj" Description="Done converting to new project file 'C:\Users\BlackWidow\Documents\HW\GSP 360\gsp360-settlersofcatan\SettlersOfCatan\SettlersOfCatan\SettlersOfCatan.vcxproj'.">
+</Event><Event ErrorLevel="3" Project="SettlersOfCatan" Source="SettlersOfCatan\SettlersOfCatan.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="SettlersOfCatan.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="SettlersOfCatan.sln" Description="Converted">
+</Event></UpgradeLog>

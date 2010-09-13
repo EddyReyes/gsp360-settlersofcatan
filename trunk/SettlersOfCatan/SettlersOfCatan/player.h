@@ -27,7 +27,7 @@ private:
 
 public: 
 	player::player(void){active = false;}
-	player::player(char a_color);
+	void player::setPlayer(char a_color);
 	void drawResource(rsc* resDeck, char type, int num);
 	void addVictoryPoint(void)			{ currentVictoryPoints++; }
 	void addUsedSoldier(void)			{ usedSoldiers++; }
@@ -39,10 +39,10 @@ public:
 	void player::retractLongestRoad(void);
 	void player::awardLargestArmy(void);
 	void player::retractLargestArmy(void);
-	
+	void player::playDevCard(char type);
 };
 
-player::player(char a_color)
+void player::setPlayer(char a_color)
 {
 	active = true;
 	color = a_color;
@@ -69,6 +69,41 @@ void player::awardLargestArmy(void)
 void player::retractLargestArmy(void)
 {
 	hasLargestArmy = false;
+}
+
+void player::playDevCard(char type)
+{
+	switch(type)
+	{
+		case 'S':	if (inHandSoldiers > 0)
+					{
+						inHandSoldiers--; 
+						usedSoldiers++;
+					}
+				break;
+		case 'M':	if (inHandMonopolies > 0)
+					{
+						inHandMonopolies--; 
+					}
+				break;
+		case 'Y':	if (inHandYearOfPlanty > 0)
+					{
+						inHandYearOfPlenty--; 
+					}
+				break;
+		case 'T':	if(inHandTwoRoads > 0)
+					{
+						inHandTwoRoads--; 
+					}
+				break;
+		case 'V':	if(inHandVictoryPoints > 0)
+					{
+						inHandVictoryPoints--; 
+						usedVictoryPoints++;
+					}
+				break;
+		default: break;
+	}
 }
 
 bool player::checkBuildSomething(char type)

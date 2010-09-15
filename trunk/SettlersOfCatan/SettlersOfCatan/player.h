@@ -115,7 +115,7 @@ void player::playDevCard(char type)
 						inHandMonopolies--; 
 					}
 				break;
-		case 'Y':	if (inHandYearOfPlanty > 0)
+		case 'Y':	if (inHandYearOfPlenty > 0)
 					{
 						inHandYearOfPlenty--; 
 					}

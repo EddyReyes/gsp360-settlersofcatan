@@ -28,10 +28,10 @@ private:
 public: 
 	player::player(void){active = false;}
 	void player::setPlayer(char a_color);
-	void drawResource(rsc* resDeck, char type, int num);
-	void addVictoryPoint(void)			{ currentVictoryPoints++; }
-	void addUsedSoldier(void)			{ usedSoldiers++; }
-	void addUsedVictoryPoint(void)		{ usedVictoryPoints++; }
+	void player::drawResource(rsc* resDeck, char type, int num);
+	void player::addVictoryPoint(void)			{ currentVictoryPoints++; }
+	void player::addUsedSoldier(void)			{ usedSoldiers++; }
+	void player::addUsedVictoryPoint(void)		{ usedVictoryPoints++; }
 	void player::drawDevCard(dvc* devDeck);
 	bool player::checkBuildSomething(char type);
 	void player::actuallyBuildSomething(char type, rsc* rsc, dvc* dvc);
@@ -40,6 +40,7 @@ public:
 	void player::awardLargestArmy(void);
 	void player::retractLargestArmy(void);
 	void player::playDevCard(char type);
+	int player::getResource(char type);
 };
 
 void player::setPlayer(char a_color)
@@ -52,6 +53,19 @@ void player::setPlayer(char a_color)
 	numUnusedRoads = 15; numUnusedSettlements = 5; numUnusedCities = 4;
 	hasLongestRoad = false;
 	hasLargestArmy = false;
+}
+
+int player::getResource(char type)
+{
+	switch(type)
+	{
+		case WOOD:	return wood;		break;
+		case WHEAT:	return wheat;		break;
+		case STONE:	return stone;		break;
+		case SHEEP:	return sheep;		break;
+		case BRICK:	return brick;		break;
+		default: break;
+	}
 }
 
 void player::awardLongestRoad(void)

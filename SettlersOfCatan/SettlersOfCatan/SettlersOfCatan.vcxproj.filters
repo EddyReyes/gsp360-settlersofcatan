@@ -29,5 +29,8 @@
     <ClInclude Include="resourceCards.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="stndrd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

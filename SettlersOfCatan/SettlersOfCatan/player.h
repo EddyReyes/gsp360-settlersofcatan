@@ -63,13 +63,14 @@ int player::getResource(char type)
 {
 	switch(type)
 	{
-		case WOOD:	return wood;		break;
-		case WHEAT:	return wheat;		break;
-		case STONE:	return stone;		break;
-		case SHEEP:	return sheep;		break;
-		case BRICK:	return brick;		break;
+		case WOOD:	return wood;
+		case WHEAT:	return wheat;
+		case STONE:	return stone;
+		case SHEEP:	return sheep;
+		case BRICK:	return brick;
 		default: break;
 	}
+	return -1;
 }
 
 void player::changeResource(char type, int num)

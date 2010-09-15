@@ -41,6 +41,9 @@ public:
 	void player::retractLargestArmy(void);
 	void player::playDevCard(char type);
 	int player::getResource(char type);
+	void player::changeResource(char type, int num);
+	//void player::addResource(char type, int num);
+	//void player::removeResource(char type, int num);
 };
 
 void player::setPlayer(char a_color)
@@ -68,6 +71,18 @@ int player::getResource(char type)
 	}
 }
 
+void player::changeResource(char type, int num)
+{
+	switch(type)
+	{
+	case WOOD: wood += num; break;
+	case WHEAT: wheat += num; break;
+	case STONE: stone += num; break;
+	case SHEEP: sheep += num; break;
+	case BRICK: brick += num; break;
+	default: break;
+	}
+}
 void player::awardLongestRoad(void)
 {
 	hasLongestRoad = true;

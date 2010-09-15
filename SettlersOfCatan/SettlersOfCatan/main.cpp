@@ -1,9 +1,9 @@
 #include "player.h"
 
-
+/*
 void main()
 {
-	player playerOne, playerTwo, playerThree, playerFour;
+	player ONE, TWO, THREE, FOUR;
 	int winner = NULL;
 	int numOfPlayers;
 	int currentTurn;
@@ -15,3 +15,4 @@ void main()
 		//doNextTurn();
 	}
 }
+*/

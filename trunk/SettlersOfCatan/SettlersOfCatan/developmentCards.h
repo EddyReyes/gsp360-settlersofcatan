@@ -13,7 +13,7 @@ private:
 public:
 	dvc::dvc()
 	{
-		srand(time(0));
+		srand((unsigned int)time(0));
 		rand();
 		soldiersLeft = 14;
 		monopoliesLeft = 2;

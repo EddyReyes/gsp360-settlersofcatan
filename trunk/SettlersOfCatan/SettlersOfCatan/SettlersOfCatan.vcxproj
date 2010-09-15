@@ -89,6 +89,7 @@
     <ClInclude Include="developmentCards.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="resourceCards.h" />
+    <ClInclude Include="stndrd.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

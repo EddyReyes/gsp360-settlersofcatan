@@ -1,10 +1,5 @@
-
-
-#define WOOD 'L'
-#define WHEAT 'W'
-#define STONE 'S'
-#define BRICK 'B'
-#define SHEEP 'E'
+#pragma once
+#include"stndrd.h"
 
 class rsc
 {

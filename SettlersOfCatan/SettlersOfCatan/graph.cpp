@@ -21,24 +21,24 @@ struct Edge;
 
 struct Node
 {
-	int number, harborType, x, y, numOfEdges;
+	int ID, harborType, x, y, numOfEdges;
 	char icon;
 	Edge ** edges;
 
-	Node(int a_x, int a_y, int a_number)
+	Node(int a_x, int a_y, int a_ID)
 	{
 		x = a_x * 3;
 		y = a_y * 3;
 		icon = '@';
 		edges = 0;
 		numOfEdges = 0;
-		number = a_number;
+		ID = a_ID;
 	}
 
 	void print()
 	{
 		gotoxy(x, y);
-		cout << icon << number;
+		cout << icon << ID;
 	}
 
 	void setEdgeCount(int a_numOfEdges)
@@ -80,10 +80,10 @@ struct Edge
 	}
 };
 
-Node * getNode(Node * population, int popCount, char ID)
+Node * getNode(Node * population, int popCount, int ID)
 {
 	for(int i = 0; i < popCount; i++)
-		if(population[i].icon == ID)
+		if(population[i].ID == ID)
 			return &population[i];
 	return 0;
 }
@@ -221,8 +221,8 @@ void setHarbor(Node* harbor)
 	}
 }
 
-#define _EDGE(c) Edge(getNode(myNodes, count, c[0]),\
-							getNode(myNodes, count, c[1]))
+#define _EDGE(c,d) Edge(getNode(myNodes, count, c),\
+							getNode(myNodes, count, d))
 
 void main()
 {
@@ -249,6 +249,18 @@ void main()
 	for(int i = 0; i < count; ++i)
 	{
 		myNodes[i].print();
+	}
+
+	Edge myEdges[] =
+	{
+		_EDGE(1,2),_EDGE(2,5),
+	};
+
+	const int eCount = sizeof(myEdges) / sizeof(Edge);
+
+	for(int i = 0; i < eCount; ++i)
+	{
+		myEdges[i].print();
 	}
 
 	setHarbor(myNodes);

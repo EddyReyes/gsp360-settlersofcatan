@@ -44,6 +44,7 @@ public:
 	void player::changeResource(char type, int num);
 	//void player::addResource(char type, int num);
 	//void player::removeResource(char type, int num);
+	bool player::CheckWin();
 };
 
 void player::setPlayer(char a_color)
@@ -200,6 +201,32 @@ void player::drawResource(rsc* resDeck, char type, int num)
 		case BRICK:	brick += count;		break;
 		default: break;
 	}
+}
+
+bool player::CheckWin()
+{
+	//can take out currentVictoryPoints from the player and put it here, since its calculated each time
+	currentVictoryPoints = 0;
+
+	//ill change this to not add more variables
+	int settlementPoints  = 5 - numUnusedSettlements;
+	currentVictoryPoints += settlementPoints;
+	
+	int cityPoints = (4 - numUnusedCities) * 2;
+	currentVictoyPoints += cityPoints;
+
+	currentVictoryPoints += numUsedVictoryPoints;
+
+	if(hasLargestArmy)
+		currentVictoryPoints += 2;
+	
+	if(hasLongestRoad)
+		currentVictoryPoints += 2;
+
+	if(currentVictoryPoints >= 10)
+		return true;
+
+	return false;//player hasnt won yet
 }
 
 /*

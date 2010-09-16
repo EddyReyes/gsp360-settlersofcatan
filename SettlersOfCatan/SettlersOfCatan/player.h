@@ -1,3 +1,5 @@
+#pragma once
+
 #include "resourceCards.h"
 #include "developmentCards.h"
 
@@ -214,9 +216,9 @@ bool player::CheckWin()
 	currentVictoryPoints += settlementPoints;
 	
 	int cityPoints = (4 - numUnusedCities) * 2;
-	currentVictoyPoints += cityPoints;
+	currentVictoryPoints += cityPoints;
 
-	currentVictoryPoints += numUsedVictoryPoints;
+	currentVictoryPoints += usedVictoryPoints;
 
 	if(hasLargestArmy)
 		currentVictoryPoints += 2;

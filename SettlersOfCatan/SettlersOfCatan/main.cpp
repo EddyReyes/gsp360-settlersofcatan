@@ -1,3 +1,4 @@
+/*
 #include <iostream>
 #include "player.h"
 #include "resourceCards.h"
@@ -68,3 +69,4 @@ void DebugOutputResourceChits(char *chits)
 		cout << chits[x] << endl;
 	}
 }
+*/

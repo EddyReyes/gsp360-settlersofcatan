@@ -27,8 +27,8 @@ struct Node
 
 	Node(int a_x, int a_y, int a_ID)
 	{
-		x = a_x * 3;
-		y = a_y * 3;
+		x = a_x * scale;
+		y = a_y * scale;
 		icon = '@';
 		edges = 0;
 		numOfEdges = 0;
@@ -38,7 +38,7 @@ struct Node
 	void print()
 	{
 		gotoxy(x, y);
-		cout << icon << ID;
+		cout << ID;
 	}
 
 	void setEdgeCount(int a_numOfEdges)
@@ -60,7 +60,7 @@ struct Edge
 	Node * from;
 	Node * to;
 	//player * whoHasARoadHere;
-
+	Edge(){}
 	//constructor
 	Edge(Node * a_from, Node * a_to)
 	{
@@ -72,11 +72,20 @@ struct Edge
 	void print()
 	{
 						//set midpoint
+		/*
 		int avgX = (from->x*2 + to->x)/3,
 			avgY = (from->y*2 + to->y)/3;
+			*/
+		int avgX = (from->x + to->x) / 2,
+			avgY = (from->y + to->y) / 2;
 
 		gotoxy(avgX, avgY);
 		cout << from->icon << to->icon;
+	}
+	void setEdgeFromAndTo(Node * a_from, Node * a_to)
+	{
+		this->from = a_from;
+		this->to = a_to;
 	}
 };
 
@@ -251,19 +260,122 @@ void main()
 		myNodes[i].print();
 	}
 
-	Edge myEdges[] =
+	//=================EDGEFINDER==============================================================
+
+	int amountEdges = 0;
+
+	Edge * tempEdges;
+
+	tempEdges = new Edge [1000];
+
+	Edge * myEdges;
+
+	for(int i = 0; i < count; ++i)
 	{
-		_EDGE(1,2),_EDGE(2,5),
-	};
+		for(int j = 0; j < count; ++j)
+		{
+			if(j != i)
+			{
 
-	const int eCount = sizeof(myEdges) / sizeof(Edge);
+				if ((myNodes[i].y / scale) == (myNodes[j].y / scale) ||
+					(myNodes[i].y / scale) + 1 == (myNodes[j].y / scale) ||
+					(myNodes[i].y / scale) - 1 == (myNodes[j].y / scale) )
+				{
+					if( (myNodes[i].x / scale) + 2 == (myNodes[j].x / scale) ||
+						(myNodes[i].x / scale) + 1 == (myNodes[j].x / scale) ||
+						(myNodes[i].x / scale) - 2 == (myNodes[j].x / scale) ||
+						(myNodes[i].x / scale) - 1 == (myNodes[j].x / scale) )
+					{
+						getNode(myNodes,count, i + 1)->numOfEdges++;
+						tempEdges[amountEdges].from = getNode(myNodes, count, i + 1);
+						tempEdges[amountEdges].to = getNode(myNodes, count, j + 1);
+						amountEdges++;
+					}
+				}
+			}
+		}
+	}
 
-	for(int i = 0; i < eCount; ++i)
+	//cout << endl << "Amount of Edges Found: " << amountEdges << endl; // USED TO SEE HOW MANY EDGES TOTAL THERE ARE (STANDARD = 144 including overlap)
+
+	myEdges = new Edge [amountEdges];
+
+	const int eCount = amountEdges;
+
+	for (int i = 0; i < eCount; ++i)
+	{
+		myEdges[i].setEdgeFromAndTo(tempEdges[i].from, tempEdges[i].to);
+	}
+
+	delete tempEdges;
+
+	//=============================================END OF EDGEFINDER=================================
+
+	for(int i = 1; i < eCount; ++i)
 	{
 		myEdges[i].print();
 	}
 
 	setHarbor(myNodes);
 
+	gotoxy(1,50);
+
+	/*
+	for (int i = 0; i < 24; i++)
+	{
+		//myEdges[i].setEdgeFromAndTo(getNode(myNodes, count, myStoredEdgeAs[i]), getNode(myNodes, count, myStoredEdgeBs[i]));
+		cout << myStoredEdgeAs[i] << " and " << myStoredEdgeBs[i] << endl;	
+	}
+	*/
+
 	cout << endl << endl;
 }
+
+
+
+	/* NON DELETION PATHFINDER
+	//=================EDGEFINDER==============================================================
+
+	int myStoredEdgeAs[1000], myStoredEdgeBs[1000], amountEdges = 0;
+
+	Edge * myEdges;
+
+	for(int i = 0; i < count; ++i)
+	{
+		for(int j = 0; j < count; ++j)
+		{
+			if(j != i)
+			{
+
+				if ((myNodes[i].y / scale) == (myNodes[j].y / scale) ||
+					(myNodes[i].y / scale) + 1 == (myNodes[j].y / scale) ||
+					(myNodes[i].y / scale) - 1 == (myNodes[j].y / scale) )
+				{
+					if( (myNodes[i].x / scale) + 2 == (myNodes[j].x / scale) ||
+						(myNodes[i].x / scale) + 1 == (myNodes[j].x / scale) ||
+						(myNodes[i].x / scale) - 2 == (myNodes[j].x / scale) ||
+						(myNodes[i].x / scale) - 1 == (myNodes[j].x / scale) )
+					{
+						getNode(myNodes,count, i + 1)->numOfEdges++;
+						myStoredEdgeAs[amountEdges] = i + 1;
+						myStoredEdgeBs[amountEdges] = j + 1;
+						amountEdges++;
+					}
+				}
+			}
+		}
+	}
+
+	cout << endl << "Amount of Edges Found: " << amountEdges << endl;
+
+	myEdges = new Edge [amountEdges];
+
+	const int eCount = amountEdges;
+
+	for (int i = 0; i < eCount; ++i)
+	{
+		myEdges[i].setEdgeFromAndTo(getNode(myNodes, count, myStoredEdgeAs[i]), getNode(myNodes, count, myStoredEdgeBs[i]));
+	}
+
+	//=============================================END OF EDGEFINDER=================================
+	*/

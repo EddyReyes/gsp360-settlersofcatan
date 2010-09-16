@@ -9,6 +9,7 @@ void OpeningMenu (int *);
 void AssignChitResources(char *);
 void DebugOutputResourceChits(char *);
 void RollDice(int *, int *);
+void tradeWithPlayer(player*, player*, char, char, int, int);
 
 void main()
 {
@@ -22,6 +23,13 @@ void main()
 	OpeningMenu(&numOfPlayers);
 	AssignChitResources(chits);
 	//DebugOutputResourceChits(chits);
+
+
+	//initializing players can probably be removed later if the initialization is change
+	playerOne.setPlayer('r');
+	playerTwo.setPlayer('w');
+	playerThree.setPlayer('o');
+	playerFour.setPlayer('b');
 
 	// Display the current status of the resource bank
 	ResourceDeck.DisplayResourceBankStatus();
@@ -52,12 +60,24 @@ void main()
 	// Display the current status of the resource bank
 	ResourceDeck.DisplayResourceBankStatus();
 
+
+	cout << "playerOneStatus:" << endl;
+	cout << playerOne.getResource(WHEAT) << endl;
 	// Trade cards between player one and player two
-
+	tradeWithPlayer(&playerOne, &playerTwo, WHEAT, STONE, 3, 0);
 	//Display playerOne Cards
-
+	cout << "playerOne wheat: " << playerOne.getResource(WHEAT) << endl;
+	cout << "playerOne stone: " << playerOne.getResource(STONE) << endl;
+	cout << "playerOne brick: " << playerOne.getResource(BRICK) << endl;
+	cout << "playerOne sheep: " << playerOne.getResource(SHEEP) << endl;
+	cout << "playerOne wood: " << playerOne.getResource(WOOD) << endl;
 
 	//Display playerTwo Cards
+	cout << "playerTwo wheat: " << playerTwo.getResource(WHEAT) << endl;
+	cout << "playerTwo stone: " << playerTwo.getResource(STONE) << endl;
+	cout << "playerTwo brick: " << playerTwo.getResource(BRICK) << endl;
+	cout << "playerTwo sheep: " << playerTwo.getResource(SHEEP) << endl;
+	cout << "playerTwo wood: " << playerTwo.getResource(WOOD) << endl;
 }
 
 void OpeningMenu(int *numOfPlayers)
@@ -96,4 +116,16 @@ void RollDice(int *Dice1, int *Dice2)
 {
 	*Dice1 = rand()%6+1;
 	*Dice2 = rand()%6+1;
+}
+
+void tradeWithPlayer(player* active_player, player* trade_to_player, char choice_recieve, char choice_give, int num_recieve, int num_give)
+{
+	if(active_player->getResource(choice_give) >= num_give && trade_to_player->getResource(choice_recieve) >= num_recieve)
+	{
+		active_player->changeResource(choice_give, -num_give);
+		active_player->changeResource(choice_recieve, num_recieve);
+
+		trade_to_player->changeResource(choice_recieve, -num_recieve);
+		trade_to_player->changeResource(choice_give, num_give);
+	}
 }

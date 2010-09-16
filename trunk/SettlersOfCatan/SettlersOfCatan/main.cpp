@@ -2,6 +2,7 @@
 #include "player.h"
 #include "resourceCards.h"
 #include "stndrd.h"
+#include "graph.h"
 
 using namespace std;
 
@@ -74,11 +75,10 @@ void main()
 	cout << "playerOne wood: " << playerOne.getResource(WOOD) << endl;
 
 	//Display playerTwo Cards
-	cout << "playerTwo wheat: " << playerTwo.getResource(WHEAT) << endl;
-	cout << "playerTwo stone: " << playerTwo.getResource(STONE) << endl;
-	cout << "playerTwo brick: " << playerTwo.getResource(BRICK) << endl;
-	cout << "playerTwo sheep: " << playerTwo.getResource(SHEEP) << endl;
-	cout << "playerTwo wood: " << playerTwo.getResource(WOOD) << endl;
+	cout << "playerTwo wheat: " << playerTwo.getResource(WHEAT) << endl;	cout << "playerTwo stone: " << playerTwo.getResource(STONE) << endl;	cout << "playerTwo brick: " << playerTwo.getResource(BRICK) << endl;	cout << "playerTwo sheep: " << playerTwo.getResource(SHEEP) << endl;	cout << "playerTwo wood: " << playerTwo.getResource(WOOD) << endl;
+	//shows console graph
+	graph();
+	system("PAUSE");
 }
 
 void OpeningMenu(int *numOfPlayers)

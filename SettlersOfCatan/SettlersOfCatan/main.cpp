@@ -20,8 +20,8 @@ void main()
 	char chits[12]; // delcare an array of 12 chits
 	srand((unsigned int)time(0));
 	OpeningMenu(&numOfPlayers);
-	AssignChitResources(&chits[12]);
-	//DebugOutputResourceChits(&chits[12]);
+	AssignChitResources(chits);
+	//DebugOutputResourceChits(chits);
 
 	// Display the current status of the resource bank
 	ResourceDeck.DisplayResourceBankStatus();
@@ -45,19 +45,19 @@ void main()
 
 	// Give the player a resouce according to value rolled and chit value correspondence
 	int DiceRollTotal = Dice1+Dice2;
-
-	cout << "Player recieves " << chits[DiceRollTotal-1] <<". " << endl;
-	playerOne.drawResource(&ResourceDeck, chits[DiceRollTotal-1], 1);
+	
+	playerOne.drawResource(&ResourceDeck, chits[(DiceRollTotal-1)], 1);
+	cout << "Player recieves " << chits[(DiceRollTotal-1)] <<". " << endl;
 
 	// Display the current status of the resource bank
 	ResourceDeck.DisplayResourceBankStatus();
 
-	////openingLayout();
-	////comeoutTurn();
-	//while (winner == NULL)
-	//{
-	//	//doNextTurn();
-	//}
+	// Trade cards between player one and player two
+
+	//Display playerOne Cards
+
+
+	//Display playerTwo Cards
 }
 
 void OpeningMenu(int *numOfPlayers)

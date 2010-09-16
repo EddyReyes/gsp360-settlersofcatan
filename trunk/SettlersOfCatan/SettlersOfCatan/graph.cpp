@@ -38,7 +38,7 @@ struct Node
 	void print()
 	{
 		gotoxy(x, y);
-		cout << ID;
+		cout << 'N' << ID;
 	}
 
 	void setEdgeCount(int a_numOfEdges)
@@ -86,6 +86,24 @@ struct Edge
 	{
 		this->from = a_from;
 		this->to = a_to;
+	}
+};
+
+struct Center
+{
+	int x, y, ID;
+	char resource;
+
+	Center(Node * from, Node * to, int a_ID)
+	{
+		x = (from->x + to->x) / 2;
+		y = (from->y + to->y) / 2;
+		ID = a_ID;
+	}
+	void print()
+	{
+		gotoxy(x, y);
+		cout << 'C' << ID;
 	}
 };
 
@@ -233,7 +251,10 @@ void setHarbor(Node* harbor)
 #define _EDGE(c,d) Edge(getNode(myNodes, count, c),\
 							getNode(myNodes, count, d))
 
-void main()
+#define _CENTER(c,d,e) Center(getNode(myNodes, count, c),\
+							getNode(myNodes, count, d), e)
+
+void graph()
 {
 	//set node values
 	Node myNodes[] = 
@@ -318,8 +339,6 @@ void main()
 
 	setHarbor(myNodes);
 
-	gotoxy(1,50);
-
 	/*
 	for (int i = 0; i < 24; i++)
 	{
@@ -328,6 +347,28 @@ void main()
 	}
 	*/
 
+	Center myCenters[] =
+	{
+						_CENTER(4, 5, 1),
+				_CENTER(8, 9, 2),_CENTER(10, 11, 3),
+		_CENTER(13, 14, 4),_CENTER(15, 16, 5),_CENTER(17, 18, 6),
+				_CENTER(20, 21, 7),_CENTER(22, 23, 8),
+		_CENTER(25, 26, 9),_CENTER(27, 28, 10),_CENTER(29, 30, 11),
+				_CENTER(32, 33, 12),_CENTER(34, 35, 13),
+		_CENTER(37, 38, 14),_CENTER(39, 40, 15),_CENTER(41, 42, 16),
+				_CENTER(44, 45, 17),_CENTER(46, 47, 18),
+						_CENTER(50, 51, 19),
+	};
+
+	const int Ccount = sizeof(myCenters) / sizeof(Center);
+
+
+	for(int i = 0; i < Ccount; ++i)
+	{
+		myCenters[i].print();
+	}
+
+	gotoxy(1,50);
 	cout << endl << endl;
 }
 
@@ -379,3 +420,8 @@ void main()
 
 	//=============================================END OF EDGEFINDER=================================
 	*/
+
+void main()
+{
+	graph();
+}

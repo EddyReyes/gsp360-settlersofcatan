@@ -1,5 +1,7 @@
 #pragma once
 #include"stndrd.h"
+#include <iostream>
+using namespace std;
 
 class rsc
 {
@@ -20,6 +22,7 @@ public:
 	}
 	int rsc::pullFromResourcePool(char type, int a_num);
 	void rsc::returnToResourcePool(char type, int a_num);
+	void rsc::DisplayResourceBankStatus(void);
 };
 
 void rsc::returnToResourcePool(char type, int a_num)
@@ -63,4 +66,14 @@ int rsc::pullFromResourcePool(char type, int a_num)					// THIS FUNCTION TAKES I
 	default: break;
 	}
 	return count;
+}
+
+void rsc::DisplayResourceBankStatus(void)
+{
+	cout << "Resource Bank Status" << endl
+		 << "Wood:  "  << woodLeft << endl
+		 << "Wheat: " << wheatLeft << endl
+		 << "Stone: " << stoneLeft << endl
+		 << "Sheep: " << sheepLeft << endl
+		 << "Brick: " << brickLeft << endl << endl;
 }

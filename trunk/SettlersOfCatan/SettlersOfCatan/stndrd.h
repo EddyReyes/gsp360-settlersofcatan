@@ -1,5 +1,8 @@
+#pragma once
 #define WOOD 'L'
 #define WHEAT 'W'
 #define STONE 'S'
-#define BRICK 'B'
 #define SHEEP 'E'
+#define BRICK 'B'
+
+const int scale = 4;

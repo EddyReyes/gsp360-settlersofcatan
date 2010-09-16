@@ -1,5 +1,5 @@
 //im not sure where to put these so they are here for now
-
+/*
 void tradeWithHarbor(rsc* resDeck, char harbor_type, Player* p, char choice_recieve, char choice_give)
 {
 	switch(harbor_type)
@@ -47,3 +47,4 @@ void tradeWithPlayer(Player* active_player, Player* trade_to_player, char choice
 		trade_to_player->changeResource(choice_give, num_give);
 	}
 }
+*/

@@ -61,6 +61,7 @@ struct Edge
 {
 	Node * from;
 	Node * to;
+	int ID;
 	//player * whoHasARoadHere;
 	Edge(){}
 	//constructor
@@ -312,6 +313,7 @@ void graph()
 						getNode(myNodes,count, i + 1)->numOfEdges++;
 						tempEdges[amountEdges].from = getNode(myNodes, count, i + 1);
 						tempEdges[amountEdges].to = getNode(myNodes, count, j + 1);
+						tempEdges[amountEdges].ID = amountEdges;
 						amountEdges++;
 					}
 				}
@@ -328,6 +330,7 @@ void graph()
 	for (int i = 0; i < eCount; ++i)
 	{
 		myEdges[i].setEdgeFromAndTo(tempEdges[i].from, tempEdges[i].to);
+		myEdges[i].ID = tempEdges[i].ID;
 	}
 
 	delete tempEdges;

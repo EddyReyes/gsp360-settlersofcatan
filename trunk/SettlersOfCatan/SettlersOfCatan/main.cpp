@@ -4,6 +4,11 @@
 #include "stndrd.h"
 #include "graph.h"
 
+#include "SDL/SDL.h"
+#include "SDL/SDL_image.h"
+#include "SDL/SDL_ttf.h"
+#include <string>
+
 using namespace std;
 
 void OpeningMenu (int *);
@@ -12,7 +17,7 @@ void DebugOutputResourceChits(char *);
 void RollDice(int *, int *);
 void tradeWithPlayer(player*, player*, char, char, int, int);
 
-void main()
+int main(int argc, char* args[])
 {
 	player playerOne, playerTwo, playerThree, playerFour; // declare four players
 	rsc ResourceDeck; // declare a resource deck
@@ -79,6 +84,7 @@ void main()
 	//shows console graph
 	graph();
 	system("PAUSE");
+	return 0;
 }
 
 void OpeningMenu(int *numOfPlayers)

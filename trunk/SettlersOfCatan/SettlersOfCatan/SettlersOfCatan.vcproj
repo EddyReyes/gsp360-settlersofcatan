@@ -60,7 +60,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="SDLmain.lib SDL.lib  SDL_image.lib SDL_ttf.lib"
+				UseLibraryDependencyInputs="false"
+				AdditionalDependencies="SDL.lib SDLmain.lib SDL_ttf.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -172,7 +173,15 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\dv_sdlgrafix.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\main.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\sdlManager.cpp"
 				>
 			</File>
 			<File
@@ -190,6 +199,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\dv_sdlgrafix.h"
+				>
+			</File>
+			<File
 				RelativePath=".\graph.h"
 				>
 			</File>
@@ -199,6 +212,14 @@
 			</File>
 			<File
 				RelativePath=".\resourceCards.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SDL_tff.h"
+				>
+			</File>
+			<File
+				RelativePath=".\sdlManager.h"
 				>
 			</File>
 			<File

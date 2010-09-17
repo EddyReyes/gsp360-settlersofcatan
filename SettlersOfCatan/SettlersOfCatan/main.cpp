@@ -1,15 +1,21 @@
 #include <iostream>
+#include <stdio.h> // printf() 
 #include "player.h"
 #include "resourceCards.h"
 #include "stndrd.h"
 #include "graph.h"
-
-#include "SDL/SDL.h"
-#include "SDL/SDL_image.h"
-#include "SDL/SDL_ttf.h"
-#include <string>
+#include "sdlManager.h"
 
 using namespace std;
+
+//declarations
+static sdlManager& sdlMgr = sdlManager::getInstance();
+
+//screen
+SDL_Surface *screen = NULL;
+const int WIDTH = 640;
+const int HEIGHT = 480;
+const int BPP = 32;
 
 void OpeningMenu (int *);
 void AssignChitResources(char *);
@@ -17,8 +23,40 @@ void DebugOutputResourceChits(char *);
 void RollDice(int *, int *);
 void tradeWithPlayer(player*, player*, char, char, int, int);
 
-int main(int argc, char* args[])
+// must be the header for SDL applications 
+int main(int argc, char ** argv) 
 {
+	//intializes everything SDL
+	SDL_Init(SDL_INIT_EVERYTHING);
+	//init fail buster
+	if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
+	{
+		cout <<"could not initialize SDL" << endl;
+		return 1;
+	}	
+	
+	//Initialize SDL_ttf 
+	TTF_Init();
+	//init fail buster
+	if( TTF_Init() != 0 ) 
+	{ 
+		cout << "could not initialize SDLttf " << endl;
+		return 2;
+	} 
+
+	//create a new window--->set up screen
+	screen = SDL_SetVideoMode(WIDTH, HEIGHT, BPP, SDL_SWSURFACE
+		/*comment out FULLSCREEN to see console*//*|SDL_FULLSCREEN*/);
+	if(!screen)
+	{
+		cout << "failed to initialize screen" << endl;
+		return 2;
+	}
+
+	//SDL Load Images
+	sdlMgr.loadImages();
+
+
 	player playerOne, playerTwo, playerThree, playerFour; // declare four players
 	rsc ResourceDeck; // declare a resource deck
 	int winner = NULL;
@@ -81,11 +119,76 @@ int main(int argc, char* args[])
 
 	//Display playerTwo Cards
 	cout << "playerTwo wheat: " << playerTwo.getResource(WHEAT) << endl;	cout << "playerTwo stone: " << playerTwo.getResource(STONE) << endl;	cout << "playerTwo brick: " << playerTwo.getResource(BRICK) << endl;	cout << "playerTwo sheep: " << playerTwo.getResource(SHEEP) << endl;	cout << "playerTwo wood: " << playerTwo.getResource(WOOD) << endl;
+	
+	
 	//shows console graph
 	graph();
 	system("PAUSE");
+
+SDL_Event e;
+	bool running = true;
+	// ---- game loop
+	do
+	{
+		sdlMgr.draw(screen);
+	
+		if(!SDL_PollEvent(&e))
+			e.type = SDL_NOEVENT;
+		switch(e.type)
+		{
+		case SDL_KEYDOWN:
+			switch(e.key.keysym.sym)
+			{
+			case SDLK_UP:
+				sdlMgr.randomRange++;
+				if(sdlMgr.randomRange > 6)
+					sdlMgr.randomRange = 6;
+				break;
+			case SDLK_DOWN:
+				sdlMgr.randomRange--;
+				if(sdlMgr.randomRange < 1)
+					sdlMgr.randomRange = 1;
+				break;
+			case SDLK_LEFT:
+				sdlMgr.numDice--;
+				if(sdlMgr.numDice < 0)
+					sdlMgr.numDice = 1;
+				break;
+			case SDLK_RIGHT:
+				sdlMgr.numDice++;
+				if(sdlMgr.numDice > 6)
+					sdlMgr.numDice = 5;
+				break;
+			case SDLK_SPACE:
+				sdlMgr.rollDice = true;
+				sdlMgr.randomize = true;
+				break;
+			case SDLK_ESCAPE:
+				running = false;
+				break;
+			}
+			break;
+		case SDL_QUIT:
+			running = false;
+			break;
+		}
+	}
+	while(running);
+
+	//release data
+	SDL_FreeSurface(screen);
+	sdlMgr.shutdown();
+	SDL_Quit();
+
 	return 0;
 }
+
+
+//
+//        // ensures that memory allocated using SDL_Init is freed 
+//        SDL_Quit(); 
+//	return 0; 
+//}
 
 void OpeningMenu(int *numOfPlayers)
 {

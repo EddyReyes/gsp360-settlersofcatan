@@ -1,5 +1,7 @@
 #pragma once
 
+#include "map.h"
+
 #include "sdl/sdl.h"
 
 struct Vector
@@ -12,6 +14,9 @@ struct Vector
 class Game
 {
 private:
+	//map
+	map underlyingBoard;
+
 	// player
 	Vector playerSize;
 	Vector playerLocation;

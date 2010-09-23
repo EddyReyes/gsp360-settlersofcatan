@@ -181,6 +181,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\map.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\random.cpp"
 				>
 			</File>
@@ -195,7 +199,23 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\center.h"
+				>
+			</File>
+			<File
+				RelativePath=".\edge.h"
+				>
+			</File>
+			<File
 				RelativePath=".\game.h"
+				>
+			</File>
+			<File
+				RelativePath=".\map.h"
+				>
+			</File>
+			<File
+				RelativePath=".\node.h"
 				>
 			</File>
 			<File

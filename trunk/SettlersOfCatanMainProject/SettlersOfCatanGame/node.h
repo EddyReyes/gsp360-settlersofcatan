@@ -10,6 +10,7 @@ class Node
 public:
 	int ID;
 	int harborType;
+	int cityType;
 	int x;
 	int y; 
 	int numOfEdges;
@@ -25,6 +26,7 @@ public:
 		edges = 0;
 		numOfEdges = 0;
 		ID = a_ID;
+		cityType = 0;
 	}
 
 	/*

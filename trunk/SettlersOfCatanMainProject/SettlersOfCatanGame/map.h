@@ -12,17 +12,17 @@ using namespace std;
 class map
 {
 private:
+public:
 	Edge myEdges[144];
 	Node myNodes[54];
 	Center myCenters[19];
-public:
 	map::map();
 	Node * getNode(Node * population, int popCount, int ID);
 	int getEdge(Edge * population, int popCount, int start, Node * from);
 	int getEdgeFromCount(Edge * population, int popCount, Node * from);
 	int randomHarbor(int resource[]);
 	void setHarbor(Node* harbor);
-
+	void initializeCenters(void);
 };
 
 ////set cursor to location

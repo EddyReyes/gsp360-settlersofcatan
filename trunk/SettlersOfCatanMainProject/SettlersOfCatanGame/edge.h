@@ -2,22 +2,24 @@
 #include "node.h"
 #include "center.h"
 
+
 class Node;
 class Center;
 
 class Edge
 {
 private:
-	//player * whoHasARoadHere;
 public:
 	Node * from;
 	Node * to;
 	Edge::Edge(){}
+	int whoHasARoadHere;
 	//constructor
 	Edge::Edge(Node * a_from, Node * a_to)
 	{
 		from = a_from;
 		to = a_to;
+		whoHasARoadHere = NULL;
 	}
 
 	//prints edge to screen

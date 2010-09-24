@@ -203,6 +203,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\developmentCards.h"
+				>
+			</File>
+			<File
 				RelativePath=".\edge.h"
 				>
 			</File>
@@ -219,11 +223,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\player.h"
+				>
+			</File>
+			<File
 				RelativePath=".\random.h"
 				>
 			</File>
 			<File
 				RelativePath=".\resize++.h"
+				>
+			</File>
+			<File
+				RelativePath=".\resourceCards.h"
+				>
+			</File>
+			<File
+				RelativePath=".\sdlManager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\stndrd.h"
 				>
 			</File>
 		</Filter>

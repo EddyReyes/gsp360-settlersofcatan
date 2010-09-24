@@ -1,4 +1,7 @@
 #include "map.h"
+#include "stndrd.h"
+#include <ctime>
+#include <windows.h>
 
 #define _EDGE(c,d) Edge(getNode(tempNodes, count, c),\
 							getNode(tempNodes, count, d))
@@ -236,5 +239,29 @@ void map::setHarbor(Node* harbor)
 		default:
 			harbor[i].harborType = NULL;
 		}
+	}
+}
+
+void map::initializeCenters(void)
+{
+	srand(time(0));
+	rand();
+	int woodLeft = 4;
+	int stoneLeft = 3;
+	int brickLeft = 3;
+	int wheatLeft = 4;
+	int sheepLeft = 4;
+	int desertLeft = 1;
+	int selector = 0;
+	for (int i = 0; i < 19; i++)
+	{
+		selector = rand();
+		selector = selector % (woodLeft + sheepLeft + brickLeft + stoneLeft + wheatLeft + desertLeft);
+		if (selector < woodLeft){myCenters[i].resource = WOOD; woodLeft--;}
+		else if (selector < woodLeft + sheepLeft){myCenters[i].resource = SHEEP; sheepLeft--;}
+		else if (selector < woodLeft + sheepLeft + brickLeft){myCenters[i].resource = BRICK; brickLeft--;}
+		else if (selector < woodLeft + sheepLeft + brickLeft + stoneLeft){myCenters[i].resource = STONE; stoneLeft--;}
+		else if (selector < woodLeft + sheepLeft + brickLeft + stoneLeft + wheatLeft){myCenters[i].resource = WHEAT; wheatLeft--;}
+		else {myCenters[i].resource = 'D'; desertLeft--;}
 	}
 }

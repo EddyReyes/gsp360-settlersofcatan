@@ -6,7 +6,7 @@
 #include "random.h"
 #include "sdlManager.h"
 
-static sdlManager& sdlMgr = sdlManager::getInstance();
+//static sdlManager& sdlMgr = sdlManager::getInstance();
 
 struct Vector
 {

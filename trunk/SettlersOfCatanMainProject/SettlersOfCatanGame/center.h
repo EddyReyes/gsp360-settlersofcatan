@@ -14,6 +14,7 @@ public:
 	int y;
 	int ID;
 	char resource;
+	int chitWorth;
 
 	Center::Center(){};
 

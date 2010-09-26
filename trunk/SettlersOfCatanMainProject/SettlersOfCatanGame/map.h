@@ -16,6 +16,7 @@ public:
 	Edge myEdges[144];
 	Node myNodes[54];
 	Center myCenters[19];
+	int myChits[18];
 	map::map();
 	Node * getNode(Node * population, int popCount, int ID);
 	int getEdge(Edge * population, int popCount, int start, Node * from);

@@ -4,6 +4,7 @@
 #include "game.h"
 #include "sdl/sdl.h"
 #include "sdl/sdl_ttf.h"
+#include "stndrd.h"
 #include <iostream>
 #include <string> 
 #include <ctime>
@@ -22,6 +23,11 @@ public:
 	sdlManager(void);
 private:
 	SDL_Surface *hexTile;
+	SDL_Surface *woodTile;
+	SDL_Surface *sheepTile;
+	SDL_Surface *brickTile;
+	SDL_Surface *stoneTile;
+	SDL_Surface *wheatTile;
 	SDL_Surface *load_image( std::string filename );
 	void apply_surface(int x, int y,SDL_Surface* source, SDL_Surface* destination, SDL_Rect *clip);
 };
@@ -40,6 +46,11 @@ sdlManager::~sdlManager(void)
 void sdlManager::shutdown()
 {
 	SDL_FreeSurface(hexTile);
+	SDL_FreeSurface(woodTile);
+	SDL_FreeSurface(wheatTile);
+	SDL_FreeSurface(stoneTile);
+	SDL_FreeSurface(sheepTile);
+	SDL_FreeSurface(brickTile);
 }
 
 //function to load images
@@ -86,54 +97,73 @@ void sdlManager::apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *d
 void sdlManager::loadImages()
 {
 	hexTile = load_image( "Hex_One.bmp" );
+	woodTile = load_image( "WoodHex.bmp" );
+	wheatTile = load_image( "WheatHex.bmp" );
+	stoneTile = load_image( "StoneHex.bmp" );
+	sheepTile = load_image( "SheepHex.bmp" );
+	brickTile = load_image( "BrickHex.bmp" );
 }
 
 void sdlManager::draw(SDL_Surface * screen, map * underlyingBoard)
 {
 	SDL_FillRect(screen, 0, 0);			// black screen
+	int x = 0;
 
 	SDL_Rect colorCursor = {0,0,15,15};
 	for (int i = 0; i < 19; ++i)
 	{
 		if(i == 0 || i == 4 || i == 9 || i == 14 || i == 18)
 		{
-			apply_surface(	underlyingBoard->myCenters[i].x * (400 / 9) - 64,
-							underlyingBoard->myCenters[i].y * 50 - 55,
-							hexTile,
-							screen,
-							NULL);
+			x = 64;
 		}
 		if(i == 1 || i == 6 || i == 11 || i == 16)
 		{
-			apply_surface(	underlyingBoard->myCenters[i].x * (400 / 9) - 32,
-							underlyingBoard->myCenters[i].y * 50 - 55,
-							hexTile,
-							screen,
-							NULL);
+			x = 32;
 		}
 		if(i == 2 || i == 7 || i == 12 || i == 17)
 		{
-			apply_surface(	underlyingBoard->myCenters[i].x * (400 / 9) - 96,
-							underlyingBoard->myCenters[i].y * 50 - 55,
-							hexTile,
-							screen,
-							NULL);
+			x = 96;
 		}
 		if(i == 3 || i == 8 || i == 13)
 		{
-			apply_surface(	underlyingBoard->myCenters[i].x * (400 / 9) - 0,
-							underlyingBoard->myCenters[i].y * 50 - 55,
-							hexTile,
-							screen,
-							NULL);
+			x = 0;
 		}
 		if(i == 5 || i == 10 || i == 15)
 		{
-			apply_surface(	underlyingBoard->myCenters[i].x * (400 / 9) - 128,
-							underlyingBoard->myCenters[i].y * 50 - 55,
-							hexTile,
-							screen,
-							NULL);
+			x = 128;
+		}
+		switch(underlyingBoard->myCenters[i].resource)
+		{
+		case WOOD:		apply_surface(	underlyingBoard->myCenters[i].x * (400 / 9) - x,
+										underlyingBoard->myCenters[i].y * 50 - 55,
+										woodTile,
+										screen,
+										NULL); break;
+		case WHEAT:		apply_surface(	underlyingBoard->myCenters[i].x * (400 / 9) - x,
+										underlyingBoard->myCenters[i].y * 50 - 55,
+										wheatTile,
+										screen,
+										NULL); break;
+		case STONE:		apply_surface(	underlyingBoard->myCenters[i].x * (400 / 9) - x,
+										underlyingBoard->myCenters[i].y * 50 - 55,
+										stoneTile,
+										screen,
+										NULL); break;
+		case SHEEP:		apply_surface(	underlyingBoard->myCenters[i].x * (400 / 9) - x,
+										underlyingBoard->myCenters[i].y * 50 - 55,
+										sheepTile,
+										screen,
+										NULL); break;
+		case BRICK:		apply_surface(	underlyingBoard->myCenters[i].x * (400 / 9) - x,
+										underlyingBoard->myCenters[i].y * 50 - 55,
+										brickTile,
+										screen,
+										NULL); break;
+		case 'D':		apply_surface(	underlyingBoard->myCenters[i].x * (400 / 9) - x,
+										underlyingBoard->myCenters[i].y * 50 - 55,
+										hexTile,
+										screen,
+										NULL); break;
 		}
 	}
 	/*

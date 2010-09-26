@@ -36,6 +36,11 @@ private:
 sdlManager::sdlManager(void)
 {
 	hexTile = NULL;
+	woodTile = NULL;
+	wheatTile = NULL;
+	stoneTile = NULL;
+	sheepTile = NULL;
+	brickTile = NULL;
 }
 //sdlManager destructor
 sdlManager::~sdlManager(void)

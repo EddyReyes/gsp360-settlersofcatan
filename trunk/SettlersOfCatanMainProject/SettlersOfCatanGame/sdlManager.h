@@ -28,6 +28,7 @@ private:
 	SDL_Surface *brickTile;
 	SDL_Surface *stoneTile;
 	SDL_Surface *wheatTile;
+	SDL_Surface *chitTile[10];
 	SDL_Surface *load_image( std::string filename );
 	void apply_surface(int x, int y,SDL_Surface* source, SDL_Surface* destination, SDL_Rect *clip);
 };
@@ -41,6 +42,10 @@ sdlManager::sdlManager(void)
 	stoneTile = NULL;
 	sheepTile = NULL;
 	brickTile = NULL;
+	for (int i = 0; i < 10; ++i)
+	{
+		chitTile[i] = NULL;
+	}
 }
 //sdlManager destructor
 sdlManager::~sdlManager(void)
@@ -56,6 +61,10 @@ void sdlManager::shutdown()
 	SDL_FreeSurface(stoneTile);
 	SDL_FreeSurface(sheepTile);
 	SDL_FreeSurface(brickTile);
+	for (int i = 0; i < 10; ++i)
+	{
+		SDL_FreeSurface(chitTile[i]);
+	}
 }
 
 //function to load images
@@ -107,33 +116,44 @@ void sdlManager::loadImages()
 	stoneTile = load_image( "StoneHex.bmp" );
 	sheepTile = load_image( "SheepHex.bmp" );
 	brickTile = load_image( "BrickHex.bmp" );
+	chitTile[0] = load_image( "chit2.bmp" );
+	chitTile[1] = load_image( "chit3.bmp" );
+	chitTile[2] = load_image( "chit4.bmp" );
+	chitTile[3] = load_image( "chit5.bmp" );
+	chitTile[4] = load_image( "chit6.bmp" );
+	chitTile[5] = load_image( "chit8.bmp" );
+	chitTile[6] = load_image( "chit9.bmp" );
+	chitTile[7] = load_image( "chit10.bmp" );
+	chitTile[8] = load_image( "chit11.bmp" );
+	chitTile[9] = load_image( "chit12.bmp" );
 }
 
 void sdlManager::draw(SDL_Surface * screen, map * underlyingBoard)
 {
-	SDL_FillRect(screen, 0, 0);			// black screen
+	//CREATE A GAME STATE (IE, THIS WOULD BE PLAYSCREEN)
+	SDL_FillRect(screen, 0, 0);		// draw background	
 	int x = 0;
 
-	SDL_Rect colorCursor = {0,0,15,15};
+	//SDL_Rect colorCursor = {0,0,15,15};
 	for (int i = 0; i < 19; ++i)
 	{
 		if(i == 0 || i == 4 || i == 9 || i == 14 || i == 18)
 		{
 			x = 64;
 		}
-		if(i == 1 || i == 6 || i == 11 || i == 16)
+		else if(i == 1 || i == 6 || i == 11 || i == 16)
 		{
 			x = 32;
 		}
-		if(i == 2 || i == 7 || i == 12 || i == 17)
+		else if(i == 2 || i == 7 || i == 12 || i == 17)
 		{
 			x = 96;
 		}
-		if(i == 3 || i == 8 || i == 13)
+		else if(i == 3 || i == 8 || i == 13)
 		{
 			x = 0;
 		}
-		if(i == 5 || i == 10 || i == 15)
+		else if(i == 5 || i == 10 || i == 15)
 		{
 			x = 128;
 		}
@@ -169,6 +189,40 @@ void sdlManager::draw(SDL_Surface * screen, map * underlyingBoard)
 										hexTile,
 										screen,
 										NULL); break;
+		}
+	}
+	x = 0;
+	for (int i = 0; i < 19; ++i)
+	{
+		if(i == 0 || i == 4 || i == 9 || i == 14 || i == 18)
+		{
+			x = 0;
+		}
+		else if(i == 1 || i == 6 || i == 11 || i == 16)
+		{
+			x = -32;
+		}
+		else if(i == 2 || i == 7 || i == 12 || i == 17)
+		{
+			x = 32;
+		}
+		else if(i == 3 || i == 8 || i == 13)
+		{
+			x = -64;
+		}
+		else if(i == 5 || i == 10 || i == 15)
+		{
+			x = 64;
+		}
+		int y = 2;
+		if(underlyingBoard->myCenters[i].chitWorth >= 8){ ++y; }
+		if(underlyingBoard->myCenters[i].chitWorth != 0)
+		{
+			apply_surface(	underlyingBoard->myCenters[i].x * (400 / 9) - x - 19,
+							underlyingBoard->myCenters[i].y * 50 - 19,
+							chitTile[underlyingBoard->myCenters[i].chitWorth - y],
+							screen,
+							NULL);
 		}
 	}
 	/*

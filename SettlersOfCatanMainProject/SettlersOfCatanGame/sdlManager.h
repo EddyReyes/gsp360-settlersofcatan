@@ -22,6 +22,7 @@ public:
 	void shutdown();
 	sdlManager(void);
 private:
+	SDL_Surface *background;
 	SDL_Surface *hexTile;
 	SDL_Surface *woodTile;
 	SDL_Surface *sheepTile;
@@ -36,6 +37,7 @@ private:
 //constructor
 sdlManager::sdlManager(void)
 {
+	background = NULL;
 	hexTile = NULL;
 	woodTile = NULL;
 	wheatTile = NULL;
@@ -55,6 +57,7 @@ sdlManager::~sdlManager(void)
 //Free up SDL and font
 void sdlManager::shutdown()
 {
+	SDL_FreeSurface(background);
 	SDL_FreeSurface(hexTile);
 	SDL_FreeSurface(woodTile);
 	SDL_FreeSurface(wheatTile);
@@ -111,6 +114,7 @@ void sdlManager::apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *d
 void sdlManager::loadImages()
 {
 	hexTile = load_image( "Hex_One.bmp" );
+	background = load_image( "background.bmp" );
 	woodTile = load_image( "WoodHex.bmp" );
 	wheatTile = load_image( "WheatHex.bmp" );
 	stoneTile = load_image( "StoneHex.bmp" );

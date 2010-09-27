@@ -102,6 +102,7 @@ map::map()
 	{
 		myChits[i] = tempInts[i];
 	}
+
 }
 
 Node * map::getNode(Node * population, int popCount, int ID)
@@ -270,47 +271,11 @@ void map::initializeCenters(void)
 		else {myCenters[i].resource = 'D'; desertLeft--;}
 	}
 
-	// THIS SECTION IS BIZARRE 
-	// IN ORDER TO ASSIGN CHIT WORTH THESE COMMANDS HAVE TO BE REPEATED OVER AND OVER AGAIN.
-	// A FOR LOOP CAN'T EXIST DUE TO THE PATTERN WE HAVE FOR NAMING CENTERS. 13 -> 16 -> 18 is bottom left, middle bottom left, bottom, etc.
-	myCenters[13].chitWorth = myChits[0 - desertPass];
-	if (myCenters[13].resource == 'D'){desertPass = 1; myCenters[13].chitWorth = 0;}
-	myCenters[16].chitWorth = myChits[1 - desertPass];
-	if (myCenters[16].resource == 'D'){desertPass = 1; myCenters[16].chitWorth = 0;}
-	myCenters[18].chitWorth = myChits[2 - desertPass];
-	if (myCenters[18].resource == 'D'){desertPass = 1; myCenters[18].chitWorth = 0;}
-	myCenters[17].chitWorth = myChits[3 - desertPass];
-	if (myCenters[17].resource == 'D'){desertPass = 1; myCenters[17].chitWorth = 0;}
-	myCenters[15].chitWorth = myChits[4 - desertPass];
-	if (myCenters[15].resource == 'D'){desertPass = 1; myCenters[15].chitWorth = 0;}
-	myCenters[10].chitWorth = myChits[5 - desertPass];
-	if (myCenters[10].resource == 'D'){desertPass = 1; myCenters[18].chitWorth = 0;}
-	myCenters[5].chitWorth = myChits[6 - desertPass];
-	if (myCenters[5].resource == 'D'){desertPass = 1; myCenters[5].chitWorth = 0;}
-	myCenters[2].chitWorth = myChits[7 - desertPass];
-	if (myCenters[2].resource == 'D'){desertPass = 1; myCenters[2].chitWorth = 0;}
-	myCenters[0].chitWorth = myChits[8 - desertPass];
-	if (myCenters[0].resource == 'D'){desertPass = 1; myCenters[0].chitWorth = 0;}
-	myCenters[1].chitWorth = myChits[9 - desertPass];
-	if (myCenters[1].resource == 'D'){desertPass = 1; myCenters[1].chitWorth = 0;}
-	myCenters[3].chitWorth = myChits[10 - desertPass];
-	if (myCenters[3].resource == 'D'){desertPass = 1; myCenters[3].chitWorth = 0;}
-	myCenters[8].chitWorth = myChits[11 - desertPass];
-	if (myCenters[8].resource == 'D'){desertPass = 1; myCenters[8].chitWorth = 0;}
-	myCenters[11].chitWorth = myChits[12 - desertPass];
-	if (myCenters[11].resource == 'D'){desertPass = 1; myCenters[11].chitWorth = 0;}
-	myCenters[14].chitWorth = myChits[13 - desertPass];
-	if (myCenters[14].resource == 'D'){desertPass = 1; myCenters[14].chitWorth = 0;}
-	myCenters[12].chitWorth = myChits[14 - desertPass];
-	if (myCenters[12].resource == 'D'){desertPass = 1; myCenters[12].chitWorth = 0;}
-	myCenters[7].chitWorth = myChits[15 - desertPass];
-	if (myCenters[7].resource == 'D'){desertPass = 1; myCenters[7].chitWorth = 0;}
-	myCenters[4].chitWorth = myChits[16 - desertPass];
-	if (myCenters[4].resource == 'D'){desertPass = 1; myCenters[4].chitWorth = 0;}
-	myCenters[6].chitWorth = myChits[17 - desertPass];
-	if (myCenters[6].resource == 'D'){desertPass = 1; myCenters[6].chitWorth = 0;}
-	// THIS LAST ONE WILL BREAK IF THE FUNCTION ASSIGNS THE DESERT TO IT AND CHECK DOES NOT HAPPEN TWICE. CLEAN IT UP LATER?
-	if (myCenters[9].resource == 'D'){desertPass = 1; myCenters[9].chitWorth = 0;}
-	myCenters[9].chitWorth = myChits[18 - desertPass];
-	if (myCenters[9].resource == 'D'){desertPass = 1; myCenters[9].chitWorth = 0;}
+	int tempInts[] = {5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 8, 10, 9, 4, 5, 6, 3, 11};
+	int tempIntCenters[] = {13, 16, 18, 17, 15, 10, 5, 2, 0, 1, 3, 8, 11, 14, 12, 7, 4, 6, 9};
+	for (int i = 0; i < 19; ++i)
+	{
+		if (myCenters[tempIntCenters[i]].resource == 'D'){desertPass = 1; myCenters[tempIntCenters[i]].chitWorth = 0;}
+		else {myCenters[tempIntCenters[i]].chitWorth = tempInts[i - desertPass];}
+	}
 }

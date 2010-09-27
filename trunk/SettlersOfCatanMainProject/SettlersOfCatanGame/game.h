@@ -126,17 +126,63 @@ void Game::update(int ms)
 		randomizeColors();
 	}
 }
+
+//Mouse controls/mouse down condition
+bool mouse_down = false;
+
+//if on Game object(s) condition
+bool on_object = false;
+
 void Game::input(SDL_Event & e)
 {
 	switch(e.type)
 	{
-	case SDL_KEYDOWN:
+	
+		case SDL_KEYDOWN:
+
 		switch(e.key.keysym.sym)
 		{
 		case SDLK_UP:	playerVelocity.y -= speed;	break;
 		case SDLK_DOWN:	playerVelocity.y += speed;	break;
 		case SDLK_LEFT:	playerVelocity.x -= speed;	break;
 		case SDLK_RIGHT:playerVelocity.x += speed;	break;
+		case SDLK_d:{	printf("d button works!\n");} break;
+		case SDL_MOUSEBUTTONDOWN: //Mouse button pressed
+			{
+				if (SDL_BUTTON_LEFT)//LEFT CLICK
+				{
+					//mouse_down = true;   
+					break;
+				}
+				if(SDL_BUTTON_RIGHT ) 
+				{
+					//mouse_down = true;   
+					break;
+				}
+				break;
+			}
+			//CHECK BUTTON
+		case SDL_MOUSEBUTTONUP:
+			//MOUSE UP LET ME KNOW
+			{
+				if (SDL_BUTTON_LEFT)//LEFT button up
+				{
+					break;
+				}
+				if(SDL_BUTTON_RIGHT )//right button up 
+				{
+					break;
+				}
+				break;
+			}			
+		case SDL_MOUSEMOTION:
+			{
+				if(mouse_down && on_object)
+				{	
+					break;
+				}
+			}
+			break;
 		}
 	}
 }

@@ -7,7 +7,7 @@ void Steal(player* thief, player* victim)
 	totalCards += victim->getResource(STONE);
 	totalCards += victim->getResource(SHEEP);
 
-	int stolenCard = rand() % totalCards;
+	int stolenCard = rand() % totalCards + 1;
 	char stolenType = ' ';
 
 	if(stolenCard < victim->getResource(WHEAT))
@@ -29,7 +29,7 @@ void Steal(player* thief, player* victim)
 //this function is supposed to tell people that they need to pick cards to take away
 void thiefIsRolled(player p[])
 {
-	bool tooMany[5] = [];
+	bool tooMany[5] = 0;
 	for(int i = 1; i < 5; i++)
 	{
 		int totalCards = 0;
@@ -47,6 +47,7 @@ void thiefIsRolled(player p[])
 	int numCardsToRemove[5] = 0;
 	for(int = 1; i < 5; i++)
 	{
+		totalCards = 0;
 		if(tooMany[i] == true)
 		{
 			totalCards += p[i]->getResource(WHEAT);
@@ -63,15 +64,59 @@ void thiefIsRolled(player p[])
 
 		numCardsToRemove[i] = totalCards;
 	}
+
+	for(int i = 1; i < 5; i++)
+	{
+		if(numCardsToRemove[i] != 0)
+		{
+
+			totalCards = 0;
+			totalCards += p[i]->getResource(WHEAT);
+			totalCards += p[i]->getResource(WOOD);
+			totalCards += p[i]->getResource(BRICK);
+			totalCards += p[i]->getResource(STONE);
+			totalCards += p[i]->getResource(SHEEP);
+
+
+			int* randCard;
+			randCard = new int[numCardsToRemove[i];
+			for(int j = 0; j < numCardsToRemove[i]; j++)
+			{
+				randCard[j] = (rand() % totalCards) + 1;
+
+				for(int k = 0; k < numCardsToRemove[i]; k++)
+				{
+					if(k != j)//this is supposed to make sure the numbers arent the same
+					{
+						if(randCard[j] == randCard[k])
+							randCard[j] = (rand() % totalCards) + 1;
+					}
+				}
+			}
+
+			for(int d = 0; d < numCardsToRemove[i]; d++)
+			{
+				char stolenType = ' ';
+
+				if(randCard[d] < p[i]->getResource(WHEAT))
+					stolenType = WHEAT;
+				else if(randCard[d] < p[i]->getResource(WHEAT) + p[i]->getResource(WOOD))
+					stolenType = WOOD;
+				else if(randCard[d] < p[i]->getResource(WHEAT) + p[i]->getResource(WOOD) + p[i]->getResource(BRICK))
+					stolenType = BRICK;
+				else if(randCard[d] < p[i]->getResource(WHEAT) + p[i]->getResource(WOOD) + p[i]->getResource(BRICK) + p[i]->getResource(STONE))
+					stolenType = STONE;
+				else
+					stolenType = SHEEP;
+
+				p[i]->changeResource(stolenType, -1);
+			}
+
+		}
+
 }
 
 
-
-
-
-
-
-p[i]
 
 bool endTurn = false;
 bool hasRolled = false;

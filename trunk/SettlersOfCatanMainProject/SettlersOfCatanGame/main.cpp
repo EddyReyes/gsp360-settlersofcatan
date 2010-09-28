@@ -14,7 +14,7 @@ int main(int argc, char ** argv)
     atexit(SDL_Quit);
     // create a new window
     SDL_Surface* screen = SDL_SetVideoMode(
-		SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP,SDL_HWSURFACE|SDL_DOUBLEBUF/*comment out FULLSCREEN to see console*//*|SDL_FULLSCREEN*/);
+		SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP,SDL_HWSURFACE|SDL_DOUBLEBUF/*comment out FULLSCREEN to see console*/|SDL_FULLSCREEN);
 	bool running = true;
 	SDL_Event e;
 	Uint32 now, then = SDL_GetTicks(), passed;
@@ -34,7 +34,16 @@ int main(int argc, char ** argv)
 		{
 			switch(e.type)
 			{
-			case SDL_KEYDOWN:	g.input(e);
+			case SDL_QUIT:		running = false;	break;
+			case SDL_KEYDOWN:
+				switch(e.key.keysym.sym)
+				{
+				case SDLK_ESCAPE:
+					running = false;
+					break;
+				}
+				g.input(e);
+				break;
 			}
 		}
 		// throttle code

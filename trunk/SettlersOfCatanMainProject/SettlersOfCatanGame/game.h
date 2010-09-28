@@ -79,36 +79,7 @@ Game::Game()
 void Game::draw(SDL_Surface * screen)
 {
 	sdlMgr.draw(screen, &underlyingBoard);
-	//SDL_FillRect(screen, 0, 0);			// black screen
-
-	//SDL_Rect colorCursor = {0,0,15,15};
-	//for (int i = 0; i < 19; ++i)
-	//{
-	//	colorCursor.x = underlyingBoard.myCenters[i].x * (400 / 9) - 64;
-	//	colorCursor.y = underlyingBoard.myCenters[i].y * 50 - 55;
-	//	SDL_FillRect(screen, &colorCursor, -1);
-	//}
-	///*
-	//SDL_Rect colorCursor = {0,0,15,15};
-	//for(int h = 0; h < colorH; ++h)
-	//{
-	//	for(int w = 0; w < colorW; ++w)
-	//	{
-	//		colorCursor.x = w * 20;
-	//		colorCursor.y = h * 20;
-	//		SDL_FillRect(screen, &colorCursor, colors[h][w]);
-	//	}
-	//}
-	//*/
-
-	//SDL_Rect drawRect = {
-	//	(short)playerLocation.x,
-	//	(short)playerLocation.y,
-	//	(short)playerSize.x, 
-	//	(short)playerSize.y
-	//};
-	//SDL_FillRect(screen, &drawRect, -1);	// white player box
-	//SDL_Flip(screen);
+	
 }
 void Game::update(int ms)
 {
@@ -142,11 +113,21 @@ void Game::input(SDL_Event & e)
 
 		switch(e.key.keysym.sym)
 		{
+		
 		case SDLK_UP:	playerVelocity.y -= speed;	break;
 		case SDLK_DOWN:	playerVelocity.y += speed;	break;
 		case SDLK_LEFT:	playerVelocity.x -= speed;	break;
 		case SDLK_RIGHT:playerVelocity.x += speed;	break;
-		case SDLK_d:{	printf("d button works!\n");} break;
+		case SDLK_d:{printf("d button works!\n");
+					
+					/*	sdlMgr.apply_surface(400,600,
+										woodTile,
+										screen,
+										NULL); break;*/
+					
+					
+					
+					} break;
 		case SDL_MOUSEBUTTONDOWN: //Mouse button pressed
 			{
 				if (SDL_BUTTON_LEFT)//LEFT CLICK

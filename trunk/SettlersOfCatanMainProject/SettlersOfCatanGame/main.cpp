@@ -40,6 +40,7 @@ int main(int argc, char ** argv)
 				{
 				case SDLK_ESCAPE:
 					running = false;
+					g.shutdown();
 					break;
 				}
 				g.input(e);

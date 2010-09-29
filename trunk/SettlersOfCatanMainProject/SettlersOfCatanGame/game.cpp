@@ -1,19 +1,29 @@
 #include "game.h"
 #include "map.h"
 #include "sdl/sdl.h"
+#include "menu.h"
 
 Game::Game()
 {
 	gameState = Game::MENU;
 	underlyingBoard.initializeCenters();
 	underlyingBoard.loadImages();
+	m.loadImages();
 	changeTime = 5000;
 	timer = 0;
+}
+
+void Game::initGame(int const & a_numPlayers)
+{
+	numPlayers = a_numPlayers;
+	p = new player[numPlayers];
+	activePlayer = 0;
 }
 
 void Game::shutdown(void)
 {
 	underlyingBoard.shutdownImages();
+	m.shutdownImages();
 }
 
 void Game::draw(SDL_Surface * screen)
@@ -35,9 +45,8 @@ void Game::draw(SDL_Surface * screen)
 		SDL_FillRect(screen, 0, 0);
 		underlyingBoard.draw(screen);
 		SDL_Flip(screen);
-		
-	// switch the back buffer
-	SDL_Flip(screen);
+
+		break;
 	}
 
 }
@@ -77,7 +86,7 @@ void Game::menuInput(SDL_Event & e)
 		}
 		if(num > 0)
 		{
-			//initGame(num);
+			initGame(num);
 			gameState = Game::GAME;
 		}
 		break;

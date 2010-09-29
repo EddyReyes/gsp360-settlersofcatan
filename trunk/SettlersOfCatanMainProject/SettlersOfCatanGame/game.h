@@ -13,20 +13,25 @@ private:
 	
 	//game state
 	int gameState;
-	static const int GAME = 1;
+	static const int GAME = 1; // play state
 	void gameInput(SDL_Event & e);
 	
 	//menu
 	Menu m;
-	static const int MENU = 0;
+	static const int MENU = 0; // menu state
 	void menuInput(SDL_Event & e);
 	
 	// player
-	player player[4];
+	int numPlayers;
+	int activePlayer;
+	player * p;
 	
-	// timer? needed?
+	// timer. needed?
 	Uint32 timer;
 	Uint32 changeTime;
+
+
+	void Game::initGame(int const & a_numPlayers);
 
 public:
 	Game();

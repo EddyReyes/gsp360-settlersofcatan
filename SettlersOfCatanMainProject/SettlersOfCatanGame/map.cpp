@@ -104,7 +104,7 @@ map::map()
 	}
 
 	//=====IMAGE ASSIGNMENT==================
-	background = NULL;
+
 	hexTile = NULL;
 	woodTile = NULL;
 	wheatTile = NULL;
@@ -296,7 +296,6 @@ void map::initializeCenters(void)
 void map::loadImages()
 {
 	hexTile = load_image( "Hex_One.bmp" );
-	background = load_image( "background.bmp" );
 	woodTile = load_image( "WoodHex.bmp" );
 	wheatTile = load_image( "WheatHex.bmp" );
 	stoneTile = load_image( "StoneHex.bmp" );
@@ -412,7 +411,6 @@ void map::draw(SDL_Surface * screen)
 
 void map::shutdownImages()
 {
-	SDL_FreeSurface(background);
 	SDL_FreeSurface(hexTile);
 	SDL_FreeSurface(woodTile);
 	SDL_FreeSurface(wheatTile);

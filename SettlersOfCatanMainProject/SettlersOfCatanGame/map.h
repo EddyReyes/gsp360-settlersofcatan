@@ -14,7 +14,6 @@ using namespace std;
 class map
 {
 private:
-	SDL_Surface *background;
 	SDL_Surface *hexTile;
 	SDL_Surface *woodTile;
 	SDL_Surface *sheepTile;

@@ -11,6 +11,11 @@ Game::Game()
 	timer = 0;
 }
 
+void Game::shutdown(void)
+{
+	underlyingBoard.shutdownImages();
+}
+
 void Game::draw(SDL_Surface * screen)
 {
 	SDL_FillRect(screen, 0, 0);

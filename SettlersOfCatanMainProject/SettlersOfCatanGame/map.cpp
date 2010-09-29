@@ -37,11 +37,8 @@ map::map()
 						_CENTER(4, 5, 1),
 				_CENTER(8, 9, 2),_CENTER(10, 11, 3),
 		_CENTER(13, 14, 4),_CENTER(15, 16, 5),_CENTER(17, 18, 6),
-		_CENTER(20, 21, 7),
-		_CENTER(22, 23, 8),
-		_CENTER(25, 26, 9),
-		_CENTER(27, 28, 10),
-		_CENTER(29, 30, 11),
+				_CENTER(20, 21, 7),_CENTER(22, 23, 8),
+		_CENTER(25, 26, 9),_CENTER(27, 28, 10),_CENTER(29, 30, 11),
 				_CENTER(32, 33, 12),_CENTER(34, 35, 13),
 		_CENTER(37, 38, 14),_CENTER(39, 40, 15),_CENTER(41, 42, 16),
 				_CENTER(44, 45, 17),_CENTER(46, 47, 18),
@@ -50,6 +47,43 @@ map::map()
 
 	for(int i = 0; i < 19; ++i)
 		myCenters[i] = tempCenters[i];
+
+	//=============CENTER GETTING NODES====================
+
+	for(int i = 0; i < 19; ++i)
+	{
+		int allotedCenters = 0;
+		for (int j = 0; j < 54; j++)
+		{
+			if (myNodes[j].y == myCenters[i].y)
+			{
+				if (myNodes[j].x + 2 == myCenters[i].x ||
+					myNodes[j].x - 2 == myCenters[i].x)
+				{
+					myCenters[i].connectedNodes[allotedCenters] = &myNodes[j];
+					allotedCenters++;
+				}
+			}
+			else if (myNodes[j].y + 1 == myCenters[i].y)
+			{
+				if (myNodes[j].x + 1 == myCenters[i].x ||
+					myNodes[j].x - 1 == myCenters[i].x)
+				{
+					myCenters[i].connectedNodes[allotedCenters] = &myNodes[j];
+					allotedCenters++;
+				}
+			}
+			else if (myNodes[j].y - 1 == myCenters[i].y)
+			{
+				if (myNodes[j].x + 1 == myCenters[i].x ||
+					myNodes[j].x - 1 == myCenters[i].x)
+				{
+					myCenters[i].connectedNodes[allotedCenters] = &myNodes[j];
+					allotedCenters++;
+				}
+			}
+		}
+	}
 
 	//=============EDGE ASSIGNMENT=========================
 
@@ -463,3 +497,8 @@ void map::apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destinat
 	//Blit the surface
 	SDL_BlitSurface( source, clip, destination, &offset ); 
 }
+
+/*void handleInput(SDL_Event e)
+{
+	switch
+}*/

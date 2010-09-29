@@ -8,7 +8,7 @@ int main(int argc, char ** argv)
 	int SCREEN_HEIGHT = 600;
 	int SCREEN_BPP = 32;
 	// main state of the main loop
-	if (SDL_Init( SDL_INIT_VIDEO ) != 0)
+	if (SDL_Init( SDL_INIT_EVERYTHING ) != 0)
 		printf( "Unable to init SDL: %s\n", SDL_GetError());
     // ensure a clean exit
     atexit(SDL_Quit);

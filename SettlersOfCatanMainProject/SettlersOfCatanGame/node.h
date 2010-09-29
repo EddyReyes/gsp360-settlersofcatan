@@ -19,8 +19,8 @@ public:
 	Node::Node(){};
 	Node::Node(int a_x, int a_y, int a_ID)
 	{
-		x = a_x ;
-		y = a_y ;
+		x = a_x;
+		y = a_y;
 		icon = '@';
 		edges = 0;
 		numOfEdges = 0;

@@ -13,8 +13,6 @@ SDL_Surface *load_image(const char * a_filename);
  * @param a_surface the surface to make the transparency change to
  * @param a_transparentRGB (R | G << 8 | B << 16)
  */
-
-//just commented out
 void setTransparentColor(SDL_Surface * a_surface, 
 						 const int & a_transparentRGB);
 
@@ -34,3 +32,18 @@ void drawTile(SDL_Surface * a_source, SDL_Rect * a_tileSize,
 /** draws the given rectangle using the given 0xRRGGBB color */
 void drawRect(SDL_Surface * a_surface, SDL_Rect * a_rect, Uint32 a_rgbColor, 
 			  const int & a_borderSize);
+
+/**
+ * @param a_surface the SDL_Surface to get pixel data about
+ * @param a_x x coordinate
+ * @param a_y y coordinate
+ */
+int getPixel(SDL_Surface * a_surface, const int & a_x, const int & a_y);
+
+/**
+ * @param a_surface the SDL_Surface to get pixel data about
+ * @param a_x x coordinate
+ * @param a_y y coordinate
+ * @param a_value the color of the pixel
+ */
+void setPixel(SDL_Surface * a_surface, const int & a_x, const int & a_y, const int & a_value);

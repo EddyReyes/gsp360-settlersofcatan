@@ -32,6 +32,10 @@ void drawTile(SDL_Surface * a_source, SDL_Rect * a_tile, const int & a_index, SD
 {
 	int dist = a_index * a_tile->w;
 	SDL_Rect src = {dist % a_source->w, (dist / a_source->w) * a_tile->h, a_tile->w, a_tile->h}, dest = {a_x, a_y, 0,0};
+	while(src.y >= a_source->h)
+	{
+		src.y -= a_source->h;
+	}
 	SDL_BlitSurface( a_source, &src, a_dest, &dest); 
 }
 

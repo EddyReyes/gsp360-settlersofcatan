@@ -79,17 +79,21 @@ void thiefIsRolled(player p[])
 
 
 			int* randCard;
-			randCard = new int[numCardsToRemove[i];
+			randCard = new int [numCardsToRemove[i]];
 			for(int j = 0; j < numCardsToRemove[i]; j++)
 			{
 				randCard[j] = (rand() % totalCards) + 1;
 
 				for(int k = 0; k < numCardsToRemove[i]; k++)
 				{
-					if(k != j)//this is supposed to make sure the numbers arent the same
+					if(k != j)//this is so it doesnt check the same number
 					{
+						//this is supposed to make sure the numbers arent the same and assign a new number
 						if(randCard[j] == randCard[k])
-							randCard[j] = (rand() % totalCards) + 1;
+						{
+							while(randCard[j] == randCard[k])//this should make sure it doesnt put the same number back in
+								randCard[j] = (rand() % totalCards) + 1;
+						}
 					}
 				}
 			}
@@ -112,7 +116,7 @@ void thiefIsRolled(player p[])
 				p[i]->changeResource(stolenType, -1);
 			}
 
-		}
+		}//end of if(numCardsToRemove[i] != 0)
 	}//end of if for actually removing cards
 }
 
@@ -126,7 +130,6 @@ int numPlayers = 4;//this variable is the one needed for ^ but it might already 
 
 while(running)//while the game is running, probably have another thing for winner = false
 {
-	
 	while(!hasRolled)
 	{
 		//play dev card
@@ -152,6 +155,4 @@ while(running)//while the game is running, probably have another thing for winne
 			curPlayer = 1;
 	}
 }
-
-
-	//all the stuff in this while(running) loop need to be together
+//all the stuff in this while(running) loop need to be together

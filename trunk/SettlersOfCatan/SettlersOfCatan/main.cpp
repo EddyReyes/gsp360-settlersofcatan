@@ -45,7 +45,7 @@ int main(int argc, char ** argv)
 	} 
 
 	//create a new window--->set up screen
-	screen = SDL_SetVideoMode(WIDTH, HEIGHT, BPP, SDL_SWSURFACE
+	screen = SDL_SetVideoMode(WIDTH, HEIGHT, BPP, SDL_SWSURFACE|SDL_DOUBLEBUF
 		/*comment out FULLSCREEN to see console*//*|SDL_FULLSCREEN*/);
 	if(!screen)
 	{

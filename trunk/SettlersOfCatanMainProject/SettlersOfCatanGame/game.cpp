@@ -2,9 +2,9 @@
 #include "map.h"
 #include "sdl/sdl.h"
 
-
 Game::Game()
 {
+	gameState = Game::MENU;
 	underlyingBoard.initializeCenters();
 	underlyingBoard.loadImages();
 	changeTime = 5000;
@@ -18,9 +18,28 @@ void Game::shutdown(void)
 
 void Game::draw(SDL_Surface * screen)
 {
-	SDL_FillRect(screen, 0, 0);
-	underlyingBoard.draw(screen);
+	switch(gameState)
+	{
+	case Game::MENU:
+
+		printf("The Menu Screen goes here!!!\n");
+
+		SDL_FillRect(screen, 0, 0);
+		m.draw(screen);
+		SDL_Flip(screen);
+
+		break;
+	case Game::GAME:
+		printf("We are INSIDE the game!!!\n");
+		
+		SDL_FillRect(screen, 0, 0);
+		underlyingBoard.draw(screen);
+		SDL_Flip(screen);
+		
+	// switch the back buffer
 	SDL_Flip(screen);
+	}
+
 }
 void Game::update(int ms)
 {
@@ -30,7 +49,41 @@ void Game::update(int ms)
 	{
 		timer -= changeTime;
 	}
+	switch(gameState)
+	{
+	case Game::MENU:
+		break;
+	case Game::GAME:
+		printf("I am in the loop\n");
+
+		break;
+	}
 }
+
+void Game::menuInput(SDL_Event & e)
+{
+	////////
+	////this will be moving into menu
+	switch(e.type)
+	{
+	case SDL_KEYDOWN:
+		int num = 0;
+		switch(e.key.keysym.sym)
+		{
+		case SDLK_1:	num = 1;	break;
+		case SDLK_2:	num = 2;	break;
+		case SDLK_3:	num = 3;	break;
+		case SDLK_4:	num = 4;	break;
+		}
+		if(num > 0)
+		{
+			//initGame(num);
+			gameState = Game::GAME;
+		}
+		break;
+	}/////////////////////////////////
+}
+
 
 //Mouse controls/mouse down condition
 bool mouse_down = false;
@@ -38,7 +91,7 @@ bool mouse_down = false;
 //if on Game object(s) condition
 bool on_object = false;
 
-void Game::input(SDL_Event & e)
+void Game::gameInput(SDL_Event & e)
 {
 	switch(e.type)
 	{
@@ -56,16 +109,9 @@ void Game::input(SDL_Event & e)
 			break;
 		case SDLK_RIGHT://playerVelocity.x += speed;	
 			break;
-		case SDLK_d:{printf("d button works!\n");
-					
-					/*	sdlMgr.apply_surface(400,600,
-										woodTile,
-										screen,
-										NULL); break;*/
-					
-					
-					
-					} break;
+		case SDLK_d:{printf("d button works!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");} 
+			break;
+
 		case SDL_MOUSEBUTTONDOWN: //Mouse button pressed
 			{
 				if (SDL_BUTTON_LEFT)//LEFT CLICK
@@ -103,5 +149,17 @@ void Game::input(SDL_Event & e)
 			}
 			break;
 		}
+	}
+}
+void Game::input(SDL_Event & e)
+{
+	switch(gameState)
+	{
+	case Game::MENU:
+		menuInput(e);
+		break;
+	case Game::GAME:
+		gameInput(e);
+		break;
 	}
 }

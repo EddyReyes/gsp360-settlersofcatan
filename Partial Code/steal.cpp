@@ -44,7 +44,7 @@ void thiefIsRolled(player p[])
 	}
 
 	totalCards = 0;
-	int numCardsToRemove[5] = 0;
+	int numCardsToRemove[5] = 0;//this is holding the number of cards to remove for each player
 	for(int = 1; i < 5; i++)
 	{
 		totalCards = 0;
@@ -113,22 +113,24 @@ void thiefIsRolled(player p[])
 			}
 
 		}
-
+	}//end of if for actually removing cards
 }
 
 
-
-bool endTurn = false;
-bool hasRolled = false;
-int curPlayer = 1;
+//need these variables for turns
+bool endTurn = false;//if they pick end turn, it will leave the while loop
+bool hasRolled = false;//bool for if the dice have been rolled yet
+int curPlayer = 1;//player number, to compare later on, to reset it back to one, should be a variable
+int numPlayers = 4;//this variable is the one needed for ^ but it might already be in the hting
 //p is the array of players
+
 while(running)//while the game is running, probably have another thing for winner = false
 {
-	currentPlayer = p[curPlayer];
-
+	
 	while(!hasRolled)
 	{
 		//play dev card
+		//p[curPlayer].playdevCard//not exactly sure how this will work
 		//roll
 		//after they roll, set hasRolled to true, so it leaves this loop
 	}
@@ -143,12 +145,13 @@ while(running)//while the game is running, probably have another thing for winne
 	// until they pick end turn
 	if(endTurn)//chooses end turn
 	{
-		currentPlayer = nextPlayer;
-		nextPlayer = p[curPlayer];
 		curPlayer++;
-		if(curPlayer > 4)
+		endTurn = false;//need to reset back to false, so for the next player, it goes in the right loop
+		hasRolled = false;
+		if(curPlayer > numPlayers)//this may need to be changed for the actual game
 			curPlayer = 1;
 	}
+}
 
 
 	//all the stuff in this while(running) loop need to be together

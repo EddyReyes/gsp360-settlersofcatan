@@ -15,7 +15,7 @@ public:
 	int ID;
 	char resource;
 	int chitWorth;
-
+	Node * connectedNodes[6];
 	Center::Center(){};
 
 	Center::Center(Node * from, Node * to, int a_ID)

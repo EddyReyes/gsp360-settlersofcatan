@@ -1,18 +1,26 @@
 #include "menu.h"
 
+Menu::Menu()
+{
+	menuScreen = NULL;
+	background = NULL;
+}
+
 void Menu::loadImages()
 {
 	//splash = load_image( "splash.bmp" );
-	//menuScreen = load_image("menuScreen.bmp");
+	menuScreen = load_image( "PlaceHolderMenuScreen.bmp" );
 	background = load_image( "background.bmp" );
 }
 void Menu::draw(SDL_Surface * screen)
 {
+	apply_surface( 0, 0, menuScreen, screen, NULL);
 }
 
 void Menu::shutdownImages()
 {
 	SDL_FreeSurface(background);
+	SDL_FreeSurface(menuScreen);
 }
 
 //function to load images

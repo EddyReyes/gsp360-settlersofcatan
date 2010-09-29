@@ -259,6 +259,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Menu.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\player.cpp"
 				>
 			</File>

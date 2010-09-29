@@ -8,27 +8,18 @@
 class Menu
 {
 private:
-SDL_Surface *background;
-//SDL_Surface *splash;
+	SDL_Surface *background;
+	//SDL_Surface *splash;
 
-
-void apply_surface(
-		int x, int y,SDL_Surface* source, 
-		SDL_Surface* destination, 
-		SDL_Rect *clip);
+	SDL_Surface *load_image( std::string filename );
+	void apply_surface(int x, int y,SDL_Surface* source, SDL_Surface* destination, SDL_Rect *clip);
 
 public:
+	void Menu::shutdownImages();
+	void Menu::draw(SDL_Surface * screen);
+	void Menu::loadImages();
 Menu(){}
-void Menu::loadImage()
-{
-	//splash = load_image( "splash.bmp" );
-	//menuScreen = load_image("menuScreen.bmp");
-	background = load_image( "background.bmp" );
-}
-
-	void draw(SDL_Surface * screen)
-	{
 	
-	}
+
 
 };

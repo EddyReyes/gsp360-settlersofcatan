@@ -1,7 +1,4 @@
 #include "map.h"
-#include "stndrd.h"
-#include <ctime>
-#include <windows.h>
 
 #define _EDGE(c,d) Edge(getNode(tempNodes, count, c),\
 							getNode(tempNodes, count, d))
@@ -11,6 +8,7 @@
 
 map::map()
 {
+	//=====NODE ASSIGNMENT==================
 	int count;
 
 	Node tempNodes[54] = {
@@ -32,6 +30,8 @@ map::map()
 
 	count = 54;
 
+	//=====CENTER ASSIGNMENT==================
+
 	Center tempCenters[19] = 
 	{
 						_CENTER(4, 5, 1),
@@ -51,7 +51,7 @@ map::map()
 	for(int i = 0; i < 19; ++i)
 		myCenters[i] = tempCenters[i];
 
-	//=================EDGEFINDER==============================================================
+	//=============EDGE ASSIGNMENT=========================
 
 	int amountEdges = 0;
 
@@ -95,12 +95,25 @@ map::map()
 
 	delete tempEdges;
 
-	//=============================================END OF EDGEFINDER=================================
+	//=======CHIT ASSIGNMENT=================
 
 	int tempInts[] = {5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 8, 10, 9, 4, 5, 6, 3, 11};
 	for (int i = 0; i < 19; ++i)
 	{
 		myChits[i] = tempInts[i];
+	}
+
+	//=====IMAGE ASSIGNMENT==================
+	background = NULL;
+	hexTile = NULL;
+	woodTile = NULL;
+	wheatTile = NULL;
+	stoneTile = NULL;
+	sheepTile = NULL;
+	brickTile = NULL;
+	for (int i = 0; i < 10; ++i)
+	{
+		chitTile[i] = NULL;
 	}
 
 }
@@ -278,4 +291,177 @@ void map::initializeCenters(void)
 		if (myCenters[tempIntCenters[i]].resource == 'D'){desertPass = 1; myCenters[tempIntCenters[i]].chitWorth = 0;}
 		else {myCenters[tempIntCenters[i]].chitWorth = tempInts[i - desertPass];}
 	}
+}
+
+void map::loadImages()
+{
+	hexTile = load_image( "Hex_One.bmp" );
+	background = load_image( "background.bmp" );
+	woodTile = load_image( "WoodHex.bmp" );
+	wheatTile = load_image( "WheatHex.bmp" );
+	stoneTile = load_image( "StoneHex.bmp" );
+	sheepTile = load_image( "SheepHex.bmp" );
+	brickTile = load_image( "BrickHex.bmp" );
+	chitTile[0] = load_image( "chit2.bmp" );
+	chitTile[1] = load_image( "chit3.bmp" );
+	chitTile[2] = load_image( "chit4.bmp" );
+	chitTile[3] = load_image( "chit5.bmp" );
+	chitTile[4] = load_image( "chit6.bmp" );
+	chitTile[5] = load_image( "chit8.bmp" );
+	chitTile[6] = load_image( "chit9.bmp" );
+	chitTile[7] = load_image( "chit10.bmp" );
+	chitTile[8] = load_image( "chit11.bmp" );
+	chitTile[9] = load_image( "chit12.bmp" );
+}
+
+void map::draw(SDL_Surface * screen)
+{
+	// BOARD DRAWING
+	int x = 0;
+	for (int i = 0; i < 19; ++i)
+	{
+		if(i == 0 || i == 4 || i == 9 || i == 14 || i == 18)
+		{
+			x = 64;
+		}
+		else if(i == 1 || i == 6 || i == 11 || i == 16)
+		{
+			x = 32;
+		}
+		else if(i == 2 || i == 7 || i == 12 || i == 17)
+		{
+			x = 96;
+		}
+		else if(i == 3 || i == 8 || i == 13)
+		{
+			x = 0;
+		}
+		else if(i == 5 || i == 10 || i == 15)
+		{
+			x = 128;
+		}
+		switch(myCenters[i].resource)
+		{
+		case WOOD:		apply_surface(	myCenters[i].x * (400 / 9) - x,
+										myCenters[i].y * 50 - 55,
+										woodTile,
+										screen,
+										NULL); break;
+		case WHEAT:		apply_surface(	myCenters[i].x * (400 / 9) - x,
+										myCenters[i].y * 50 - 55,
+										wheatTile,
+										screen,
+										NULL); break;
+		case STONE:		apply_surface(	myCenters[i].x * (400 / 9) - x,
+										myCenters[i].y * 50 - 55,
+										stoneTile,
+										screen,
+										NULL); break;
+		case SHEEP:		apply_surface(	myCenters[i].x * (400 / 9) - x,
+										myCenters[i].y * 50 - 55,
+										sheepTile,
+										screen,
+										NULL); break;
+		case BRICK:		apply_surface(	myCenters[i].x * (400 / 9) - x,
+										myCenters[i].y * 50 - 55,
+										brickTile,
+										screen,
+										NULL); break;
+		case 'D':		apply_surface(	myCenters[i].x * (400 / 9) - x,
+										myCenters[i].y * 50 - 55,
+										hexTile,
+										screen,
+										NULL); break;
+		}
+	}
+	x = 0;
+	for (int i = 0; i < 19; ++i)
+	{
+		if(i == 0 || i == 4 || i == 9 || i == 14 || i == 18)
+		{
+			x = 0;
+		}
+		else if(i == 1 || i == 6 || i == 11 || i == 16)
+		{
+			x = -32;
+		}
+		else if(i == 2 || i == 7 || i == 12 || i == 17)
+		{
+			x = 32;
+		}
+		else if(i == 3 || i == 8 || i == 13)
+		{
+			x = -64;
+		}
+		else if(i == 5 || i == 10 || i == 15)
+		{
+			x = 64;
+		}
+		int y = 2;
+		if(myCenters[i].chitWorth >= 8){ ++y; }
+		if(myCenters[i].chitWorth != 0)
+		{
+			apply_surface(	myCenters[i].x * (400 / 9) - x - 19,
+							myCenters[i].y * 50 - 19,
+							chitTile[myCenters[i].chitWorth - y],
+							screen,
+							NULL);
+		}
+	}
+}
+
+void map::shutdownImages()
+{
+	SDL_FreeSurface(background);
+	SDL_FreeSurface(hexTile);
+	SDL_FreeSurface(woodTile);
+	SDL_FreeSurface(wheatTile);
+	SDL_FreeSurface(stoneTile);
+	SDL_FreeSurface(sheepTile);
+	SDL_FreeSurface(brickTile);
+	for (int i = 0; i < 10; ++i)
+	{
+		SDL_FreeSurface(chitTile[i]);
+	}
+}
+
+//function to load images
+SDL_Surface* map::load_image( std::string filename ) 
+{ 
+	//Temporary storage for the image that's loaded
+	SDL_Surface* loadedImage = NULL;
+	//The optimized image that will be used
+	SDL_Surface* optimizedImage = NULL;
+	
+	//Load the image
+	loadedImage = SDL_LoadBMP( filename.c_str() ); 
+
+	//If nothing went wrong in loading the image
+	if( loadedImage != NULL ) 
+	{
+		//Create an optimized image
+		optimizedImage = SDL_DisplayFormat( loadedImage );
+		//Free the old image
+		SDL_FreeSurface( loadedImage );
+		if (optimizedImage != NULL)
+		{
+            Uint32 colorkey = SDL_MapRGB( optimizedImage->format, 0xC0, 0xC0, 0xC0 ); //GRAYSCALE COLOR KEY ( 192, 192, 192 )
+			SDL_SetColorKey( optimizedImage, SDL_SRCCOLORKEY, colorkey );
+		}
+	} 
+//Return the optimized image
+return optimizedImage;
+}
+
+void map::apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination, SDL_Rect* clip = NULL) 
+{ 
+	//Make a temporary rectangle to hold the offsets
+	SDL_Rect offset;
+
+	//Give the offsets to the rectangle
+	offset.x = x;
+	offset.y = y;
+
+	//Blit the surface
+	SDL_BlitSurface( source, clip, destination, &offset ); 
 }

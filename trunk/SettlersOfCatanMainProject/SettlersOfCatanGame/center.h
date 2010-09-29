@@ -24,11 +24,4 @@ public:
 		y = (from->y + to->y) / 2;
 		ID = a_ID;
 	}
-	/*
-	void Center::print()
-	{
-		gotoxy(x, y);
-		cout << 'C' << ID;
-	}
-	*/
 };

@@ -691,7 +691,8 @@ void map::handleInput(SDL_Event e, player * p)
 				case SDL_KEYDOWN:
 					switch(e.key.keysym.sym)
 					{
-					case SDLK_2:	mapState= map::BUILDCARD;		break;
+					case SDLK_2:	mapState= map::BUILDCARD;		
+						break;
 					case SDLK_3:	mapState= map::RESOURCELIST;	break;
 					case SDLK_4:	mapState= map::DEVHAND;			break;
 					case SDLK_5:	mapState= map::TRADE;			break;

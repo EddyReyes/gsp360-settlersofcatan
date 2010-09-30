@@ -11,6 +11,7 @@ Game::Game()
 	m.loadImages();
 	changeTime = 5000;
 	timer = 0;
+	placeHolderTurnTwo = 0;
 }
 
 void Game::initGame(int const & a_numPlayers)
@@ -56,7 +57,6 @@ void Game::draw(SDL_Surface * screen)
 }
 void Game::update(int ms)
 {
-	int placeHolderTurnTwo = -1;
 	timer += ms;
 
 	if(timer >= changeTime)
@@ -72,26 +72,31 @@ void Game::update(int ms)
 		{
 			if (underlyingBoard.overallTurn == 2)
 			{
+				placeHolderTurnTwo++;
 				activePlayer = 0;
 			}
-			placeHolderTurnTwo++;
+			cout << "placeHolderTurnTwo is " << placeHolderTurnTwo << endl;
 			activePlayer++;
 			if (activePlayer >= numPlayers)
 			{
 				activePlayer = 0;
 				underlyingBoard.overallTurn++;
 			}
-			if ( underlyingBoard.overallTurn == 2 &&  placeHolderTurnTwo >= numPlayers - 1 )
-			{
-				underlyingBoard.overallTurn++;
-			}
-
+			cout << "placeHolderTurnTwo is " << placeHolderTurnTwo << endl;
 			cout << "Overall turn is " << underlyingBoard.overallTurn << endl;
 
 			if (underlyingBoard.overallTurn == 2)
 			{
-				activePlayer = (numPlayers - 1) - placeHolderTurnTwo;
-				underlyingBoard.mapState = map::TURNTWOSETTLEMENT;
+				if (placeHolderTurnTwo > (numPlayers - 1))
+				{
+					underlyingBoard.overallTurn++;
+					underlyingBoard.mapState = map::MAP;
+				}
+				else
+				{
+					activePlayer = (numPlayers - 1) - placeHolderTurnTwo;
+					underlyingBoard.mapState = map::TURNTWOSETTLEMENT;
+				}
 			}
 			else if (underlyingBoard.overallTurn == 1)
 			{

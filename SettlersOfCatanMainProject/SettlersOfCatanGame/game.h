@@ -10,6 +10,8 @@ class Game
 private:
 	//turn in Numerics.
 	//int overallTurn;
+	// tricky turn two placeholder
+	int placeHolderTurnTwo;
 
 	//map
 	map underlyingBoard;

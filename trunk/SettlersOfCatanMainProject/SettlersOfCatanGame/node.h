@@ -15,6 +15,8 @@ public:
 	int numOfEdges;
 	char icon;
 	Edge ** edges;
+	int pixelX;
+	int pixelY;
 
 	Node::Node(){};
 	Node::Node(int a_x, int a_y, int a_ID)

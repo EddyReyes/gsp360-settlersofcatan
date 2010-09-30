@@ -67,7 +67,15 @@ void Game::update(int ms)
 	case Game::MENU:
 		break;
 	case Game::GAME:
-		//printf("I am in the loop\n");
+		if(underlyingBoard.mapState == map::ENDTURN)
+		{
+			activePlayer++;
+			if (activePlayer >= numPlayers)
+			{
+				activePlayer = 0;
+			}
+			underlyingBoard.mapState = map::MAP;
+		}
 		break;
 	}
 }

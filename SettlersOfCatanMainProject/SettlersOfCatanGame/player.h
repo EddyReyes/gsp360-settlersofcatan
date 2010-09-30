@@ -20,13 +20,13 @@ private:
 	int inHandMonopolies;
 	int inHandTwoRoads;
 	int inHandYearOfPlenty; // TWO OF ANY RESOURCE
-	int numUnusedRoads;
-	int numUnusedSettlements;
-	int numUnusedCities;
 	bool hasLongestRoad;
 	bool hasLargestArmy;
 
 public: 
+	int numUnusedRoads;
+	int numUnusedSettlements;
+	int numUnusedCities;
 	int ID;
 	player::player(void);
 	//void player::setPlayer(char a_color);

@@ -10,7 +10,7 @@ map::map()
 {
 	//=====NODE ASSIGNMENT==================
 	int count;
-	mapState = map::MAP;
+	mapState = map::TURNONESETTLEMENT;
 	overallTurn = 1;
 
 	Node tempNodes[54] = {
@@ -607,6 +607,14 @@ void map::draw(SDL_Surface * screen, player * p)
 									drawNodeSelectron(screen);		break;
 		case map::BUILDCITY:		drawBoard(screen);
 									drawNodeSelectron(screen);		break;
+		case map::TURNONESETTLEMENT:		drawBoard(screen);
+									drawNodeSelectron(screen);		break;
+		case map::TURNONEROAD:		drawBoard(screen);
+									drawRoadSelectron(screen);		break;
+		case map::TURNTWOSETTLEMENT:		drawBoard(screen);
+									drawNodeSelectron(screen);		break;
+		case map::TURNTWOROAD:		drawBoard(screen);
+									drawRoadSelectron(screen);		break;
 	}
 }
 
@@ -675,145 +683,189 @@ void map::apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destinat
 
 void map::handleInput(SDL_Event e, player * p)
 {
-	switch(mapState)
-	{
-	case map::MAP:
-		switch(e.type)
+		switch(mapState)
 		{
-			case SDL_KEYDOWN:
-				switch(e.key.keysym.sym)
-				{
-				case SDLK_2:	mapState= map::BUILDCARD;		break;
-				case SDLK_3:	mapState= map::RESOURCELIST;	break;
-				case SDLK_4:	mapState= map::DEVHAND;			break;
-				case SDLK_5:	mapState= map::TRADE;			break;
-				case SDLK_0:	mapState= map::ENDTURN;			break;
-				}
-		}
-		break;
-	case map::BUILDCARD:
-		switch(e.type)
-		{
-			case SDL_KEYDOWN:
-				switch(e.key.keysym.sym)
-				{
-				case SDLK_1:	mapState= map::MAP;				break;
-				case SDLK_3:	mapState= map::RESOURCELIST;	break;
-				case SDLK_4:	mapState= map::DEVHAND;			break;
-				case SDLK_5:	mapState= map::TRADE;			break;
-				case SDLK_0:	mapState= map::ENDTURN;			break;
-				case SDLK_r:	if (overallTurn == 1 || overallTurn == 2 || p->checkBuildSomething('R', &dvc) == true)
-								{
-									p->actuallyBuildSomething('R', &rsc, &dvc);
-									mapState = map::BUILDROAD;	break;
-								}
-				case SDLK_s:	if (overallTurn == 1 || overallTurn == 2 || p->checkBuildSomething('S', &dvc) == true)
-								{
-									p->actuallyBuildSomething('S', &rsc, &dvc);
-									mapState = map::BUILDSETTLEMENT;	break;
-								}
-				case SDLK_c:	if (overallTurn != 1 || overallTurn != 2 || p->checkBuildSomething('C', &dvc) == true)
-								{
-									p->actuallyBuildSomething('C', &rsc, &dvc);
-									mapState = map::BUILDCITY;	break;
-								}
-				case SDLK_d:	if (overallTurn != 1 || overallTurn != 2 || p->checkBuildSomething('D', &dvc) == true)
-								{
-									p->actuallyBuildSomething('D', &rsc, &dvc);
-									mapState = map::MAP;	break;
-								}
-				}
-		}
-		break;
-	case map::RESOURCELIST:
-		switch(e.type)
-		{
-			case SDL_KEYDOWN:
-				switch(e.key.keysym.sym)
-				{
-				case SDLK_1:	mapState= map::MAP;				break;
-				case SDLK_2:	mapState= map::BUILDCARD;		break;
-				case SDLK_4:	mapState= map::DEVHAND;			break;
-				case SDLK_5:	mapState= map::TRADE;			break;
-				}
-		}
-		break;
-	case map::DEVHAND:
-		switch(e.type)
-		{
-			case SDL_KEYDOWN:
-				switch(e.key.keysym.sym)
-				{
-				case SDLK_1:	mapState= map::MAP;				break;
-				case SDLK_2:	mapState= map::BUILDCARD;		break;
-				case SDLK_3:	mapState= map::RESOURCELIST;	break;
-				case SDLK_5:	mapState= map::TRADE;			break;
-				case SDLK_m:	p->playDevCard('M');			break;
-								//MONOPOLY FUNCTIONALITY GO!
-				case SDLK_s:	p->playDevCard('S');
-								//SOLDIER FUNCTIONALITY GO!
-				case SDLK_y:	p->playDevCard('Y');
-								//YEAR OF PLENTY FUNCTIONALITY GO!
-				case SDLK_t:	p->playDevCard('T');
-								//TWO ROADS FUNCTIONALITY GO!
-				case SDLK_v:	p->playDevCard('V');
-								//VICTORY POINT FUNCTIONALITY GO!
-				}
-		}
-		break;
-	case map::TRADE:
-		switch(e.type)
-		{
-			case SDL_KEYDOWN:
-				switch(e.key.keysym.sym)
-				{
-				case SDLK_1:	mapState= map::MAP;				break;
-				case SDLK_2:	mapState= map::BUILDCARD;		break;
-				case SDLK_4:	mapState= map::DEVHAND;			break;
-				case SDLK_5:	mapState= map::TRADE;			break;
-				//ADD TRADE FUNCTIONALITY. DON'T KNOW HOW.
-				}
-		}
-		break;
-	case map::BUILDROAD:
-		switch(e.type)
-		{
-			case SDL_MOUSEMOTION:	whichRoadIsWithin(e.motion.x, e.motion.y, 100); break;
-
-			case SDL_MOUSEBUTTONDOWN:
-				switch(e.button.button)
-				{
-					case SDL_BUTTON_LEFT:	constructRoadOnMap(p); mapState = map::MAP;	break;
-				}
-				break;
-		}
-		break;
-	case map::BUILDSETTLEMENT:
-		switch(e.type)
-		{
-			case SDL_MOUSEMOTION:	whichNodeIsWithin(e.motion.x, e.motion.y, 100); break;
-
-			case SDL_MOUSEBUTTONDOWN:
-				switch(e.button.button)
-				{
-					case SDL_BUTTON_LEFT:	constructSettlementOnMap(p); mapState = map::MAP;	break;
-				}
-				break;
-		}
-		break;
-	case map::BUILDCITY:
-		switch(e.type)
-		{
-			case SDL_MOUSEMOTION:	whichNodeIsWithin(e.motion.x, e.motion.y, 100); break;
-			/*						
-			case SDL_MOUSEDOWN:
+		case map::MAP:
+			switch(e.type)
 			{
-
+				case SDL_KEYDOWN:
+					switch(e.key.keysym.sym)
+					{
+					case SDLK_2:	mapState= map::BUILDCARD;		break;
+					case SDLK_3:	mapState= map::RESOURCELIST;	break;
+					case SDLK_4:	mapState= map::DEVHAND;			break;
+					case SDLK_5:	mapState= map::TRADE;			break;
+					case SDLK_0:	mapState= map::ENDTURN;			break;
+					}
 			}
-			*/
+			break;
+		case map::BUILDCARD:
+			switch(e.type)
+			{
+				case SDL_KEYDOWN:
+					switch(e.key.keysym.sym)
+					{
+					case SDLK_1:	mapState= map::MAP;				break;
+					case SDLK_3:	mapState= map::RESOURCELIST;	break;
+					case SDLK_4:	mapState= map::DEVHAND;			break;
+					case SDLK_5:	mapState= map::TRADE;			break;
+					case SDLK_0:	mapState= map::ENDTURN;			break;
+					case SDLK_r:	if (overallTurn == 1 || overallTurn == 2 || p->checkBuildSomething('R', &dvc) == true)
+									{
+										p->actuallyBuildSomething('R', &rsc, &dvc);
+										mapState = map::BUILDROAD;	break;
+									}
+					case SDLK_s:	if (overallTurn == 1 || overallTurn == 2 || p->checkBuildSomething('S', &dvc) == true)
+									{
+										p->actuallyBuildSomething('S', &rsc, &dvc);
+										mapState = map::BUILDSETTLEMENT;	break;
+									}
+					case SDLK_c:	if (overallTurn != 1 || overallTurn != 2 || p->checkBuildSomething('C', &dvc) == true)
+									{
+										p->actuallyBuildSomething('C', &rsc, &dvc);
+										mapState = map::BUILDCITY;	break;
+									}
+					case SDLK_d:	if (overallTurn != 1 || overallTurn != 2 || p->checkBuildSomething('D', &dvc) == true)
+									{
+										p->actuallyBuildSomething('D', &rsc, &dvc);
+										mapState = map::MAP;	break;
+									}
+					}
+			}
+			break;
+		case map::RESOURCELIST:
+			switch(e.type)
+			{
+				case SDL_KEYDOWN:
+					switch(e.key.keysym.sym)
+					{
+					case SDLK_1:	mapState= map::MAP;				break;
+					case SDLK_2:	mapState= map::BUILDCARD;		break;
+					case SDLK_4:	mapState= map::DEVHAND;			break;
+					case SDLK_5:	mapState= map::TRADE;			break;
+					}
+			}
+			break;
+		case map::DEVHAND:
+			switch(e.type)
+			{
+				case SDL_KEYDOWN:
+					switch(e.key.keysym.sym)
+					{
+					case SDLK_1:	mapState= map::MAP;				break;
+					case SDLK_2:	mapState= map::BUILDCARD;		break;
+					case SDLK_3:	mapState= map::RESOURCELIST;	break;
+					case SDLK_5:	mapState= map::TRADE;			break;
+					case SDLK_m:	p->playDevCard('M');			break;
+									//MONOPOLY FUNCTIONALITY GO!
+					case SDLK_s:	p->playDevCard('S');
+									//SOLDIER FUNCTIONALITY GO!
+					case SDLK_y:	p->playDevCard('Y');
+									//YEAR OF PLENTY FUNCTIONALITY GO!
+					case SDLK_t:	p->playDevCard('T');
+									//TWO ROADS FUNCTIONALITY GO!
+					case SDLK_v:	p->playDevCard('V');
+									//VICTORY POINT FUNCTIONALITY GO!
+					}
+			}
+			break;
+		case map::TRADE:
+			switch(e.type)
+			{
+				case SDL_KEYDOWN:
+					switch(e.key.keysym.sym)
+					{
+					case SDLK_1:	mapState= map::MAP;				break;
+					case SDLK_2:	mapState= map::BUILDCARD;		break;
+					case SDLK_4:	mapState= map::DEVHAND;			break;
+					case SDLK_5:	mapState= map::TRADE;			break;
+					//ADD TRADE FUNCTIONALITY. DON'T KNOW HOW.
+					}
+			}
+			break;
+		case map::BUILDROAD:
+			switch(e.type)
+			{
+				case SDL_MOUSEMOTION:	whichRoadIsWithin(e.motion.x, e.motion.y, 100); break;
+
+				case SDL_MOUSEBUTTONDOWN:
+					switch(e.button.button)
+					{
+						case SDL_BUTTON_LEFT:	constructRoadOnMap(p); mapState = map::MAP;	break;
+					}
+					break;
+			}
+			break;
+		case map::BUILDSETTLEMENT:
+			switch(e.type)
+			{
+				case SDL_MOUSEMOTION:	whichNodeIsWithin(e.motion.x, e.motion.y, 100); break;
+
+				case SDL_MOUSEBUTTONDOWN:
+					switch(e.button.button)
+					{
+						case SDL_BUTTON_LEFT:	constructSettlementOnMap(p); mapState = map::MAP;	break;
+					}
+					break;
+			}
+			break;
+		case map::BUILDCITY:
+			switch(e.type)
+			{
+				case SDL_MOUSEMOTION:	whichNodeIsWithin(e.motion.x, e.motion.y, 100); break;
+			}
+			break;
+		case map::TURNONESETTLEMENT:
+			switch(e.type)
+			{
+				case SDL_MOUSEMOTION:	whichNodeIsWithin(e.motion.x, e.motion.y, 100); break;
+				case SDL_MOUSEBUTTONDOWN:
+					switch(e.button.button)
+					{
+						case SDL_BUTTON_LEFT:	constructSettlementOnMap(p); mapState = map::TURNONEROAD;	break;
+					}
+					break;
+			}
+			break;
+		case map::TURNONEROAD:
+			switch(e.type)
+			{
+				case SDL_MOUSEMOTION:	whichRoadIsWithin(e.motion.x, e.motion.y, 100); break;
+				case SDL_MOUSEBUTTONDOWN:
+					switch(e.button.button)
+					{
+						case SDL_BUTTON_LEFT:	constructRoadOnMap(p); mapState = map::ENDTURN;	cout << "MADE IT THIS FAR" << endl; break;
+					}
+					break;
+			}
+			break;
+		case map::TURNTWOSETTLEMENT:
+			switch(e.type)
+			{
+				case SDL_MOUSEMOTION:			whichNodeIsWithin(e.motion.x, e.motion.y, 100); break;
+				case SDL_MOUSEBUTTONDOWN:
+					switch(e.button.button)
+					{
+						case SDL_BUTTON_LEFT:	constructSettlementOnMap(p); mapState = map::TURNTWOROAD;	break;
+					}
+					break;
+			}
+			break;
+		case map::TURNTWOROAD:
+			switch(e.type)
+			{
+				case SDL_MOUSEMOTION:	whichRoadIsWithin(e.motion.x, e.motion.y, 100); break;
+				case SDL_MOUSEBUTTONDOWN:
+					switch(e.button.button)
+					{
+						case SDL_BUTTON_LEFT:	constructRoadOnMap(p); mapState = map::ENDTURN;	break;
+					}
+					break;
+			}
+			break;
+		case map::ENDTURN:
+			break;
 		}
-		break;
-	}
 }
 
 void map::whichNodeIsWithin(int const & x, int const & y, int radius)

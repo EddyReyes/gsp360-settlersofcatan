@@ -586,6 +586,7 @@ void map::apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destinat
 	SDL_BlitSurface( source, clip, destination, &offset ); 
 }
 
+
 void map::handleInput(SDL_Event e, player * p)
 {
 	switch(e.type)

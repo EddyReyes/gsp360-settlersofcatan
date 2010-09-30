@@ -222,6 +222,10 @@
 				RelativePath=".\stndrd.h"
 				>
 			</File>
+			<File
+				RelativePath=".\tradebank.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
@@ -264,6 +268,10 @@
 			</File>
 			<File
 				RelativePath=".\resourceCards.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tradebank.cpp"
 				>
 			</File>
 		</Filter>

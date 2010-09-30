@@ -3,6 +3,7 @@
 #include "player.h"
 #include "map.h"
 #include "menu.h"
+#include "tradebank.h"
 
 
 class Game
@@ -34,6 +35,8 @@ private:
 	// timer. needed?
 	Uint32 timer;
 	Uint32 changeTime;
+
+	TradeBank tradebank;
 
 
 	void Game::initGame(int const & a_numPlayers);

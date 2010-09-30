@@ -15,6 +15,13 @@ using namespace std;
 class map
 {
 private:
+	rsc rsc;
+	dvc dvc;
+	SDL_Surface *buildCard;
+	SDL_Surface *resourceCard;
+	SDL_Surface *roadTile[4];
+	SDL_Surface *settlementTile[4];
+	SDL_Surface *cityTile[4];
 	SDL_Surface *testSelect;
 	SDL_Surface *hexTile;
 	SDL_Surface *woodTile;
@@ -34,7 +41,9 @@ private:
 	static const int BUILDROAD = 6; // play state
 	static const int BUILDSETTLEMENT = 7; // play state
 	static const int BUILDCITY = 8; // play state
+	static const int ENDTURN = 99; // play state (mainly to trigger the changing of players in game.cpp)
 public:
+	int overallTurn;
 	int nodeSelectron;
 	int roadSelectron;
 	Edge myEdges[144];
@@ -52,7 +61,7 @@ public:
 	void map::loadImages(void);
 	void map::shutdownImages(void);
 	void map::whichNodeIsWithin(int const & x, int const & y, int radius);
-	//Node * map::whichNodeIsWithin(int const & x, int const & y, int radius);
+	void map::whichRoadIsWithin(int const & x, int const & y, int radius);
 	bool map::mouseOverNode(int const & x, int const & y);
 	void map::drawTradeScreen(SDL_Surface * screen);
 	void map::drawDevHand(SDL_Surface * screen);
@@ -62,4 +71,6 @@ public:
 	void map::drawRoadSelectron(SDL_Surface * screen);
 	void map::drawBoard(SDL_Surface * screen);
 	void map::handleInput(SDL_Event e, player * p);
+	void map::constructRoadOnMap(player * p);
+	void map::constructSettlementOnMap(player * p);
 };

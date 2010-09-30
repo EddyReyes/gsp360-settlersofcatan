@@ -1,9 +1,7 @@
 #include "player.h"
 
-void player::setPlayer(char a_color)
+player::player(void)
 {
-	active = true;
-	color = a_color;
 	wood = 0; wheat = 0; stone = 0; sheep = 0; brick = 0;
 	currentVictoryPoints = 0; usedSoldiers = 0; usedVictoryPoints = 0;
 	inHandSoldiers = 0; inHandMonopolies = 0; inHandYearOfPlenty = 0; inHandTwoRoads = 0; inHandVictoryPoints = 0;
@@ -90,13 +88,14 @@ void player::playDevCard(char type)
 	}
 }
 
-bool player::checkBuildSomething(char type)
+bool player::checkBuildSomething(char type, dvc * dvc)
 {
 	switch(type)
 	{
-		case 'R': if(numUnusedRoads > 0) {return true;}; break;
-		case 'S': if(numUnusedSettlements > 0) {return true;}; break;
-		case 'C': if(numUnusedCities > 0) {return true;}; break;
+		case 'R': if(numUnusedRoads > 0 && brick >= 1 && wood >= 1) {return true;}; break;
+		case 'S': if(numUnusedSettlements > 0 && brick >=1 && wood >= 1 && sheep >= 1 && wheat >= 1) {return true;}; break;
+		case 'C': if(numUnusedCities > 0 && stone >= 3 && wheat >= 2) {return true;}; break;
+		case 'D': if(dvc->drawAvailable() == true && stone >= 1 && wheat >= 1 && sheep >= 1) {return true;}; break;
 		default:break;
 	}
 	return false;

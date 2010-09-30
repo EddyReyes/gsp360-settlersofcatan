@@ -6,7 +6,6 @@
 class player
 {
 private:
-	bool active;
 	char color;
 	int wood;
 	int wheat;
@@ -28,14 +27,15 @@ private:
 	bool hasLargestArmy;
 
 public: 
-	player::player(void){active = false;}
-	void player::setPlayer(char a_color);
+	int ID;
+	player::player(void);
+	//void player::setPlayer(char a_color);
 	void player::drawResource(rsc* resDeck, char type, int num);
 	void player::addVictoryPoint(void)			{ currentVictoryPoints++; }
 	void player::addUsedSoldier(void)			{ usedSoldiers++; }
 	void player::addUsedVictoryPoint(void)		{ usedVictoryPoints++; }
 	void player::drawDevCard(dvc* devDeck);
-	bool player::checkBuildSomething(char type);
+	bool player::checkBuildSomething(char type, dvc* dvc);
 	void player::actuallyBuildSomething(char type, rsc* rsc, dvc* dvc);
 	void player::awardLongestRoad(void);
 	void player::retractLongestRoad(void);

@@ -10,11 +10,13 @@ public:
 	int ID;
 	int harborType;
 	int cityType;
+	int owner;
 	int x;
 	int y; 
 	int numOfEdges;
 	char icon;
 	Edge ** edges;
+	Edge * edges2;
 	int pixelX;
 	int pixelY;
 
@@ -36,6 +38,28 @@ public:
 			delete edges;
 		numOfEdges = a_numOfEdges;
 		edges = new Edge * [numOfEdges];
+	}
+
+	void Node::addNewEdge(Edge * e)
+	{
+		/*
+		Edge * tempEdges;
+		tempEdges = new Edge [1000];
+		for (int x = 0; x < sizeof(edges); ++x)
+		{
+			tempEdges[x] = edges[x];
+		}
+		tempEdges[sizeof(edges)] = e;
+		if(edges)
+			delete edges;
+		numOfEdges = sizeof(tempEdges);
+		edges = new Edge * [numOfEdges];
+		for (int x = 0; x < numOfEdges; ++x)
+		{
+			edges[x] = tempEdges[x];
+		}
+		delete tempEdges;
+		*/
 	}
 
 	void Node::setEdge(int a_index, Edge * e)

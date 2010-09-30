@@ -871,7 +871,7 @@ void map::handleInput(SDL_Event e, player * p)
 void map::whichNodeIsWithin(int const & x, int const & y, int radius)
 {
 	float minDistance, distance, dx, dy, maxRadius = radius*radius;
-	minDistance = 1000000;
+	minDistance = 2500;
 	Node * closest = NULL;
 	for(int i = 0; i < 54; ++i)
 	{
@@ -890,7 +890,7 @@ void map::whichNodeIsWithin(int const & x, int const & y, int radius)
 void map::whichRoadIsWithin(int const & x, int const & y, int radius)
 {
 	float minDistance, distance, dx, dy, maxRadius = radius*radius;
-	minDistance = 1000000;
+	minDistance = 2500;
 	Edge * closest = NULL;
 	for(int i = 0; i < 144; ++i)
 	{

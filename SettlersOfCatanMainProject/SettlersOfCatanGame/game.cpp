@@ -5,6 +5,7 @@
 
 Game::Game()
 {
+	overallTurn = 0;
 	gameState = Game::MENU;
 	underlyingBoard.initializeCenters();
 	underlyingBoard.loadImages();
@@ -15,6 +16,7 @@ Game::Game()
 
 void Game::initGame(int const & a_numPlayers)
 {
+	overallTurn = 1;
 	numPlayers = a_numPlayers;
 	p = new player[numPlayers];
 	activePlayer = 0;
@@ -43,7 +45,7 @@ void Game::draw(SDL_Surface * screen)
 		printf("We are INSIDE the game!!!\n");
 		
 		SDL_FillRect(screen, 0, 0);
-		underlyingBoard.draw(screen);
+		underlyingBoard.draw(screen, &p[activePlayer]);
 		SDL_Flip(screen);
 
 		break;
@@ -64,7 +66,6 @@ void Game::update(int ms)
 		break;
 	case Game::GAME:
 		printf("I am in the loop\n");
-
 		break;
 	}
 }
@@ -102,14 +103,14 @@ bool on_object = false;
 
 void Game::gameInput(SDL_Event & e)
 {
+	underlyingBoard.handleInput(e, &p[activePlayer]);
+	/*
 	switch(e.type)
 	{
-	
-		case SDL_KEYDOWN:
+	case SDL_KEYDOWN:
 
 		switch(e.key.keysym.sym)
 		{
-		
 		case SDLK_UP:	//playerVelocity.y -= speed;	
 			break;
 		case SDLK_DOWN:	//playerVelocity.y += speed;	
@@ -120,45 +121,50 @@ void Game::gameInput(SDL_Event & e)
 			break;
 		case SDLK_d:{printf("d button works!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");} 
 			break;
-
-		case SDL_MOUSEBUTTONDOWN: //Mouse button pressed
-			{
-				if (SDL_BUTTON_LEFT)//LEFT CLICK
-				{
-					//mouse_down = true;   
-					break;
-				}
-				if(SDL_BUTTON_RIGHT ) 
-				{
-					//mouse_down = true;   
-					break;
-				}
-				break;
-			}
-			//CHECK BUTTON
-		case SDL_MOUSEBUTTONUP:
-			//MOUSE UP LET ME KNOW
-			{
-				if (SDL_BUTTON_LEFT)//LEFT button up
-				{
-					break;
-				}
-				if(SDL_BUTTON_RIGHT )//right button up 
-				{
-					break;
-				}
-				break;
-			}			
-		case SDL_MOUSEMOTION:
-			{
-				if(mouse_down && on_object)
-				{	
-					break;
-				}
-			}
-			break;
 		}
+		break;
+
+	case SDL_MOUSEBUTTONDOWN: //Mouse button pressed
+		{
+			if (SDL_BUTTON_LEFT)//LEFT CLICK
+			{
+				//mouse_down = true;   
+				break;
+			}
+			if(SDL_BUTTON_RIGHT ) 
+			{
+				//mouse_down = true;   
+				break;
+			}
+		}
+		break;
+		//CHECK BUTTON
+	case SDL_MOUSEBUTTONUP:
+		//MOUSE UP LET ME KNOW
+		{
+			if (SDL_BUTTON_LEFT)//LEFT button up
+			{
+				break;
+			}
+			if(SDL_BUTTON_RIGHT )//right button up 
+			{
+				break;
+			}
+		}		
+		break;
+	case SDL_MOUSEMOTION:
+		{
+			underlyingBoard.whichNodeIsWithin(e.motion.x, e.motion.y, 100);
+			printf("MOUSE MOTION WORKING \n");
+			if(mouse_down && on_object)
+			{	
+				break;
+			}
+		}
+		break;
+	default: break;
 	}
+	*/
 }
 void Game::input(SDL_Event & e)
 {

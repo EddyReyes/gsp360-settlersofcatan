@@ -8,12 +8,14 @@
 #include "node.h"
 #include "center.h"
 #include "stndrd.h"
+#include "player.h"
 
 using namespace std;
 
 class map
 {
 private:
+	SDL_Surface *testSelect;
 	SDL_Surface *hexTile;
 	SDL_Surface *woodTile;
 	SDL_Surface *sheepTile;
@@ -23,7 +25,18 @@ private:
 	SDL_Surface *chitTile[10];
 	SDL_Surface *load_image( std::string filename );
 	void apply_surface(int x, int y,SDL_Surface* source, SDL_Surface* destination, SDL_Rect *clip);
+	int mapState;
+	static const int MAP = 1; // play state
+	static const int BUILDCARD = 2; // play state
+	static const int RESOURCELIST = 3; // play state
+	static const int DEVHAND = 4; // play state
+	static const int TRADE = 5; // play state
+	static const int BUILDROAD = 6; // play state
+	static const int BUILDSETTLEMENT = 7; // play state
+	static const int BUILDCITY = 8; // play state
 public:
+	int nodeSelectron;
+	int roadSelectron;
 	Edge myEdges[144];
 	Node myNodes[54];
 	Center myCenters[19];
@@ -35,7 +48,18 @@ public:
 	int randomHarbor(int resource[]);
 	void setHarbor(Node* harbor);
 	void initializeCenters(void);
-	void map::draw(SDL_Surface * screen);
+	void map::draw(SDL_Surface * screen, player * p);
 	void map::loadImages(void);
 	void map::shutdownImages(void);
+	void map::whichNodeIsWithin(int const & x, int const & y, int radius);
+	//Node * map::whichNodeIsWithin(int const & x, int const & y, int radius);
+	bool map::mouseOverNode(int const & x, int const & y);
+	void map::drawTradeScreen(SDL_Surface * screen);
+	void map::drawDevHand(SDL_Surface * screen);
+	void map::drawResourceList(SDL_Surface * screen, player * p);
+	void map::drawBuildCard(SDL_Surface * screen);
+	void map::drawNodeSelectron(SDL_Surface * screen);
+	void map::drawRoadSelectron(SDL_Surface * screen);
+	void map::drawBoard(SDL_Surface * screen);
+	void map::handleInput(SDL_Event e, player * p);
 };

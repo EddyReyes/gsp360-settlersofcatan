@@ -8,6 +8,9 @@
 class Game
 {
 private:
+	//turn in Numerics.
+	int overallTurn;
+
 	//map
 	map underlyingBoard;
 	

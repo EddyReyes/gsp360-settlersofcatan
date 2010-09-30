@@ -10,6 +10,7 @@ map::map()
 {
 	//=====NODE ASSIGNMENT==================
 	int count;
+	mapState = map::MAP;
 
 	Node tempNodes[54] = {
 							 	 Node(8,1,1),Node(10,1,2),
@@ -139,6 +140,7 @@ map::map()
 
 	//=====IMAGE ASSIGNMENT==================
 
+	testSelect = NULL;
 	hexTile = NULL;
 	woodTile = NULL;
 	wheatTile = NULL;
@@ -150,6 +152,34 @@ map::map()
 		chitTile[i] = NULL;
 	}
 
+	//======SELECTRON====================
+	nodeSelectron = NULL;
+	roadSelectron = NULL;
+
+
+	//=======SETTING THE NODES IN TERMS OF PIXELS
+	int x = 0;
+	for (int i = 0; i < 54; ++i)
+	{
+		switch(myNodes[i].x)
+		{
+			case 8:		x = 0;		break;
+			case 10:	x = 0;		break;
+			case 7:		x = 24;		break;
+			case 11:	x = -24;	break;
+			case 4:		x = 48;		break;
+			case 5:		x = 36;		break;
+			case 13:	x = -36;	break;
+			case 14:	x = -48;	break;
+			case 16:	x = -64;	break;
+			case 2:		x = 64;		break;
+			case 17:	x = -96;	break;
+			case 1:		x = 96;		break;
+			default:	x = -200;	break;
+		}
+		myNodes[i].pixelX = myNodes[i].x * (400/9) - 16 + x;
+		myNodes[i].pixelY = myNodes[i].y * 50 - 16;
+	}
 }
 
 Node * map::getNode(Node * population, int popCount, int ID)
@@ -329,6 +359,7 @@ void map::initializeCenters(void)
 
 void map::loadImages()
 {
+	testSelect = load_image( "testSelector.bmp" );
 	hexTile = load_image( "Hex_One.bmp" );
 	woodTile = load_image( "WoodHex.bmp" );
 	wheatTile = load_image( "WheatHex.bmp" );
@@ -346,10 +377,26 @@ void map::loadImages()
 	chitTile[8] = load_image( "chit11.bmp" );
 	chitTile[9] = load_image( "chit12.bmp" );
 }
-
-void map::draw(SDL_Surface * screen)
+void map::drawNodeSelectron(SDL_Surface * screen)
 {
-	// BOARD DRAWING
+	if (nodeSelectron >= 0 && nodeSelectron <= 53)
+	{
+		apply_surface(	myNodes[nodeSelectron].pixelX,
+						myNodes[nodeSelectron].pixelY,
+						testSelect,
+						screen,
+						NULL );
+	}
+}
+
+void map::drawRoadSelectron(SDL_Surface * screen)
+{
+
+}
+
+
+void map::drawBoard(SDL_Surface * screen)
+{
 	int x = 0;
 	for (int i = 0; i < 19; ++i)
 	{
@@ -443,8 +490,49 @@ void map::draw(SDL_Surface * screen)
 	}
 }
 
+
+void map::drawBuildCard(SDL_Surface * screen)
+{
+
+}
+
+void map::drawResourceList(SDL_Surface * screen, player * p)
+{
+
+}
+
+void map::drawDevHand(SDL_Surface * screen)
+{
+
+}
+
+void map::drawTradeScreen(SDL_Surface * screen)
+{
+
+}
+
+void map::draw(SDL_Surface * screen, player * p)
+{
+	switch(mapState)
+	{
+		case map::MAP:				drawBoard(screen);				
+									drawNodeSelectron(screen);		break; // DELETE THE DRAW NODE SELECTRON FROM THIS PART, ITS ONLY FOR SHOW
+		case map::BUILDCARD:		drawBuildCard(screen);			break;
+		case map::RESOURCELIST:		drawResourceList(screen, p);	break;
+		case map::DEVHAND:			drawDevHand(screen);			break;
+		case map::TRADE:			drawTradeScreen(screen);		break;
+		case map::BUILDROAD:		drawBoard(screen);
+									drawRoadSelectron(screen);		break;
+		case map::BUILDSETTLEMENT:	drawBoard(screen);
+									drawNodeSelectron(screen);		break;
+		case map::BUILDCITY:		drawBoard(screen);
+									drawNodeSelectron(screen);		break;
+	}
+}
+
 void map::shutdownImages()
 {
+	SDL_FreeSurface(testSelect);
 	SDL_FreeSurface(hexTile);
 	SDL_FreeSurface(woodTile);
 	SDL_FreeSurface(wheatTile);
@@ -498,7 +586,59 @@ void map::apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destinat
 	SDL_BlitSurface( source, clip, destination, &offset ); 
 }
 
-/*void handleInput(SDL_Event e)
+void map::handleInput(SDL_Event e, player * p)
 {
-	switch
-}*/
+	switch(e.type)
+	{
+	case SDL_KEYDOWN:
+		switch(e.key.keysym.sym)
+		{
+		case SDLK_1:	mapState= map::MAP;				break;
+		case SDLK_2:	mapState= map::BUILDCARD;		break;
+		case SDLK_3:	mapState= map::RESOURCELIST;	break;
+		case SDLK_4:	mapState= map::DEVHAND;			break;
+		case SDLK_5:	mapState= map::TRADE;			break;
+		}
+	case SDL_MOUSEMOTION:
+		{
+			whichNodeIsWithin(e.motion.x, e.motion.y, 100);
+			printf("MOUSE MOTION WORKING \n");
+		}
+		break;
+	}
+}
+
+void map::whichNodeIsWithin(int const & x, int const & y, int radius)
+{
+	float minDistance, distance, dx, dy, maxRadius = radius*radius;
+	minDistance = 1000000;
+	Node * closest = NULL;
+	for(int i = 0; i < 54; ++i)
+	{
+		dx = myNodes[i].pixelX + 16- x;
+		dy = myNodes[i].pixelY + 16 - y;
+		distance = dx*dx + dy*dy;
+		if(distance < maxRadius 
+		&& (closest != NULL || distance < minDistance))
+		{
+			minDistance = distance;
+			nodeSelectron = myNodes[i].ID - 1;
+		}
+	}
+}
+
+bool map::mouseOverNode(int const & x, int const & y)
+{
+	/*
+	// what am I pressing?
+	Node * whichNode = whichNodeIsWithin(x,y, 100);
+	// is that a valid thing to press?
+	if(whichNode != NULL)
+	{
+		// do my action
+		selectron = whichNode->ID - 1;
+		return true;
+	}
+	*/
+	return false;
+}

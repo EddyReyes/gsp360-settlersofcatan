@@ -35,7 +35,7 @@ int main(int argc, char ** argv)
 		{
 			switch(e.type)
 			{
-			case SDL_QUIT:		running = false;	break;
+			case SDL_QUIT:		running = false; g.shutdown();	break;
 			case SDL_KEYDOWN:
 				switch(e.key.keysym.sym)
 				{
@@ -44,8 +44,7 @@ int main(int argc, char ** argv)
 					g.shutdown();
 					break;
 				}
-				g.input(e);
-				break;
+			 default: g.input(e);
 			}
 		}
 		// throttle code

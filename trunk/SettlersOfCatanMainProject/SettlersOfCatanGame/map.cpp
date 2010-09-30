@@ -11,6 +11,7 @@ map::map()
 	//=====NODE ASSIGNMENT==================
 	int count;
 	mapState = map::MAP;
+	overallTurn = 1;
 
 	Node tempNodes[54] = {
 							 	 Node(8,1,1),Node(10,1,2),
@@ -27,11 +28,40 @@ map::map()
 	};
 
 	for(int i = 0; i < 54; ++i)
+	{
 		myNodes[i] = tempNodes[i];
+		myNodes[i].owner = 4;
+	}
+		
+
+	//===========SETTING THE NODES IN TERMS OF PIXELS=========================
+	int x = 0;
+
+	for (int i = 0; i < 54; ++i)
+	{
+		switch(myNodes[i].x)
+		{
+			case 8:		x = 0;		break;
+			case 10:	x = 0;		break;
+			case 7:		x = 24;		break;
+			case 11:	x = -24;	break;
+			case 4:		x = 48;		break;
+			case 5:		x = 36;		break;
+			case 13:	x = -36;	break;
+			case 14:	x = -48;	break;
+			case 16:	x = -64;	break;
+			case 2:		x = 64;		break;
+			case 17:	x = -96;	break;
+			case 1:		x = 96;		break;
+			default:	x = -200;	break;
+		}
+		myNodes[i].pixelX = myNodes[i].x * (400/9) - 16 + x;
+		myNodes[i].pixelY = myNodes[i].y * 50 - 16;
+	}
 
 	count = 54;
 
-	//=====CENTER ASSIGNMENT==================
+	//========CENTER ASSIGNMENT==================
 
 	Center tempCenters[19] = 
 	{
@@ -110,9 +140,9 @@ map::map()
 						(myNodes[i].x) - 2 == (myNodes[j].x) ||
 						(myNodes[i].x) - 1 == (myNodes[j].x) )
 					{
-						getNode(tempNodes,count, i + 1)->numOfEdges++;
-						tempEdges[amountEdges].from = getNode(tempNodes, count, i + 1);
-						tempEdges[amountEdges].to = getNode(tempNodes, count, j + 1);
+						getNode(myNodes,count, i + 1)->numOfEdges++;
+						tempEdges[amountEdges].from = getNode(myNodes, count, i + 1);
+						tempEdges[amountEdges].to = getNode(myNodes, count, j + 1);
 						amountEdges++;
 					}
 				}
@@ -125,12 +155,16 @@ map::map()
 
 	for (int i = 0; i < eCount; ++i)
 	{
-		myEdges[i].setEdgeFromAndTo(tempEdges[i].from, tempEdges[i].to);
+		myEdges[i] = tempEdges[i];
+		myEdges[i].ID = i;
+		myEdges[i].owner = 4; // 4 means player 5, and is treated as never.
+		myEdges[i].from->addNewEdge(&myEdges[i]);
+		myEdges[i].to->addNewEdge(&myEdges[i]);
 	}
 
 	delete tempEdges;
 
-	//=======CHIT ASSIGNMENT=================
+	//=========CHIT ASSIGNMENT=================
 
 	int tempInts[] = {5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 8, 10, 9, 4, 5, 6, 3, 11};
 	for (int i = 0; i < 19; ++i)
@@ -138,8 +172,10 @@ map::map()
 		myChits[i] = tempInts[i];
 	}
 
-	//=====IMAGE ASSIGNMENT==================
+	//=========IMAGE ASSIGNMENT==================
 
+	resourceCard = NULL;
+	buildCard = NULL;
 	testSelect = NULL;
 	hexTile = NULL;
 	woodTile = NULL;
@@ -151,35 +187,25 @@ map::map()
 	{
 		chitTile[i] = NULL;
 	}
+	for (int i = 0; i < 4; ++i)
+	{
+		settlementTile[i] = NULL;
+		cityTile[i] = NULL;
+		roadTile[i] = NULL;
+	}
 
-	//======SELECTRON====================
+	//===========SELECTRON====================
 	nodeSelectron = NULL;
 	roadSelectron = NULL;
 
+	//============SETTING THE EDGES IN TERMS OF PIXELS=========================
 
-	//=======SETTING THE NODES IN TERMS OF PIXELS
-	int x = 0;
-	for (int i = 0; i < 54; ++i)
+	for (int i = 0; i < 144; ++i)
 	{
-		switch(myNodes[i].x)
-		{
-			case 8:		x = 0;		break;
-			case 10:	x = 0;		break;
-			case 7:		x = 24;		break;
-			case 11:	x = -24;	break;
-			case 4:		x = 48;		break;
-			case 5:		x = 36;		break;
-			case 13:	x = -36;	break;
-			case 14:	x = -48;	break;
-			case 16:	x = -64;	break;
-			case 2:		x = 64;		break;
-			case 17:	x = -96;	break;
-			case 1:		x = 96;		break;
-			default:	x = -200;	break;
-		}
-		myNodes[i].pixelX = myNodes[i].x * (400/9) - 16 + x;
-		myNodes[i].pixelY = myNodes[i].y * 50 - 16;
+		myEdges[i].pixelX = ( (myEdges[i].from->pixelX + myEdges[i].to->pixelX) / 2 );
+		myEdges[i].pixelY = ( myEdges[i].from->pixelY + myEdges[i].to->pixelY ) / 2 ;
 	}
+
 }
 
 Node * map::getNode(Node * population, int popCount, int ID)
@@ -359,6 +385,20 @@ void map::initializeCenters(void)
 
 void map::loadImages()
 {
+	resourceCard = load_image( "resourceCard.bmp" );
+	buildCard = load_image( "buildCard.bmp" );
+	roadTile[0] = load_image( "roadRed.bmp" );
+	roadTile[1] = load_image( "roadBlue.bmp" );
+	roadTile[2] = load_image( "roadWhite.bmp" );
+	roadTile[3] = load_image( "roadOrange.bmp" );
+	settlementTile[0] = load_image( "settlementRed.bmp" );
+	settlementTile[1] = load_image( "settlementBlue.bmp" );
+	settlementTile[2] = load_image( "settlementWhite.bmp" );
+	settlementTile[3] = load_image( "settlementOrange.bmp" );
+	cityTile[0] = load_image( "cityRed.bmp" );
+	cityTile[1] = load_image( "cityBlue.bmp" );
+	cityTile[2] = load_image( "cityWhite.bmp" );
+	cityTile[3] = load_image( "cityOrange.bmp" );
 	testSelect = load_image( "testSelector.bmp" );
 	hexTile = load_image( "Hex_One.bmp" );
 	woodTile = load_image( "WoodHex.bmp" );
@@ -391,7 +431,14 @@ void map::drawNodeSelectron(SDL_Surface * screen)
 
 void map::drawRoadSelectron(SDL_Surface * screen)
 {
-
+	if (roadSelectron >= 0 && roadSelectron <= 143)
+	{
+		apply_surface(	myEdges[roadSelectron].pixelX,
+						myEdges[roadSelectron].pixelY,
+						testSelect,
+						screen,
+						NULL );
+	}
 }
 
 
@@ -488,17 +535,51 @@ void map::drawBoard(SDL_Surface * screen)
 							NULL);
 		}
 	}
+
+	for (int i = 0; i < 54; ++i)
+	{
+		if (myNodes[i].owner != 4)
+		{
+			if (myNodes[i].cityType == 1)
+			{
+				apply_surface(	myNodes[i].pixelX,
+								myNodes[i].pixelY,
+								settlementTile[myNodes[i].owner],
+								screen,
+								NULL);
+			}
+			else if (myNodes[i].cityType == 2)
+			{
+				apply_surface(	myNodes[i].pixelX,
+								myNodes[i].pixelY,
+								cityTile[myNodes[i].owner],
+								screen,
+								NULL);
+			}
+		}
+	}
+	for (int i = 0; i < 144; ++i)
+	{
+		if (myEdges[i].owner != 4)
+		{
+			apply_surface(	myEdges[i].pixelX,
+							myEdges[i].pixelY,
+							roadTile[myEdges[i].owner],
+							screen,
+							NULL);
+		}
+	}
 }
 
 
 void map::drawBuildCard(SDL_Surface * screen)
 {
-
+	apply_surface( 0, 0, buildCard, screen, NULL );
 }
 
 void map::drawResourceList(SDL_Surface * screen, player * p)
 {
-
+	apply_surface( 0, 0, resourceCard, screen, NULL );
 }
 
 void map::drawDevHand(SDL_Surface * screen)
@@ -515,8 +596,7 @@ void map::draw(SDL_Surface * screen, player * p)
 {
 	switch(mapState)
 	{
-		case map::MAP:				drawBoard(screen);				
-									drawNodeSelectron(screen);		break; // DELETE THE DRAW NODE SELECTRON FROM THIS PART, ITS ONLY FOR SHOW
+		case map::MAP:				drawBoard(screen);				break; 
 		case map::BUILDCARD:		drawBuildCard(screen);			break;
 		case map::RESOURCELIST:		drawResourceList(screen, p);	break;
 		case map::DEVHAND:			drawDevHand(screen);			break;
@@ -542,6 +622,12 @@ void map::shutdownImages()
 	for (int i = 0; i < 10; ++i)
 	{
 		SDL_FreeSurface(chitTile[i]);
+	}
+	for (int i = 0; i < 4; ++i)
+	{
+		SDL_FreeSurface(settlementTile[i]);
+		SDL_FreeSurface(cityTile[i]);
+		SDL_FreeSurface(roadTile[i]);
 	}
 }
 
@@ -589,21 +675,140 @@ void map::apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destinat
 
 void map::handleInput(SDL_Event e, player * p)
 {
-	switch(e.type)
+	switch(mapState)
 	{
-	case SDL_KEYDOWN:
-		switch(e.key.keysym.sym)
+	case map::MAP:
+		switch(e.type)
 		{
-		case SDLK_1:	mapState= map::MAP;				break;
-		case SDLK_2:	mapState= map::BUILDCARD;		break;
-		case SDLK_3:	mapState= map::RESOURCELIST;	break;
-		case SDLK_4:	mapState= map::DEVHAND;			break;
-		case SDLK_5:	mapState= map::TRADE;			break;
+			case SDL_KEYDOWN:
+				switch(e.key.keysym.sym)
+				{
+				case SDLK_2:	mapState= map::BUILDCARD;		break;
+				case SDLK_3:	mapState= map::RESOURCELIST;	break;
+				case SDLK_4:	mapState= map::DEVHAND;			break;
+				case SDLK_5:	mapState= map::TRADE;			break;
+				}
 		}
-	case SDL_MOUSEMOTION:
+		break;
+	case map::BUILDCARD:
+		switch(e.type)
 		{
-			whichNodeIsWithin(e.motion.x, e.motion.y, 100);
-			printf("MOUSE MOTION WORKING \n");
+			case SDL_KEYDOWN:
+				switch(e.key.keysym.sym)
+				{
+				case SDLK_1:	mapState= map::MAP;				break;
+				case SDLK_3:	mapState= map::RESOURCELIST;	break;
+				case SDLK_4:	mapState= map::DEVHAND;			break;
+				case SDLK_5:	mapState= map::TRADE;			break;
+				case SDLK_r:	if (overallTurn == 1 || overallTurn == 2 || p->checkBuildSomething('R', &dvc) == true)
+								{
+									p->actuallyBuildSomething('R', &rsc, &dvc);
+									mapState = map::BUILDROAD;	break;
+								}
+				case SDLK_s:	if (overallTurn == 1 || overallTurn == 2 || p->checkBuildSomething('S', &dvc) == true)
+								{
+									p->actuallyBuildSomething('S', &rsc, &dvc);
+									mapState = map::BUILDSETTLEMENT;	break;
+								}
+				case SDLK_c:	if (overallTurn != 1 || overallTurn != 2 || p->checkBuildSomething('C', &dvc) == true)
+								{
+									p->actuallyBuildSomething('C', &rsc, &dvc);
+									mapState = map::BUILDCITY;	break;
+								}
+				case SDLK_d:	if (overallTurn != 1 || overallTurn != 2 || p->checkBuildSomething('D', &dvc) == true)
+								{
+									p->actuallyBuildSomething('D', &rsc, &dvc);
+									mapState = map::MAP;	break;
+								}
+				}
+		}
+		break;
+	case map::RESOURCELIST:
+		switch(e.type)
+		{
+			case SDL_KEYDOWN:
+				switch(e.key.keysym.sym)
+				{
+				case SDLK_1:	mapState= map::MAP;				break;
+				case SDLK_2:	mapState= map::BUILDCARD;		break;
+				case SDLK_4:	mapState= map::DEVHAND;			break;
+				case SDLK_5:	mapState= map::TRADE;			break;
+				}
+		}
+		break;
+	case map::DEVHAND:
+		switch(e.type)
+		{
+			case SDL_KEYDOWN:
+				switch(e.key.keysym.sym)
+				{
+				case SDLK_1:	mapState= map::MAP;				break;
+				case SDLK_2:	mapState= map::BUILDCARD;		break;
+				case SDLK_3:	mapState= map::RESOURCELIST;	break;
+				case SDLK_5:	mapState= map::TRADE;			break;
+				case SDLK_m:	p->playDevCard('M');			break;
+								//MONOPOLY FUNCTIONALITY GO!
+				case SDLK_s:	p->playDevCard('S');
+								//SOLDIER FUNCTIONALITY GO!
+				case SDLK_y:	p->playDevCard('Y');
+								//YEAR OF PLENTY FUNCTIONALITY GO!
+				case SDLK_t:	p->playDevCard('T');
+								//TWO ROADS FUNCTIONALITY GO!
+				case SDLK_v:	p->playDevCard('V');
+								//VICTORY POINT FUNCTIONALITY GO!
+				}
+		}
+		break;
+	case map::TRADE:
+		switch(e.type)
+		{
+			case SDL_KEYDOWN:
+				switch(e.key.keysym.sym)
+				{
+				case SDLK_1:	mapState= map::MAP;				break;
+				case SDLK_2:	mapState= map::BUILDCARD;		break;
+				case SDLK_4:	mapState= map::DEVHAND;			break;
+				case SDLK_5:	mapState= map::TRADE;			break;
+				//ADD TRADE FUNCTIONALITY. DON'T KNOW HOW.
+				}
+		}
+		break;
+	case map::BUILDROAD:
+		switch(e.type)
+		{
+			case SDL_MOUSEMOTION:	whichRoadIsWithin(e.motion.x, e.motion.y, 100); break;
+
+			case SDL_MOUSEBUTTONDOWN:
+				switch(e.button.button)
+				{
+					case SDL_BUTTON_LEFT:	constructRoadOnMap(p); mapState = map::MAP;	break;
+				}
+				break;
+		}
+		break;
+	case map::BUILDSETTLEMENT:
+		switch(e.type)
+		{
+			case SDL_MOUSEMOTION:	whichNodeIsWithin(e.motion.x, e.motion.y, 100); break;
+
+			case SDL_MOUSEBUTTONDOWN:
+				switch(e.button.button)
+				{
+					case SDL_BUTTON_LEFT:	constructSettlementOnMap(p); mapState = map::MAP;	break;
+				}
+				break;
+		}
+		break;
+	case map::BUILDCITY:
+		switch(e.type)
+		{
+			case SDL_MOUSEMOTION:	whichNodeIsWithin(e.motion.x, e.motion.y, 100); break;
+			/*						
+			case SDL_MOUSEDOWN:
+			{
+
+			}
+			*/
 		}
 		break;
 	}
@@ -628,18 +833,58 @@ void map::whichNodeIsWithin(int const & x, int const & y, int radius)
 	}
 }
 
-bool map::mouseOverNode(int const & x, int const & y)
+void map::whichRoadIsWithin(int const & x, int const & y, int radius)
 {
-	/*
-	// what am I pressing?
-	Node * whichNode = whichNodeIsWithin(x,y, 100);
-	// is that a valid thing to press?
-	if(whichNode != NULL)
+	float minDistance, distance, dx, dy, maxRadius = radius*radius;
+	minDistance = 1000000;
+	Edge * closest = NULL;
+	for(int i = 0; i < 144; ++i)
 	{
-		// do my action
-		selectron = whichNode->ID - 1;
-		return true;
+		dx = myEdges[i].pixelX + 16 - x;
+		dy = myEdges[i].pixelY + 16 - y;
+		distance = dx*dx + dy*dy;
+		if(distance < maxRadius 
+		&& (closest != NULL || distance < minDistance))
+		{
+			minDistance = distance;
+			roadSelectron = myEdges[i].ID;
+		}
 	}
-	*/
-	return false;
+}
+
+void map::constructRoadOnMap(player * p)
+{
+	if (myEdges[roadSelectron].owner == 4)
+	{
+		myEdges[roadSelectron].owner = p->ID;
+	}
+}
+void map::constructSettlementOnMap(player * p)
+{
+	//THIS FUNCTION IS MILDLY BAD. IT LOOKS FOR BUILDABILITY BY DRAW PIXEL COUNTS, NOT BY ACTUALLY LOOKING AT EDGES THAT CONNECT TO NODES.
+	bool buildable = true;
+	for (int i = 0; i < 54; ++i)
+	{
+		if (nodeSelectron != i)
+		{
+			if (myNodes[i].owner != 4)
+			{
+				if (((myNodes[i].x + 1 == myNodes[nodeSelectron].x ||
+					myNodes[i].x - 1 == myNodes[nodeSelectron].x) &&
+					(myNodes[i].y + 1 == myNodes[nodeSelectron].y ||
+					myNodes[i].y - 1 == myNodes[nodeSelectron].y)) ||
+					(myNodes[i].x + 2 == myNodes[nodeSelectron].x ||
+					myNodes[i].x - 2 == myNodes[nodeSelectron].x))
+				{
+					buildable = false;
+				}
+			}
+		}
+	}
+	// RIGHT AROUND HERE, THIS FUNCTION WOULD NEED TO CHECK FOR ROADS AND SET BUILDABILITY TO FALSE IF IT FINDS NONE.
+	if (buildable == true && myNodes[nodeSelectron].owner == 4)
+	{
+		myNodes[nodeSelectron].owner = p->ID;
+		myNodes[nodeSelectron].cityType = 1;
+	}
 }

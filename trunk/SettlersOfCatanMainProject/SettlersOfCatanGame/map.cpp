@@ -923,12 +923,23 @@ void map::constructSettlementOnMap(player * p)
 		{
 			if (myNodes[i].owner != 4)
 			{
-				if (((myNodes[i].x + 1 == myNodes[nodeSelectron].x ||
-					myNodes[i].x - 1 == myNodes[nodeSelectron].x) &&
+				if							(
+
+					((myNodes[i].x + 1 == myNodes[nodeSelectron].x ||
+					myNodes[i].x - 1 == myNodes[nodeSelectron].x) 
+											&&
 					(myNodes[i].y + 1 == myNodes[nodeSelectron].y ||
-					myNodes[i].y - 1 == myNodes[nodeSelectron].y)) ||
-					(myNodes[i].x + 2 == myNodes[nodeSelectron].x ||
-					myNodes[i].x - 2 == myNodes[nodeSelectron].x))
+					myNodes[i].y - 1 == myNodes[nodeSelectron].y)) 
+					
+											||
+
+
+					((myNodes[i].x + 2 == myNodes[nodeSelectron].x ||
+					myNodes[i].x - 2 == myNodes[nodeSelectron].x)
+											&&
+					(myNodes[i].y == myNodes[nodeSelectron].y))
+					
+											)
 				{
 					buildable = false;
 				}

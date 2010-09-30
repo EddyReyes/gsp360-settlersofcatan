@@ -1,3 +1,6 @@
+//the 4s in the for loops may need to be changed to the variable numPlayers
+//the thief functions will probably need to be in Game
+
 void Steal(player* thief, player* victim)
 {
 	int totalCards = 0;
@@ -29,8 +32,8 @@ void Steal(player* thief, player* victim)
 //this function is supposed to tell people that they need to pick cards to take away
 void thiefIsRolled(player p[])
 {
-	bool tooMany[5] = 0;
-	for(int i = 1; i < 5; i++)
+	bool tooMany[4] = false;
+	for(int i = 0; i < 4; i++)
 	{
 		int totalCards = 0;
 		totalCards += p[i]->getResource(WHEAT);
@@ -44,8 +47,8 @@ void thiefIsRolled(player p[])
 	}
 
 	totalCards = 0;
-	int numCardsToRemove[5] = 0;//this is holding the number of cards to remove for each player
-	for(int = 1; i < 5; i++)
+	int numCardsToRemove[4] = 0;//this is holding the number of cards to remove for each player
+	for(int = 0; i < 4; i++)
 	{
 		totalCards = 0;
 		if(tooMany[i] == true)
@@ -65,7 +68,7 @@ void thiefIsRolled(player p[])
 		numCardsToRemove[i] = totalCards;
 	}
 
-	for(int i = 1; i < 5; i++)
+	for(int i = 0; i < 4; i++)
 	{
 		if(numCardsToRemove[i] != 0)
 		{
@@ -79,14 +82,15 @@ void thiefIsRolled(player p[])
 
 
 			int* randCard;
-			randCard = new int [numCardsToRemove[i]];
+			randCard = new int[numCardsToRemove[i]];
 			for(int j = 0; j < numCardsToRemove[i]; j++)
 			{
 				randCard[j] = (rand() % totalCards) + 1;
 
+				//this is supposed to check to make sure it doesnt store the same number more than once
 				for(int k = 0; k < numCardsToRemove[i]; k++)
 				{
-					if(k != j)//this is so it doesnt check the same number
+					if(k != j)//this is so it doesnt check itself, because the number stored will be the same
 					{
 						//this is supposed to make sure the numbers arent the same and assign a new number
 						if(randCard[j] == randCard[k])
@@ -98,6 +102,7 @@ void thiefIsRolled(player p[])
 				}
 			}
 
+			//this should remove the random card
 			for(int d = 0; d < numCardsToRemove[i]; d++)
 			{
 				char stolenType = ' ';
@@ -124,12 +129,13 @@ void thiefIsRolled(player p[])
 //need these variables for turns
 bool endTurn = false;//if they pick end turn, it will leave the while loop
 bool hasRolled = false;//bool for if the dice have been rolled yet
-int curPlayer = 1;//player number, to compare later on, to reset it back to one, should be a variable
+int curPlayer = 0;//player number, to compare later on, to reset it back to one, should be a variable
 int numPlayers = 4;//this variable is the one needed for ^ but it might already be in the hting
 //p is the array of players
 
 while(running)//while the game is running, probably have another thing for winner = false
 {
+	
 	while(!hasRolled)
 	{
 		//play dev card
@@ -152,7 +158,8 @@ while(running)//while the game is running, probably have another thing for winne
 		endTurn = false;//need to reset back to false, so for the next player, it goes in the right loop
 		hasRolled = false;
 		if(curPlayer > numPlayers)//this may need to be changed for the actual game
-			curPlayer = 1;
+			curPlayer = 0;
 	}
 }
+
 //all the stuff in this while(running) loop need to be together

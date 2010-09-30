@@ -41,6 +41,10 @@ public:
 	static const int BUILDROAD = 6; // play state
 	static const int BUILDSETTLEMENT = 7; // play state
 	static const int BUILDCITY = 8; // play state
+	static const int TURNONESETTLEMENT = 9;
+	static const int TURNONEROAD = 10;
+	static const int TURNTWOSETTLEMENT = 11;
+	static const int TURNTWOROAD = 12;
 	static const int ENDTURN = 99; // play state (mainly to trigger the changing of players in game.cpp)
 	int mapState;
 	int overallTurn;

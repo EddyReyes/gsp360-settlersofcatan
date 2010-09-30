@@ -56,7 +56,7 @@ void Game::draw(SDL_Surface * screen)
 }
 void Game::update(int ms)
 {
-	int placeHolderTurnTwo = 0;
+	int placeHolderTurnTwo = -1;
 	timer += ms;
 
 	if(timer >= changeTime)
@@ -70,13 +70,19 @@ void Game::update(int ms)
 	case Game::GAME:
 		if(underlyingBoard.mapState == map::ENDTURN)
 		{
-			activePlayer++;
+			if (underlyingBoard.overallTurn == 2)
+			{
+				activePlayer = 0;
+			}
 			placeHolderTurnTwo++;
-			cout << "Player " << activePlayer + 1 << "'s turn!" << endl;
+			activePlayer++;
 			if (activePlayer >= numPlayers)
 			{
 				activePlayer = 0;
-				placeHolderTurnTwo = 0;
+				underlyingBoard.overallTurn++;
+			}
+			if ( underlyingBoard.overallTurn == 2 &&  placeHolderTurnTwo >= numPlayers - 1 )
+			{
 				underlyingBoard.overallTurn++;
 			}
 
@@ -84,7 +90,7 @@ void Game::update(int ms)
 
 			if (underlyingBoard.overallTurn == 2)
 			{
-				activePlayer = numPlayers - placeHolderTurnTwo;
+				activePlayer = (numPlayers - 1) - placeHolderTurnTwo;
 				underlyingBoard.mapState = map::TURNTWOSETTLEMENT;
 			}
 			else if (underlyingBoard.overallTurn == 1)
@@ -94,6 +100,7 @@ void Game::update(int ms)
 			else
 			{
 				underlyingBoard.mapState = map::MAP;
+				cout << "HERE IT IS" << endl;
 			}
 		}
 		break;

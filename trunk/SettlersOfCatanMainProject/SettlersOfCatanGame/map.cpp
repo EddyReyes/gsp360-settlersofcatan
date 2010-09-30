@@ -687,6 +687,7 @@ void map::handleInput(SDL_Event e, player * p)
 				case SDLK_3:	mapState= map::RESOURCELIST;	break;
 				case SDLK_4:	mapState= map::DEVHAND;			break;
 				case SDLK_5:	mapState= map::TRADE;			break;
+				case SDLK_0:	mapState= map::ENDTURN;			break;
 				}
 		}
 		break;
@@ -700,6 +701,7 @@ void map::handleInput(SDL_Event e, player * p)
 				case SDLK_3:	mapState= map::RESOURCELIST;	break;
 				case SDLK_4:	mapState= map::DEVHAND;			break;
 				case SDLK_5:	mapState= map::TRADE;			break;
+				case SDLK_0:	mapState= map::ENDTURN;			break;
 				case SDLK_r:	if (overallTurn == 1 || overallTurn == 2 || p->checkBuildSomething('R', &dvc) == true)
 								{
 									p->actuallyBuildSomething('R', &rsc, &dvc);

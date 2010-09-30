@@ -32,7 +32,7 @@ private:
 	SDL_Surface *chitTile[10];
 	SDL_Surface *load_image( std::string filename );
 	void apply_surface(int x, int y,SDL_Surface* source, SDL_Surface* destination, SDL_Rect *clip);
-	int mapState;
+public:
 	static const int MAP = 1; // play state
 	static const int BUILDCARD = 2; // play state
 	static const int RESOURCELIST = 3; // play state
@@ -42,7 +42,7 @@ private:
 	static const int BUILDSETTLEMENT = 7; // play state
 	static const int BUILDCITY = 8; // play state
 	static const int ENDTURN = 99; // play state (mainly to trigger the changing of players in game.cpp)
-public:
+	int mapState;
 	int overallTurn;
 	int nodeSelectron;
 	int roadSelectron;

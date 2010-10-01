@@ -89,7 +89,7 @@ public:
 	void map::draw(SDL_Surface * screen, player * p);
 	void map::loadImages(void);
 	void map::initializeImages(void);
-	void map::drawTradeScreen(SDL_Surface * screen);
+	void map::drawtradeCard(SDL_Surface * screen);
 	void map::drawDevHand(SDL_Surface * screen);
 	void map::drawResourceList(SDL_Surface * screen, player * p);
 	void map::drawBuildCard(SDL_Surface * screen);

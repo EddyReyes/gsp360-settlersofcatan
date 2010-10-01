@@ -12,7 +12,7 @@ void map::draw(SDL_Surface * screen, player * p)
 		case map::BUILDCARD:		drawBuildCard(screen);			break;
 		case map::RESOURCELIST:		drawResourceList(screen, p);	break;
 		case map::DEVHAND:			drawDevHand(screen);			break;
-		case map::TRADE:			drawTradeScreen(screen);		break;
+		case map::TRADE:			drawtradeCard(screen);		break;
 		case map::BUILDROAD:		drawBoard(screen);
 									drawRoadSelectron(screen);		break;
 		case map::BUILDSETTLEMENT:	drawBoard(screen);
@@ -35,7 +35,7 @@ void map::draw(SDL_Surface * screen, player * p)
 
 void map::loadImages()
 {
-	tradeCard = load_image( "TradeScreen.bmp" );
+	tradeCard = load_image( "tradeCard.bmp" );
 	resourceCard = load_image( "resourceCard.bmp" );
 	buildCard = load_image( "buildCard.bmp" );
 	roadTile[0] = load_image( "roadRed.bmp" );
@@ -263,7 +263,7 @@ void map::drawDevHand(SDL_Surface * screen)
 
 }
 
-void map::drawTradeScreen(SDL_Surface * screen)
+void map::drawtradeCard(SDL_Surface * screen)
 {
 	apply_surface( 0, 0, tradeCard, screen, NULL );
 }

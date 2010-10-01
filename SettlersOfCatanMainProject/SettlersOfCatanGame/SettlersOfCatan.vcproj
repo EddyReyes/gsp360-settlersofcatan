@@ -263,6 +263,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\mapInput.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Menu.cpp"
 				>
 			</File>

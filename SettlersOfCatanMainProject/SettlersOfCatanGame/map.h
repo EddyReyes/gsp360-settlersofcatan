@@ -33,6 +33,8 @@ private:
 	SDL_Surface *load_image( std::string filename );
 	void apply_surface(int x, int y,SDL_Surface* source, SDL_Surface* destination, SDL_Rect *clip);
 public:
+	// THESE ARE THE STATES IN mapState. THEY ARE PUBLIC BECAUSE GAME.CPP NEEDS TO ACCESS THEM SOMETIMES
+	int mapState;
 	static const int MAP = 1; // play state
 	static const int BUILDCARD = 2; // play state
 	static const int RESOURCELIST = 3; // play state
@@ -46,7 +48,7 @@ public:
 	static const int TURNTWOSETTLEMENT = 11;
 	static const int TURNTWOROAD = 12;
 	static const int ENDTURN = 99; // play state (mainly to trigger the changing of players in game.cpp)
-	int mapState;
+
 	int overallTurn;
 	int nodeSelectron;
 	int roadSelectron;
@@ -74,8 +76,27 @@ public:
 	void map::drawNodeSelectron(SDL_Surface * screen);
 	void map::drawRoadSelectron(SDL_Surface * screen);
 	void map::drawBoard(SDL_Surface * screen);
-	void map::handleInput(SDL_Event e, player * p);
 	bool map::constructRoadOnMap(player * p);
 	bool map::constructSettlementOnMap(player * p);
 	bool map::constructSettlementOnMapAnywhere(player * p);
+
+
+
+
+	
+	//========HANDLE INPUTS, ALL IN THE mapInput.cpp FILE================
+	void map::handleInput(SDL_Event e, player * p);
+	void map::handleInput_MAP(SDL_Event e, player * p);
+	void map::handleInput_BUILDCARD(SDL_Event e, player * p);
+	void map::handleInput_RESOURCELIST(SDL_Event e, player * p);
+	void map::handleInput_DEVHAND(SDL_Event e, player * p);
+	void map::handleInput_TRADE(SDL_Event e, player * p);
+	void map::handleInput_BUILDROAD(SDL_Event e, player * p);
+	void map::handleInput_BUILDSETTLEMENT(SDL_Event e, player * p);
+	void map::handleInput_BUILDCITY(SDL_Event e, player * p);
+	void map::handleInput_TURNONESETTLEMENT(SDL_Event e, player * p);
+	void map::handleInput_TURNONEROAD(SDL_Event e, player * p);
+	void map::handleInput_TURNTWOSETTLEMENT(SDL_Event e, player * p);
+	void map::handleInput_TURNTWOROAD(SDL_Event e, player * p);
+	//=========================================================================
 };

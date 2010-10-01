@@ -104,8 +104,8 @@ void Game::update(int ms)
 			}
 			else
 			{
-				underlyingBoard.mapState = map::MAP;
-				cout << "HERE IT IS" << endl;
+				underlyingBoard.mapState = map::BEGINTURN;
+				cout << "A WHOLE NEW WORLD! TURN " << underlyingBoard.overallTurn << endl;
 			}
 		}
 		break;

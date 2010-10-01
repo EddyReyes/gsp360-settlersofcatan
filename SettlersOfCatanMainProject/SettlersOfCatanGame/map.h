@@ -43,6 +43,7 @@ private:
 public:
 	// =============== MAPSTATES (THEY ARE PUBLIC BECAUSE GAME.CPP NEEDS THEM SOMETIMES ====================
 	int mapState;
+	static const int BEGINTURN = 0; // start state to trigger dice roll and such;
 	static const int MAP = 1; // play state
 	static const int BUILDCARD = 2; // play state
 	static const int RESOURCELIST = 3; // play state
@@ -103,6 +104,7 @@ public:
 	
 	//========HANDLE INPUTS, ALL IN THE mapInput.cpp FILE================
 	void map::handleInput(SDL_Event e, player * p);
+	void map::handleInput_BEGINTURN(SDL_Event e, player *p);
 	void map::handleInput_MAP(SDL_Event e, player * p);
 	void map::handleInput_BUILDCARD(SDL_Event e, player * p);
 	void map::handleInput_RESOURCELIST(SDL_Event e, player * p);

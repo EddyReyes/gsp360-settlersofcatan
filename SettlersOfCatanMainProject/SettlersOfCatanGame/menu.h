@@ -20,7 +20,4 @@ public:
 	void Menu::draw(SDL_Surface * screen);
 	void Menu::loadImages();
 	Menu();
-	
-
-
 };

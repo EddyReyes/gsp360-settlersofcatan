@@ -8,6 +8,7 @@ void map::handleInput(SDL_Event e, player * p)
 {
 		switch(mapState)
 		{
+		case map::BEGINTURN:			handleInput_BEGINTURN(e, p);			break;		
 		case map::MAP:					handleInput_MAP(e, p);					break;
 		case map::BUILDCARD:			handleInput_BUILDCARD(e, p);			break;
 		case map::RESOURCELIST:			handleInput_RESOURCELIST(e, p);			break;
@@ -22,6 +23,13 @@ void map::handleInput(SDL_Event e, player * p)
 		case map::TURNTWOROAD:			handleInput_TURNTWOROAD(e, p);			break;
 		case map::ENDTURN:														break;
 		}
+}
+
+void map::handleInput_BEGINTURN(SDL_Event e, player *p)
+{
+	//some DiceRoll mechanics would happen here
+	//assigning of resources to players would happen here
+	mapState = map::MAP;
 }
 
 void map::handleInput_MAP(SDL_Event e, player * p)

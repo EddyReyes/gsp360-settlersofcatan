@@ -187,6 +187,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\dice.h"
+				>
+			</File>
+			<File
 				RelativePath=".\edge.h"
 				>
 			</File>
@@ -240,6 +244,10 @@
 			>
 			<File
 				RelativePath=".\developmentCards.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Dice.cpp"
 				>
 			</File>
 			<File

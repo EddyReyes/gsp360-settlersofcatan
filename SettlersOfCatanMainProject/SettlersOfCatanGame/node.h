@@ -1,5 +1,7 @@
 #pragma once
 #include "edge.h"
+#include <iostream>
+using namespace std;
 
 class Center;
 class Edge;
@@ -15,8 +17,8 @@ public:
 	int y; 
 	int numOfEdges;
 	char icon;
-	Edge ** edges;
-	Edge * edges2;
+	Edge * nodeEdges[3];
+	//Edge * tempEdges;
 	int pixelX;
 	int pixelY;
 
@@ -26,7 +28,6 @@ public:
 		x = a_x;
 		y = a_y;
 		icon = '@';
-		edges = 0;
 		numOfEdges = 0;
 		ID = a_ID;
 		cityType = 0;
@@ -34,37 +35,27 @@ public:
 
 	void Node::setEdgeCount(int a_numOfEdges)
 	{
-		if(edges)
-			delete edges;
 		numOfEdges = a_numOfEdges;
-		edges = new Edge * [numOfEdges];
 	}
 
-	void Node::addNewEdge(Edge * e)
+	void Node::addNewEdge(Edge * sentEdge)
 	{
-		/*
-		Edge * tempEdges;
-		tempEdges = new Edge [1000];
-		for (int x = 0; x < sizeof(edges); ++x)
+		int j = 0;
+		for (int i = 0; i < 3; ++i)
 		{
-			tempEdges[x] = edges[x];
+			if (nodeEdges[i] == NULL)
+			{
+				j = i;
+				break;
+			}
 		}
-		tempEdges[sizeof(edges)] = e;
-		if(edges)
-			delete edges;
-		numOfEdges = sizeof(tempEdges);
-		edges = new Edge * [numOfEdges];
-		for (int x = 0; x < numOfEdges; ++x)
-		{
-			edges[x] = tempEdges[x];
-		}
-		delete tempEdges;
-		*/
+		nodeEdges[j] = sentEdge;
+		numOfEdges = j++;
 	}
 
 	void Node::setEdge(int a_index, Edge * e)
 	{
-		edges[a_index] = e;
+		nodeEdges[a_index] = e;
 	}
 
 	void Node::setNode(int a_x, int a_y, int a_ID)
@@ -72,7 +63,7 @@ public:
 		x = a_x;
 		y = a_y;
 		icon = '@';
-		edges = 0;
+		//nodeEdges = NULL;
 		numOfEdges = 0;
 		ID = a_ID;
 	}

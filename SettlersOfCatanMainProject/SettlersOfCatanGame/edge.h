@@ -12,12 +12,12 @@ private:
 public:
 	Node * from;
 	Node * to;
-	Edge::Edge(){}
-	int owner; // 0 through 3
+	int owner;
 	int ID;
 	int pixelX;
 	int pixelY;
 	//constructor
+	Edge::Edge(){}
 	Edge::Edge(Node * a_from, Node * a_to)
 	{
 		from = a_from;

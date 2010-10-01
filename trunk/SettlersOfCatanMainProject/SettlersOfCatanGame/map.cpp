@@ -6,6 +6,9 @@
 #define _CENTER(c,d,e) Center(getNode(tempNodes, count, c),\
 							getNode(tempNodes, count, d), e)
 
+
+
+
 map::map()
 {
 	//=====NODE ASSIGNMENT==================
@@ -31,6 +34,11 @@ map::map()
 	{
 		myNodes[i] = tempNodes[i];
 		myNodes[i].owner = 4;
+	}
+
+	for (int i = 0; i < 54; ++i)
+	{
+		setHarbor(&myNodes[i]);
 	}
 		
 
@@ -158,8 +166,8 @@ map::map()
 		myEdges[i] = tempEdges[i];
 		myEdges[i].ID = i;
 		myEdges[i].owner = 4; // 4 means player 5, and is treated as never.
-		myEdges[i].from->addNewEdge(&myEdges[i]);
-		myEdges[i].to->addNewEdge(&myEdges[i]);
+		myEdges[i].to->addNewEdge(&myEdges[i]); //cout << "called function 2" << endl;
+		myEdges[i].from->addNewEdge(&myEdges[i]); //cout << "called function" << endl;
 	}
 
 	delete tempEdges;
@@ -233,6 +241,41 @@ int map::getEdgeFromCount(Edge * population, int popCount, Node * from)
 	return count;
 }
 
+
+void map::initializeCenters(void)
+{
+	srand(time(0));
+	rand();
+	int woodLeft = 4;
+	int stoneLeft = 3;
+	int brickLeft = 3;
+	int wheatLeft = 4;
+	int sheepLeft = 4;
+	int desertLeft = 1;
+	int selector = 0;
+	int desertPass = 0;
+	// SELECTS A RANDOM NUMBER OUT OF ALL THE REMAINING AVAILABLE TILES AND ASSIGNS RESOURCES. INCLUDING 'D', DESERT
+	for (int i = 0; i < 19; i++)
+	{
+		selector = rand();
+		selector = selector % (woodLeft + sheepLeft + brickLeft + stoneLeft + wheatLeft + desertLeft);
+		if (selector < woodLeft){myCenters[i].resource = WOOD; woodLeft--;}
+		else if (selector < woodLeft + sheepLeft){myCenters[i].resource = SHEEP; sheepLeft--;}
+		else if (selector < woodLeft + sheepLeft + brickLeft){myCenters[i].resource = BRICK; brickLeft--;}
+		else if (selector < woodLeft + sheepLeft + brickLeft + stoneLeft){myCenters[i].resource = STONE; stoneLeft--;}
+		else if (selector < woodLeft + sheepLeft + brickLeft + stoneLeft + wheatLeft){myCenters[i].resource = WHEAT; wheatLeft--;}
+		else {myCenters[i].resource = 'D'; desertLeft--;}
+	}
+
+	int tempInts[] = {5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 8, 10, 9, 4, 5, 6, 3, 11};
+	int tempIntCenters[] = {13, 16, 18, 17, 15, 10, 5, 2, 0, 1, 3, 8, 11, 14, 12, 7, 4, 6, 9};
+	for (int i = 0; i < 19; ++i)
+	{
+		if (myCenters[tempIntCenters[i]].resource == 'D'){desertPass = 1; myCenters[tempIntCenters[i]].chitWorth = 0;}
+		else {myCenters[tempIntCenters[i]].chitWorth = tempInts[i - desertPass];}
+	}
+}
+
 int map::randomHarbor(int resource[])
 {
 	srand(0);
@@ -278,6 +321,7 @@ void map::setHarbor(Node* harbor)
 	for(int i = 0; i < 54; i++)
 	{
 		//places harbor on pre-determined nodes
+		/*
 		switch(i)
 		{
 		case 2:
@@ -346,40 +390,7 @@ void map::setHarbor(Node* harbor)
 		default:
 			harbor[i].harborType = NULL;
 		}
-	}
-}
-
-void map::initializeCenters(void)
-{
-	srand(time(0));
-	rand();
-	int woodLeft = 4;
-	int stoneLeft = 3;
-	int brickLeft = 3;
-	int wheatLeft = 4;
-	int sheepLeft = 4;
-	int desertLeft = 1;
-	int selector = 0;
-	int desertPass = 0;
-	// SELECTS A RANDOM NUMBER OUT OF ALL THE REMAINING AVAILABLE TILES AND ASSIGNS RESOURCES. INCLUDING 'D', DESERT
-	for (int i = 0; i < 19; i++)
-	{
-		selector = rand();
-		selector = selector % (woodLeft + sheepLeft + brickLeft + stoneLeft + wheatLeft + desertLeft);
-		if (selector < woodLeft){myCenters[i].resource = WOOD; woodLeft--;}
-		else if (selector < woodLeft + sheepLeft){myCenters[i].resource = SHEEP; sheepLeft--;}
-		else if (selector < woodLeft + sheepLeft + brickLeft){myCenters[i].resource = BRICK; brickLeft--;}
-		else if (selector < woodLeft + sheepLeft + brickLeft + stoneLeft){myCenters[i].resource = STONE; stoneLeft--;}
-		else if (selector < woodLeft + sheepLeft + brickLeft + stoneLeft + wheatLeft){myCenters[i].resource = WHEAT; wheatLeft--;}
-		else {myCenters[i].resource = 'D'; desertLeft--;}
-	}
-
-	int tempInts[] = {5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 8, 10, 9, 4, 5, 6, 3, 11};
-	int tempIntCenters[] = {13, 16, 18, 17, 15, 10, 5, 2, 0, 1, 3, 8, 11, 14, 12, 7, 4, 6, 9};
-	for (int i = 0; i < 19; ++i)
-	{
-		if (myCenters[tempIntCenters[i]].resource == 'D'){desertPass = 1; myCenters[tempIntCenters[i]].chitWorth = 0;}
-		else {myCenters[tempIntCenters[i]].chitWorth = tempInts[i - desertPass];}
+		*/
 	}
 }
 
@@ -792,7 +803,7 @@ void map::handleInput(SDL_Event e, player * p)
 				case SDL_MOUSEBUTTONDOWN:
 					switch(e.button.button)
 					{
-						case SDL_BUTTON_LEFT:	constructRoadOnMap(p); mapState = map::MAP;	break;
+					case SDL_BUTTON_LEFT:	if(constructRoadOnMap(p) == true){ mapState = map::MAP;}	break;
 					}
 					break;
 			}
@@ -805,7 +816,7 @@ void map::handleInput(SDL_Event e, player * p)
 				case SDL_MOUSEBUTTONDOWN:
 					switch(e.button.button)
 					{
-						case SDL_BUTTON_LEFT:	constructSettlementOnMap(p); mapState = map::MAP;	break;
+					case SDL_BUTTON_LEFT:	if(constructSettlementOnMap(p) == true){ mapState = map::MAP;}	break;
 					}
 					break;
 			}
@@ -823,7 +834,7 @@ void map::handleInput(SDL_Event e, player * p)
 				case SDL_MOUSEBUTTONDOWN:
 					switch(e.button.button)
 					{
-						case SDL_BUTTON_LEFT:	constructSettlementOnMap(p); mapState = map::TURNONEROAD;	break;
+					case SDL_BUTTON_LEFT:	if(constructSettlementOnMapAnywhere(p) == true){ mapState = map::TURNONEROAD;}	break;
 					}
 					break;
 			}
@@ -835,7 +846,7 @@ void map::handleInput(SDL_Event e, player * p)
 				case SDL_MOUSEBUTTONDOWN:
 					switch(e.button.button)
 					{
-						case SDL_BUTTON_LEFT:	constructRoadOnMap(p); mapState = map::ENDTURN;	cout << "MADE IT THIS FAR" << endl; break;
+					case SDL_BUTTON_LEFT:	if (constructRoadOnMap(p) == true){ mapState = map::ENDTURN;} break;
 					}
 					break;
 			}
@@ -847,7 +858,7 @@ void map::handleInput(SDL_Event e, player * p)
 				case SDL_MOUSEBUTTONDOWN:
 					switch(e.button.button)
 					{
-						case SDL_BUTTON_LEFT:	constructSettlementOnMap(p); mapState = map::TURNTWOROAD;	break;
+						case SDL_BUTTON_LEFT:	if(constructSettlementOnMapAnywhere(p) == true){ mapState = map::TURNTWOROAD;}	break;
 					}
 					break;
 			}
@@ -859,7 +870,7 @@ void map::handleInput(SDL_Event e, player * p)
 				case SDL_MOUSEBUTTONDOWN:
 					switch(e.button.button)
 					{
-						case SDL_BUTTON_LEFT:	constructRoadOnMap(p); mapState = map::ENDTURN;	break;
+						case SDL_BUTTON_LEFT:	if (constructRoadOnMap(p) == true){ mapState = map::ENDTURN;} break;
 					}
 					break;
 			}
@@ -907,14 +918,109 @@ void map::whichRoadIsWithin(int const & x, int const & y, int radius)
 	}
 }
 
-void map::constructRoadOnMap(player * p)
+bool map::constructRoadOnMap(player * p)
 {
+	bool buildable = false;
+
 	if (myEdges[roadSelectron].owner == 4)
 	{
-		myEdges[roadSelectron].owner = p->ID;
+		//cout << "got to 1" << endl;
+		if (myEdges[roadSelectron].from->owner == p->ID || myEdges[roadSelectron].to->owner == p->ID)
+		{
+			buildable = true;
+			//cout << "got to 2b (FINISH)" << endl;
+		}
+		else if ( myEdges[roadSelectron].to->owner == 4)
+		{
+			//cout << "got to 2a" << endl;
+			for (int i = 0; i < myEdges[roadSelectron].to->numOfEdges; ++i)
+			{
+				//cout << "got to 3a" << endl;
+				if (myEdges[roadSelectron].to->nodeEdges[i]->owner == p->ID)
+				{
+					//cout << "got to 4a FINISH" << endl;
+					buildable = true;
+				}
+			}
+		}
+		else if ( myEdges[roadSelectron].from->owner == 4)
+		{
+			//cout << "got to 2c" << endl;
+			for (int i = 0; i < myEdges[roadSelectron].to->numOfEdges; ++i)
+			{
+				//cout << "got to 3c" << endl;
+				if (myEdges[roadSelectron].from->nodeEdges[i]->owner == p->ID)
+				{
+					//cout << "got to 4c FINISH" << endl;
+					buildable = true;
+				}
+			}
+		}
+		
+		
+		if (buildable == true)
+		{
+			//cout << "got to BUILD!" << endl;
+			myEdges[roadSelectron].owner = p->ID;
+			return true;
+		}
 	}
+	return false;
 }
-void map::constructSettlementOnMap(player * p)
+
+bool map::constructSettlementOnMap(player * p)
+{
+	//THIS FUNCTION IS MILDLY BAD. IT LOOKS FOR BUILDABILITY BY DRAW PIXEL COUNTS, NOT BY ACTUALLY LOOKING AT EDGES THAT CONNECT TO NODES.
+	bool buildable = false;
+	for (int i = 0; i < 54; ++i)
+	{
+		if (nodeSelectron != i)
+		{
+			if (myNodes[i].owner != 4)
+			{
+				if							(!(
+
+					((myNodes[i].x + 1 == myNodes[nodeSelectron].x ||
+					myNodes[i].x - 1 == myNodes[nodeSelectron].x) 
+											&&
+					(myNodes[i].y + 1 == myNodes[nodeSelectron].y ||
+					myNodes[i].y - 1 == myNodes[nodeSelectron].y)) 
+					
+											&&
+
+
+					((myNodes[i].x + 2 == myNodes[nodeSelectron].x ||
+					myNodes[i].x - 2 == myNodes[nodeSelectron].x)
+											&&
+					(myNodes[i].y == myNodes[nodeSelectron].y))
+					
+											))
+				{
+					buildable = true;
+				}
+			}
+		}
+	}
+	// RIGHT AROUND HERE, THIS FUNCTION WOULD NEED TO CHECK FOR ROADS AND SET BUILDABILITY TO FALSE IF IT FINDS NONE.
+
+	for (int i = 0; myNodes[nodeSelectron].numOfEdges; ++i)
+	{
+		if (myNodes[nodeSelectron].nodeEdges[i]->owner == p->ID)
+		{
+			buildable = true;
+		}
+	}
+
+	if (buildable == true && myNodes[nodeSelectron].owner == 4)
+	{
+		myNodes[nodeSelectron].owner = p->ID;
+		myNodes[nodeSelectron].cityType = 1;
+		return true;
+	}
+	return false;
+}
+
+bool map::constructSettlementOnMapAnywhere(player * p)
 {
 	//THIS FUNCTION IS MILDLY BAD. IT LOOKS FOR BUILDABILITY BY DRAW PIXEL COUNTS, NOT BY ACTUALLY LOOKING AT EDGES THAT CONNECT TO NODES.
 	bool buildable = true;
@@ -952,5 +1058,7 @@ void map::constructSettlementOnMap(player * p)
 	{
 		myNodes[nodeSelectron].owner = p->ID;
 		myNodes[nodeSelectron].cityType = 1;
+		return true;
 	}
+	return false;
 }

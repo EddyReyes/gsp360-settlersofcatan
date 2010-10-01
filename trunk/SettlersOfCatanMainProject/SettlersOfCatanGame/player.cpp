@@ -106,6 +106,8 @@ void player::actuallyBuildSomething(char type, rsc* rsc, dvc* dvc) //ADD roads,s
 	switch(type)
 	{
 		case 'R':	numUnusedRoads--; 
+					wood--;
+					brick--;
 					rsc->returnToResourcePool(WOOD, 1); 
 					rsc->returnToResourcePool(BRICK, 1);
 				break;

@@ -75,6 +75,7 @@ public:
 	void map::drawRoadSelectron(SDL_Surface * screen);
 	void map::drawBoard(SDL_Surface * screen);
 	void map::handleInput(SDL_Event e, player * p);
-	void map::constructRoadOnMap(player * p);
-	void map::constructSettlementOnMap(player * p);
+	bool map::constructRoadOnMap(player * p);
+	bool map::constructSettlementOnMap(player * p);
+	bool map::constructSettlementOnMapAnywhere(player * p);
 };

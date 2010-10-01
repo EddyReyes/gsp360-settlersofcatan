@@ -24,6 +24,7 @@ private:
 	SDL_Surface *cityTile[4];
 	SDL_Surface *testSelect;
 	SDL_Surface *hexTile;
+	SDL_Surface *DevHand;
 	SDL_Surface *woodTile;
 	SDL_Surface *sheepTile;
 	SDL_Surface *brickTile;

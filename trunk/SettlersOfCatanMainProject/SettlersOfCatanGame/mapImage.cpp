@@ -36,6 +36,7 @@ void map::draw(SDL_Surface * screen, player * p)
 void map::loadImages()
 {
 	tradeCard = load_image( "tradeCard.bmp" );
+	DevHand = load_image( "DevHand.bmp" );
 	resourceCard = load_image( "resourceCard.bmp" );
 	buildCard = load_image( "buildCard.bmp" );
 	roadTile[0] = load_image( "roadRed.bmp" );
@@ -72,6 +73,7 @@ void map::loadImages()
 void map::initializeImages()
 {
 	tradeCard = NULL;
+	DevHand = NULL;
 	resourceCard = NULL;
 	buildCard = NULL;
 	testSelect = NULL;
@@ -247,7 +249,8 @@ void map::drawBoard(SDL_Surface * screen)
 	}
 }
 
-
+//more draws!
+////////////////////////////////////////////
 void map::drawBuildCard(SDL_Surface * screen)
 {
 	apply_surface( 0, 0, buildCard, screen, NULL );
@@ -260,7 +263,7 @@ void map::drawResourceList(SDL_Surface * screen, player * p)
 
 void map::drawDevHand(SDL_Surface * screen)
 {
-
+	apply_surface( 0, 0, DevHand, screen, NULL );
 }
 
 void map::drawtradeCard(SDL_Surface * screen)
@@ -313,6 +316,7 @@ void map::apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destinat
 void map::shutdownImages()
 {
 	SDL_FreeSurface(tradeCard);
+	SDL_FreeSurface(DevHand);
 	SDL_FreeSurface(buildCard);
 	SDL_FreeSurface(resourceCard);
 	SDL_FreeSurface(testSelect);

@@ -44,6 +44,7 @@ void map::handleInput_MAP(SDL_Event e, player * p)
 			case SDLK_4:	mapState= map::DEVHAND;			break;
 			case SDLK_5:	mapState= map::TRADE;			break;
 			case SDLK_0:	mapState= map::ENDTURN;			break;
+				//Dice roll can go here
 			}
 	}
 }

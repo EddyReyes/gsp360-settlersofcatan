@@ -122,12 +122,12 @@ void Game::menuInput(SDL_Event & e)
 		int num = 0;
 		switch(e.key.keysym.sym)
 		{
-		case SDLK_1:	num = 1;	break;
-		case SDLK_2:	num = 2;	break;
+		/*case SDLK_1:	num = 1;	break;
+		case SDLK_2:	num = 2;	break;*/
 		case SDLK_3:	num = 3;	break;
 		case SDLK_4:	num = 4;	break;
 		}
-		if(num > 0)
+		if(num >= 3)
 		{
 			initGame(num);
 			gameState = Game::GAME;

@@ -28,6 +28,7 @@ void map::draw(SDL_Surface * screen, player * p)
 		case map::TURNTWOROAD:		drawBoard(screen);
 									drawRoadSelectron(screen);		break;
 	}
+	// this is where drawControls(screen) would go, because then it would print on every map screen in addition to the other draw functions.
 }
 
 // THESE ARE ALL THE IMAGES LOADED THROUGH map.h AND ITS CPPS

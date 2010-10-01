@@ -35,6 +35,7 @@ void map::draw(SDL_Surface * screen, player * p)
 
 void map::loadImages()
 {
+	tradeCard = load_image( "TradeScreen.bmp" );
 	resourceCard = load_image( "resourceCard.bmp" );
 	buildCard = load_image( "buildCard.bmp" );
 	roadTile[0] = load_image( "roadRed.bmp" );
@@ -66,6 +67,30 @@ void map::loadImages()
 	chitTile[7] = load_image( "chit10.bmp" );
 	chitTile[8] = load_image( "chit11.bmp" );
 	chitTile[9] = load_image( "chit12.bmp" );
+}
+
+void map::initializeImages()
+{
+	tradeCard = NULL;
+	resourceCard = NULL;
+	buildCard = NULL;
+	testSelect = NULL;
+	hexTile = NULL;
+	woodTile = NULL;
+	wheatTile = NULL;
+	stoneTile = NULL;
+	sheepTile = NULL;
+	brickTile = NULL;
+	for (int i = 0; i < 10; ++i)
+	{
+		chitTile[i] = NULL;
+	}
+	for (int i = 0; i < 4; ++i)
+	{
+		settlementTile[i] = NULL;
+		cityTile[i] = NULL;
+		roadTile[i] = NULL;
+	}
 }
 
 void map::drawNodeSelectron(SDL_Surface * screen)
@@ -240,7 +265,7 @@ void map::drawDevHand(SDL_Surface * screen)
 
 void map::drawTradeScreen(SDL_Surface * screen)
 {
-
+	apply_surface( 0, 0, tradeCard, screen, NULL );
 }
 
 //function to load images
@@ -287,6 +312,7 @@ void map::apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destinat
 
 void map::shutdownImages()
 {
+	SDL_FreeSurface(tradeCard);
 	SDL_FreeSurface(buildCard);
 	SDL_FreeSurface(resourceCard);
 	SDL_FreeSurface(testSelect);

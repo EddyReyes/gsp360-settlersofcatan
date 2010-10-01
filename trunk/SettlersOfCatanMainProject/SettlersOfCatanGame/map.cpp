@@ -181,25 +181,7 @@ map::map()
 
 	//=========IMAGE ASSIGNMENT==================
 
-	resourceCard = NULL;
-	buildCard = NULL;
-	testSelect = NULL;
-	hexTile = NULL;
-	woodTile = NULL;
-	wheatTile = NULL;
-	stoneTile = NULL;
-	sheepTile = NULL;
-	brickTile = NULL;
-	for (int i = 0; i < 10; ++i)
-	{
-		chitTile[i] = NULL;
-	}
-	for (int i = 0; i < 4; ++i)
-	{
-		settlementTile[i] = NULL;
-		cityTile[i] = NULL;
-		roadTile[i] = NULL;
-	}
+	initializeImages();
 
 	//===========SELECTRON====================
 	nodeSelectron = NULL;

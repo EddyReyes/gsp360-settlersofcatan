@@ -15,7 +15,7 @@ int main(int argc, char ** argv)
     // create a new window
     SDL_Surface* screen = SDL_SetVideoMode(
 		SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP,SDL_HWSURFACE|SDL_DOUBLEBUF
-		/*comment out FULLSCREEN to see console*/|SDL_FULLSCREEN);
+		/*comment out FULLSCREEN to see console*//*|SDL_FULLSCREEN*/);
 	bool running = true;
 	SDL_Event e;
 	Uint32 now, then = SDL_GetTicks(), passed;

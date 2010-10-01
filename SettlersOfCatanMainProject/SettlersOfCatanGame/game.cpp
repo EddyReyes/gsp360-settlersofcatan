@@ -2,9 +2,11 @@
 #include "map.h"
 #include "sdl/sdl.h"
 #include "menu.h"
+#include "dice.h"
 
 Game::Game()
 {
+	die = new Dice[2];
 	gameState = Game::MENU;
 	underlyingBoard.initializeCenters();
 	underlyingBoard.loadImages();
@@ -37,16 +39,15 @@ void Game::draw(SDL_Surface * screen)
 	{
 	case Game::MENU:
 
-		//printf("The Menu Screen goes here!!!\n");
-
 		SDL_FillRect(screen, 0, 0);
 		m.draw(screen);
 		SDL_Flip(screen);
 
 		break;
+
 	case Game::GAME:
 		//printf("We are INSIDE the game!!!\n");
-		
+
 		SDL_FillRect(screen, 0, 0);
 		underlyingBoard.draw(screen, &p[activePlayer]);
 		SDL_Flip(screen);
@@ -108,6 +109,8 @@ void Game::update(int ms)
 				cout << "A WHOLE NEW WORLD! TURN " << underlyingBoard.overallTurn << endl;
 			}
 		}
+
+
 		break;
 	}
 }
@@ -122,8 +125,6 @@ void Game::menuInput(SDL_Event & e)
 		int num = 0;
 		switch(e.key.keysym.sym)
 		{
-		/*case SDLK_1:	num = 1;	break;
-		case SDLK_2:	num = 2;	break;*/
 		case SDLK_3:	num = 3;	break;
 		case SDLK_4:	num = 4;	break;
 		}
@@ -135,8 +136,6 @@ void Game::menuInput(SDL_Event & e)
 		break;
 	}/////////////////////////////////
 }
-
-
 //Mouse controls/mouse down condition
 bool mouse_down = false;
 

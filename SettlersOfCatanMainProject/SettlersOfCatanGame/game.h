@@ -4,6 +4,12 @@
 #include "map.h"
 #include "menu.h"
 #include "tradebank.h"
+#include "dice.h"
+#include <iostream>
+#include <string> 
+#include <ctime>
+#include <time.h>
+#include <stdio.h> // printf() 
 
 
 class Game
@@ -16,16 +22,18 @@ private:
 
 	//map
 	map underlyingBoard;
+	//menu
+	Menu m;
+	static const int MENU = 0; // menu state
+	void menuInput(SDL_Event & e);
 	
 	//game state
 	int gameState;
 	static const int GAME = 1; // play state
 	void gameInput(SDL_Event & e);
 	
-	//menu
-	Menu m;
-	static const int MENU = 0; // menu state
-	void menuInput(SDL_Event & e);
+	//Dice
+	Dice* die;
 	
 	// player
 	int numPlayers;

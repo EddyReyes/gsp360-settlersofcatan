@@ -263,6 +263,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\mapImage.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\mapInput.cpp"
 				>
 			</File>

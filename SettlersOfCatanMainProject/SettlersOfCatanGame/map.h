@@ -16,6 +16,7 @@ class map
 {
 private:
 	//===surfaces used for images===============
+	SDL_Surface *tradeCard;
 	SDL_Surface *buildCard;
 	SDL_Surface *resourceCard;
 	SDL_Surface *roadTile[4];
@@ -86,6 +87,7 @@ public:
 	//=======DRAW FUNCTIONS HANDLED IN THE mapImage.cpp FILE===============
 	void map::draw(SDL_Surface * screen, player * p);
 	void map::loadImages(void);
+	void map::initializeImages(void);
 	void map::drawTradeScreen(SDL_Surface * screen);
 	void map::drawDevHand(SDL_Surface * screen);
 	void map::drawResourceList(SDL_Surface * screen, player * p);

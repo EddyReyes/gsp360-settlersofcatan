@@ -125,8 +125,8 @@ void map::handleInput_TRADE(SDL_Event e, player * p)
 			{
 			case SDLK_1:	mapState= map::MAP;				break;
 			case SDLK_2:	mapState= map::BUILDCARD;		break;
+			case SDLK_3:	mapState= map::RESOURCELIST;	break;
 			case SDLK_4:	mapState= map::DEVHAND;			break;
-			case SDLK_5:	mapState= map::TRADE;			break;
 			//ADD TRADE FUNCTIONALITY. DON'T KNOW HOW.
 			}
 	}

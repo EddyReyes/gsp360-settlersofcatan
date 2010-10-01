@@ -4,13 +4,13 @@
 
 void map::whichNodeIsWithin(int const & x, int const & y, int radius)
 {
-	float minDistance, distance, dx, dy, maxRadius = radius*radius;
+	float minDistance, distance, dx, dy, maxRadius = (float)(radius*radius);
 	minDistance = 2500;
 	Node * closest = NULL;
 	for(int i = 0; i < 54; ++i)
 	{
-		dx = myNodes[i].pixelX + 16- x;
-		dy = myNodes[i].pixelY + 16 - y;
+		dx = (float)(myNodes[i].pixelX + 16- x);
+		dy = (float)(myNodes[i].pixelY + 16 - y);
 		distance = dx*dx + dy*dy;
 		if(distance < maxRadius 
 		&& (closest != NULL || distance < minDistance))
@@ -23,13 +23,13 @@ void map::whichNodeIsWithin(int const & x, int const & y, int radius)
 
 void map::whichRoadIsWithin(int const & x, int const & y, int radius)
 {
-	float minDistance, distance, dx, dy, maxRadius = radius*radius;
+	float minDistance, distance, dx, dy, maxRadius = (float)(radius*radius);
 	minDistance = 2500;
 	Edge * closest = NULL;
 	for(int i = 0; i < 144; ++i)
 	{
-		dx = myEdges[i].pixelX + 16 - x;
-		dy = myEdges[i].pixelY + 16 - y;
+		dx = (float)(myEdges[i].pixelX + 16 - x);
+		dy = (float)(myEdges[i].pixelY + 16 - y);
 		distance = dx*dx + dy*dy;
 		if(distance < maxRadius 
 		&& (closest != NULL || distance < minDistance))

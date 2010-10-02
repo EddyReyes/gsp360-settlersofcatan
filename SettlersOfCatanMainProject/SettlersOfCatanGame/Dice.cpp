@@ -85,12 +85,11 @@ void Dice::apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destina
 //Image Loader
 void Dice::loadImages()
 {
-	/*background = load_image( "background.bmp" );*/
 	diceDisplay = load_image( "dice_display.bmp" );
 	diceRoll = load_image( "dice_roll.bmp" );
 
 	//Open the font
-	font = TTF_OpenFont( "SNAP.TTF", 18);
+	font = TTF_OpenFont( "SNAP.ttf", 18);
 
 	//set transparency: image then color
 	setTransparentColor(diceRoll, 0xFFFFFF);
@@ -162,6 +161,7 @@ void Dice::loadImages()
 
 void Dice::drawDiceScreen(SDL_Surface * screen, int dice1, int dice2)
 {
+	/*
 		//this is for animation through time
 		static bool restartTime = true;
 		static clock_t start = clock();
@@ -222,6 +222,7 @@ void Dice::drawDiceScreen(SDL_Surface * screen, int dice1, int dice2)
 		//draw extra sprites here
 
 		//apply_surface(25, 350, , screen, &frameS[counterS]);
+		*/
 
 //===========================================================================================
 	
@@ -247,40 +248,36 @@ void Dice::drawDiceScreen(SDL_Surface * screen, int dice1, int dice2)
 		int totalDice = dice1+dice2;
 		switch(totalDice)
 		{
-			case 2: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 2." , textColor );
-		apply_surface( 100, 150, message, screen, NULL ); cout << " ROLLED A SOMETHING!" << endl;break;
+			case 2: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 2" , textColor );
+		apply_surface( 100, 150, message, screen, NULL ); break;
 			case 3: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 3." , textColor );
-		apply_surface( 100, 150, message, screen, NULL ); cout << " ROLLED A SOMETHING!" << endl;break;
+		apply_surface( 100, 150, message, screen, NULL ); break;
 			case 4: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 4." , textColor );
-		apply_surface( 100, 150, message, screen, NULL ); cout << " ROLLED A SOMETHING!" << endl;break;
+		apply_surface( 100, 150, message, screen, NULL ); break;
 			case 5: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 5." , textColor );
-		apply_surface( 100, 150, message, screen, NULL ); cout << " ROLLED A SOMETHING!" << endl;break;
+		apply_surface( 100, 150, message, screen, NULL ); break;
 			case 6: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 6." , textColor );
-		apply_surface( 100, 150, message, screen, NULL ); cout << " ROLLED A SOMETHING!" << endl;break;
+		apply_surface( 100, 150, message, screen, NULL ); break;
 			case 7: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 7." , textColor );
-		apply_surface( 100, 150, message, screen, NULL ); cout << " ROLLED A SOMETHING!" << endl;break;
+		apply_surface( 100, 150, message, screen, NULL ); break;
 			case 8: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 8." , textColor );
-		apply_surface( 100, 150, message, screen, NULL ); cout << " ROLLED A SOMETHING!" << endl;break;
+		apply_surface( 100, 150, message, screen, NULL ); break;
 			case 9: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 9." , textColor );
-		apply_surface( 100, 150, message, screen, NULL ); cout << " ROLLED A SOMETHING!" << endl;break;
+		apply_surface( 100, 150, message, screen, NULL ); break;
 			case 10: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 10." , textColor );
-		apply_surface( 100, 150, message, screen, NULL ); cout << " ROLLED A SOMETHING!" << endl;break;
+		apply_surface( 100, 150, message, screen, NULL ); break;
 			case 11: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 11." , textColor );
-		apply_surface( 100, 150, message, screen, NULL ); cout << " ROLLED A SOMETHING!" << endl;break;
+		apply_surface( 100, 150, message, screen, NULL ); break;
 			case 12: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 12." , textColor );
-		apply_surface( 100, 150, message, screen, NULL ); cout << " ROLLED A SOMETHING!" << endl;break;
+		apply_surface( 100, 150, message, screen, NULL ); break;
 		}
 
-		if (message != NULL)
-		{
-			cout << "MESSAGE IS NOT NULL" << endl;
-		}
 
 
 //===========================================================================================
 
 
- 
+	/*
 		if(randomize == true)
 		{
 			diceframe1 = random();
@@ -289,6 +286,7 @@ void Dice::drawDiceScreen(SDL_Surface * screen, int dice1, int dice2)
 			diceframe4 = random();
 			diceframe5 = random();
 		}
+		*/
 
 		/*
 		if(rollDice == false)

@@ -11,6 +11,12 @@ int main(int argc, char ** argv)
 	if (SDL_Init( SDL_INIT_EVERYTHING ) != 0)
 		printf( "Unable to init SDL: %s\n", SDL_GetError());
     // ensure a clean exit
+	TTF_Init();
+	if( TTF_Init() != 0 ) 
+	{ 
+		cout << "could not initialize SDLttf " << endl;
+		return 2;
+	} 
     atexit(SDL_Quit);
     // create a new window
     SDL_Surface* screen = SDL_SetVideoMode(

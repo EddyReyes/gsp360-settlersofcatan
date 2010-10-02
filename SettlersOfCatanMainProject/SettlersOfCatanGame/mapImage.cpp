@@ -8,11 +8,12 @@ void map::draw(SDL_Surface * screen, player * p)
 {
 	switch(mapState)
 	{
+		case map::BEGINTURN:		drawDiceRoll(screen, p);		break;
 		case map::MAP:				drawBoard(screen);				break; 
 		case map::BUILDCARD:		drawBuildCard(screen);			break;
 		case map::RESOURCELIST:		drawResourceList(screen, p);	break;
 		case map::DEVHAND:			drawDevHand(screen);			break;
-		case map::TRADE:			drawtradeCard(screen);		break;
+		case map::TRADE:			drawtradeCard(screen);			break;
 		case map::BUILDROAD:		drawBoard(screen);
 									drawRoadSelectron(screen);		break;
 		case map::BUILDSETTLEMENT:	drawBoard(screen);
@@ -72,6 +73,7 @@ void map::loadImages()
 
 void map::initializeImages()
 {
+	dice.loadImages();
 	tradeCard = NULL;
 	DevHand = NULL;
 	resourceCard = NULL;
@@ -269,6 +271,12 @@ void map::drawDevHand(SDL_Surface * screen)
 void map::drawtradeCard(SDL_Surface * screen)
 {
 	apply_surface( 0, 0, tradeCard, screen, NULL );
+}
+
+void map::drawDiceRoll(SDL_Surface * screen, player * p)
+{
+	dice.drawDiceScreen(screen, dice1, dice2);
+	cout << " THIS HAPPENED! " << endl;
 }
 
 //function to load images

@@ -1,4 +1,5 @@
 #include "map.h"
+#include <ctime>
 
 // DURING THE GAME, THE MAP GOES INTO MANY MAP STATES. 
 // THIS IS THE LIST OF ALL THE MAP STATES, AND WHICH 
@@ -27,9 +28,20 @@ void map::handleInput(SDL_Event e, player * p)
 
 void map::handleInput_BEGINTURN(SDL_Event e, player *p)
 {
-	//some DiceRoll mechanics would happen here
-	//assigning of resources to players would happen here
-	mapState = map::MAP;
+	// DiceRoll mechanics would happen here
+	// assigning of resources to players would happen here
+	// perhaps on-screen notification of which player recieved what resource.
+	switch(e.type)
+	{
+		case SDL_KEYDOWN:
+			switch(e.key.keysym.sym)
+			{
+				case SDLK_SPACE:	mapState= map::MAP;		break;	// THIS SWITCH FUNCTION MEANS THAT THIS 
+																	// STATE WILL WAIT UNTIL THE PLAYER ACKNOWLEDGES 
+																	// THE FACT THAT IT IS HIS OR HER TURN AND HE OR 
+																	// SHE HAS ROLLED A #.
+			}
+	}
 }
 
 void map::handleInput_MAP(SDL_Event e, player * p)
@@ -44,7 +56,11 @@ void map::handleInput_MAP(SDL_Event e, player * p)
 			case SDLK_4:	mapState= map::DEVHAND;			break;
 			case SDLK_5:	mapState= map::TRADE;			break;
 			case SDLK_0:	mapState= map::ENDTURN;			break;
-				//Dice roll can go here
+				//Dice roll can go here <--------------------
+				// kyle:: actually I'd recommend putting it in handleInput_BEGINTURN, 
+				// that way it only happens once. handleInput_MAP can happen multiple 
+				// times per turn (if someone switches in and out of the map screen 
+				// and the trade screen, for example).
 			}
 	}
 }

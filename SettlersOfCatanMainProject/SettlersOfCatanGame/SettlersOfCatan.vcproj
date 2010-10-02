@@ -191,10 +191,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\dv_sdlgrafix.h"
-				>
-			</File>
-			<File
 				RelativePath=".\edge.h"
 				>
 			</File>
@@ -256,10 +252,6 @@
 			</File>
 			<File
 				RelativePath=".\Dice.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\dv_sdlgrafix.cpp"
 				>
 			</File>
 			<File

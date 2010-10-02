@@ -2,11 +2,11 @@
 #include "map.h"
 #include "sdl/sdl.h"
 #include "menu.h"
-#include "dice.h"
+#include <ctime>
 
 Game::Game()
 {
-	die = new Dice[2];
+	//die = new Dice[2];
 	gameState = Game::MENU;
 	underlyingBoard.initializeCenters();
 	underlyingBoard.loadImages();
@@ -14,6 +14,8 @@ Game::Game()
 	changeTime = 5000;
 	timer = 0;
 	placeHolderTurnTwo = 0;
+	srand(time(0));
+	rand();
 	ownerLargestArmy = NULL;
 	ownerLongestRoad = NULL;
 }
@@ -79,6 +81,7 @@ void Game::update(int ms)
 				activePlayer = 0;
 			}
 			cout << "placeHolderTurnTwo is " << placeHolderTurnTwo << endl;
+			//cout << "placeHolderTurnTwo is " << placeHolderTurnTwo << endl;
 			activePlayer++;
 			if (activePlayer >= numPlayers)
 			{
@@ -87,6 +90,8 @@ void Game::update(int ms)
 			}
 			cout << "placeHolderTurnTwo is " << placeHolderTurnTwo << endl;
 			cout << "Overall turn is " << underlyingBoard.overallTurn << endl;
+			//cout << "placeHolderTurnTwo is " << placeHolderTurnTwo << endl;
+			//cout << "Overall turn is " << underlyingBoard.overallTurn << endl;
 
 			if (underlyingBoard.overallTurn == 2)
 			{
@@ -105,8 +110,12 @@ void Game::update(int ms)
 			{
 				underlyingBoard.mapState = map::TURNONESETTLEMENT;
 			}
-			else
+
+			if (underlyingBoard.overallTurn >= 3)
 			{
+				underlyingBoard.dice1 = rand() % 6 + 1;
+				underlyingBoard.dice2 = rand() % 6 + 1;
+				cout << "A WHOLE NEW WORLD! TURN " << underlyingBoard.overallTurn << endl;
 				underlyingBoard.mapState = map::BEGINTURN;
 				cout << "A WHOLE NEW WORLD! TURN " << underlyingBoard.overallTurn << endl;
 			}

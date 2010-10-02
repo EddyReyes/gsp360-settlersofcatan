@@ -1,18 +1,6 @@
 #include "dice.h"
-#include "dv_sdlgrafix.h"
+#include <ctime>
 
-	//dice frames
-SDL_Rect frameDD[6];
-SDL_Rect frameDR[5];
-int rolls = 0;
-int diceframe1 = 0;  
-int diceframe2 = 0; 
-int diceframe3 = 0; 
-int diceframe4 = 0;
-int diceframe5 = 0;
-
-//The color of the font 
-SDL_Color textColor = {255,255,9};//yellowish text for now
 
 //dice constructor
 Dice::Dice(void)
@@ -20,33 +8,37 @@ Dice::Dice(void)
 	diceDisplay = NULL;
 	diceRoll = NULL;
 
+	textColor.r = 255;//yellowish text for now 255,255,9
+	textColor.g = 255;
+	textColor.b = 9;
+
 	message = NULL;
 	font = NULL;
+
+	rolls = 0;
+	diceframe1 = 0;  
+	diceframe2 = 0; 
+	diceframe3 = 0; 
+	diceframe4 = 0;
+	diceframe5 = 0;
 
 	counterDR = 0;
 	counterDD = 0;
 	counterS = 0;
 
-	numDice = 1;
+	numDice = 2;
 
 	rollDice = false;
 	randomize = false;
 	randomRange = 6;
-	//menuScreen = NULL;
-	//background = NULL;
 }
 
 void Dice::shutdownImages()
 {
-	
-	SDL_FreeSurface(background);
 	SDL_FreeSurface(diceDisplay);
 	SDL_FreeSurface(diceRoll);
-
+	SDL_FreeSurface(message);
 	TTF_CloseFont(font);
-
-	/*SDL_FreeSurface(background);
-	SDL_FreeSurface(menuScreen);*/
 }
 
 //function to load images
@@ -98,7 +90,7 @@ void Dice::loadImages()
 	diceRoll = load_image( "dice_roll.bmp" );
 
 	//Open the font
-	font = TTF_OpenFont( "SNAP.ttf", 18);
+	font = TTF_OpenFont( "SNAP.TTF", 18);
 
 	//set transparency: image then color
 	setTransparentColor(diceRoll, 0xFFFFFF);
@@ -168,7 +160,7 @@ void Dice::loadImages()
 	
 }
 
-void Dice::draw(SDL_Surface * screen)
+void Dice::drawDiceScreen(SDL_Surface * screen, int dice1, int dice2)
 {
 		//this is for animation through time
 		static bool restartTime = true;
@@ -179,8 +171,6 @@ void Dice::draw(SDL_Surface * screen)
 		{
 			start = clock();
 			restartTime = false;
-			
-
 		}
 		ellapseTime = (clock() - start);
 		//algo for animations go here (down at if statement)
@@ -216,25 +206,28 @@ void Dice::draw(SDL_Surface * screen)
 
 		restartTime = true;
 	
-}
+		}
 		// ---- update
 		// ---- render
 		// clear the screen with black
-		SDL_FillRect(screen, 0, 0);
+		//SDL_FillRect(screen, 0, 0);
 
 		// draw the list state to the screen buffer
-		apply_surface( 0, 0, background, screen, NULL ); 
-		apply_surface( 640, 0, background, screen, NULL );
-		apply_surface( 0, 480, background, screen, NULL );
-		apply_surface( 640, 480, background, screen, NULL );
+
+		//apply_surface( 0, 0, background, screen, NULL ); 
+		//apply_surface( 640, 0, background, screen, NULL );
+		//apply_surface( 0, 480, background, screen, NULL );
+		//apply_surface( 640, 480, background, screen, NULL );
 
 		//draw extra sprites here
 
-		//apply_surface(25, 350, /*place image here to apply*/, screen, &frameS[counterS]);
+		//apply_surface(25, 350, , screen, &frameS[counterS]);
 
 //===========================================================================================
 	
 		//Render the text
+
+		/*
 		message = TTF_RenderText_Solid( font, "THIS IS THE DICE GRAPHIC", textColor ); 
 		apply_surface( 100, 50, message, screen, NULL ); 
 
@@ -249,11 +242,44 @@ void Dice::draw(SDL_Surface * screen)
 
 		message = TTF_RenderText_Solid( font, "ESC = To exit", textColor );
 		apply_surface( 100, 150, message, screen, NULL );
+		*/
+
+		int totalDice = dice1+dice2;
+		switch(totalDice)
+		{
+			case 2: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 2." , textColor );
+		apply_surface( 100, 150, message, screen, NULL ); cout << " ROLLED A SOMETHING!" << endl;break;
+			case 3: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 3." , textColor );
+		apply_surface( 100, 150, message, screen, NULL ); cout << " ROLLED A SOMETHING!" << endl;break;
+			case 4: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 4." , textColor );
+		apply_surface( 100, 150, message, screen, NULL ); cout << " ROLLED A SOMETHING!" << endl;break;
+			case 5: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 5." , textColor );
+		apply_surface( 100, 150, message, screen, NULL ); cout << " ROLLED A SOMETHING!" << endl;break;
+			case 6: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 6." , textColor );
+		apply_surface( 100, 150, message, screen, NULL ); cout << " ROLLED A SOMETHING!" << endl;break;
+			case 7: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 7." , textColor );
+		apply_surface( 100, 150, message, screen, NULL ); cout << " ROLLED A SOMETHING!" << endl;break;
+			case 8: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 8." , textColor );
+		apply_surface( 100, 150, message, screen, NULL ); cout << " ROLLED A SOMETHING!" << endl;break;
+			case 9: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 9." , textColor );
+		apply_surface( 100, 150, message, screen, NULL ); cout << " ROLLED A SOMETHING!" << endl;break;
+			case 10: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 10." , textColor );
+		apply_surface( 100, 150, message, screen, NULL ); cout << " ROLLED A SOMETHING!" << endl;break;
+			case 11: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 11." , textColor );
+		apply_surface( 100, 150, message, screen, NULL ); cout << " ROLLED A SOMETHING!" << endl;break;
+			case 12: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 12." , textColor );
+		apply_surface( 100, 150, message, screen, NULL ); cout << " ROLLED A SOMETHING!" << endl;break;
+		}
+
+		if (message != NULL)
+		{
+			cout << "MESSAGE IS NOT NULL" << endl;
+		}
+
 
 //===========================================================================================
 
 
-		int spacing = 100;
  
 		if(randomize == true)
 		{
@@ -264,87 +290,28 @@ void Dice::draw(SDL_Surface * screen)
 			diceframe5 = random();
 		}
 
-
-		//check and draws dice
-		switch(numDice)
+		/*
+		if(rollDice == false)
 		{
-		case 1:
-		//draw dice	
-			if(rollDice == false)
-			{
-		apply_surface( 100, 250, diceDisplay, screen, &frameDD[diceframe1]);
-			}
-		apply_surface( 100, 325, diceRoll, screen, &frameDD[counterDR]);
-		randomize = false;
-		break;
-		case 2:
-			if(rollDice == false)
-			{
 			apply_surface( 100, 250, diceDisplay, screen, &frameDD[diceframe1]);
 			apply_surface( 200, 250, diceDisplay, screen, &frameDD[diceframe2]);
-			}
-			for(int i = 0; i < 2; i++)
-			{		
-				
-				apply_surface( 100+(spacing * i), 325, diceRoll, screen, &frameDD[counterDR]);
-	
-			}
-			randomize = false;
-			break;
-		case 3:
-			if(rollDice == false)
-			{
-			apply_surface( 100, 250, diceDisplay, screen, &frameDD[diceframe1]);
-			apply_surface( 200, 250, diceDisplay, screen, &frameDD[diceframe2]);
-			apply_surface( 300, 250, diceDisplay, screen, &frameDD[diceframe3]);
-			}
-			for(int i = 0; i < 3; i++)
-			{	
-			
-				apply_surface( 100+(spacing * i), 325, diceRoll, screen, &frameDD[counterDR]);
-	
-			}
-			randomize = false;
-			break;
-		case 4:
-			if(rollDice == false)
-			{
-			apply_surface( 100, 250, diceDisplay, screen, &frameDD[diceframe1]);
-			apply_surface( 200, 250, diceDisplay, screen, &frameDD[diceframe2]);
-			apply_surface( 300, 250, diceDisplay, screen, &frameDD[diceframe3]);
-			apply_surface( 400, 250, diceDisplay, screen, &frameDD[diceframe4]);
-			}
-			for(int i = 0; i < 4; i++)
-			{
-				apply_surface( 100+(spacing * i), 325, diceRoll, screen, &frameDD[counterDR]);
-	
-			}
-			randomize = false;
-			break;
-		case 5:
-			if(rollDice == false)
-			{
-			apply_surface( 100, 250, diceDisplay, screen, &frameDD[diceframe1]);
-			apply_surface( 200, 250, diceDisplay, screen, &frameDD[diceframe2]);
-			apply_surface( 300, 250, diceDisplay, screen, &frameDD[diceframe3]);
-			apply_surface( 400, 250, diceDisplay, screen, &frameDD[diceframe4]);
-			apply_surface( 500, 250, diceDisplay, screen, &frameDD[diceframe5]);
-			}
-			for(int i = 0; i < 5; i++)
-			{
-				apply_surface( 100+(spacing * i), 325, diceRoll, screen, &frameDD[counterDR]);
-	
-			}
-			randomize = false;
-			break;
-		default:
-			break;
 		}
-		// flip the screen buffer
-		SDL_Flip(screen);	
+		*/
+		int spacing = 100;
+		apply_surface( 100, 250, diceDisplay, screen, &frameDD[dice1-1]);
+		apply_surface( 200, 250, diceDisplay, screen, &frameDD[dice2-1]);
+		//apply_surface( 100+(spacing * 0), 325, diceDisplay, screen, &frameDD[dice1 - 1]);
+		//apply_surface( 100+(spacing * 1), 325, diceDisplay, screen, &frameDD[dice2 - 1]);
+		//cout << "APPLIED THE DICE" << endl;
+		//randomize = false;
 }
 int Dice::random()
 {
+	srand(time(0));
+	rand();
+	return rand() % randomRange;
+
+	/*
 	// our initial starting seed is 5323
 	static unsigned int nSeed = 5323;
 
@@ -357,7 +324,15 @@ int Dice::random()
 
 	// return a value between 0 and 32767
 	return nSeed  % randomRange;
+	*/
 }
 
 		
-		
+void Dice::setTransparentColor(SDL_Surface * a_surface, const int & a_transparentRGB)
+{
+	Uint32 colorkey = SDL_MapRGB( a_surface->format, 	//Map the color key
+		0xff & (a_transparentRGB), 
+		0xff & (a_transparentRGB >> 8), 
+		0xff & (a_transparentRGB >> 16));
+	SDL_SetColorKey( a_surface, SDL_SRCCOLORKEY, colorkey );
+}

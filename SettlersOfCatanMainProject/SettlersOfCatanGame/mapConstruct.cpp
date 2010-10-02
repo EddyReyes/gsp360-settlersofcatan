@@ -92,7 +92,6 @@ bool map::constructRoadOnMap(player * p)
 
 bool map::constructSettlementOnMap(player * p)
 {
-	//THIS FUNCTION IS MILDLY BAD. IT LOOKS FOR BUILDABILITY BY DRAW PIXEL COUNTS, NOT BY ACTUALLY LOOKING AT EDGES THAT CONNECT TO NODES.
 	bool buildable = false;
 	for (int i = 0; i < 54; ++i)
 	{
@@ -123,8 +122,6 @@ bool map::constructSettlementOnMap(player * p)
 			}
 		}
 	}
-	// RIGHT AROUND HERE, THIS FUNCTION WOULD NEED TO CHECK FOR ROADS AND SET BUILDABILITY TO FALSE IF IT FINDS NONE.
-
 	for (int i = 0; myNodes[nodeSelectron].numOfEdges; ++i)
 	{
 		if (myNodes[nodeSelectron].nodeEdges[i]->owner == p->ID)

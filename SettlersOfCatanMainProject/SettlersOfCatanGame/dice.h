@@ -24,16 +24,30 @@ class Dice
 
 	SDL_Surface *load_image( std::string filename );
 	void apply_surface(int x, int y, SDL_Surface* source, SDL_Surface* destination, SDL_Rect *clip);
+	void setTransparentColor(SDL_Surface * a_surface, const int & a_transparentRGB);
 		
 public:
 
 	Dice();
+
+
+	//The color of the font 
+	SDL_Color textColor; 
+
+	SDL_Rect frameDD[6];
+	SDL_Rect frameDR[5];
+	int rolls;
+	int diceframe1;  
+	int diceframe2; 
+	int diceframe3; 
+	int diceframe4;
+	int diceframe5;
 	
 	//The font that's going to be used
 	TTF_Font *font;
 
 	void shutdownImages();
-	void draw(SDL_Surface * screen);
+	void drawDiceScreen(SDL_Surface * screen, int dice1, int dice2);
 	void loadImages();
 	
 	bool rollDice;

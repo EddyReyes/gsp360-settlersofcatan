@@ -14,6 +14,8 @@ Game::Game()
 	changeTime = 5000;
 	timer = 0;
 	placeHolderTurnTwo = 0;
+	ownerLargestArmy = NULL;
+	ownerLongestRoad = NULL;
 }
 
 void Game::initGame(int const & a_numPlayers)
@@ -156,5 +158,42 @@ void Game::input(SDL_Event & e)
 	case Game::GAME:
 		gameInput(e);
 		break;
+	}
+}
+
+int Game::calculateVictoryPoints(player* p)
+{
+	int tempVP = 0;
+
+	tempVP += 5 - p->getNumUnusedSettlements();//settlements
+	tempVP += (4 - p->getNumUnusedCities()) * 2;//cities
+
+	tempVP += p->getNumUsedVictoryPoints();//played victory points
+
+	if(p->getHasLargestArmy())
+		tempVP += 2;//largest army
+
+	if(p->getHasLongestRoad())
+		tempVP += 2;//longest road
+
+	p->setVictoryPoints(tempVP);//sets the player's victory points
+
+	return tempVP;
+}
+
+void Game::calcLargestArmy(player* p)
+{
+	if(p->getNumUsedSoldiers() >= 3)
+	{
+		if(ownerLargestArmy == NULL)
+		{
+			p->awardLargestArmy();//the player is the first to get to 3
+			ownerLargestArmy = p;
+		}
+		else if(p->getNumUsedSoldiers() > ownerLargestArmy->getNumUsedSoldiers())
+		{
+			p->awardLargestArmy();
+			ownerLargestArmy->retractLargestArmy();
+		}
 	}
 }

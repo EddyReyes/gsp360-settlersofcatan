@@ -46,7 +46,17 @@ public:
 	void player::changeResource(char type, int num);
 	//void player::addResource(char type, int num);
 	//void player::removeResource(char type, int num);
-	bool player::CheckWin();
+	//bool player::CheckWin();
+
+	//added these for the calcVictoryPoints function
+	void setVictoryPoints(int vp) { currentVictoryPoints = vp; }
+	int getNumUnusedSettlements() { return numUnusedSettlements; }
+	int getNumUnusedCities() { return numUnusedSettlements; }
+	bool getHasLargestArmy() { return hasLargestArmy; }
+	bool getHasLongestRoad() { return hasLongestRoad; }
+	int getNumUsedSoldiers() { return usedSoldiers; }
+	int getNumUnusedRoads() { return numUnusedRoads; }
+	int getNumUsedVictoryPoints() { return usedVictoryPoints; }
 };
 
 

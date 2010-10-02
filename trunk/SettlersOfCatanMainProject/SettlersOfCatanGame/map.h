@@ -9,6 +9,7 @@
 #include "center.h"
 #include "stndrd.h"
 #include "player.h"
+#include "dice.h"
 
 using namespace std;
 
@@ -42,6 +43,12 @@ private:
 
 
 public:
+	// ============== DICE STUFF =========================
+	Dice dice;
+	int dice1;
+	int dice2;
+
+
 	// =============== MAPSTATES (THEY ARE PUBLIC BECAUSE GAME.CPP NEEDS THEM SOMETIMES ====================
 	int mapState;
 	static const int BEGINTURN = 0; // start state to trigger dice roll and such;
@@ -90,6 +97,7 @@ public:
 	void map::draw(SDL_Surface * screen, player * p);
 	void map::loadImages(void);
 	void map::initializeImages(void);
+	void map::drawDiceRoll(SDL_Surface * screen, player * p);
 	void map::drawtradeCard(SDL_Surface * screen);
 	void map::drawDevHand(SDL_Surface * screen);
 	void map::drawResourceList(SDL_Surface * screen, player * p);

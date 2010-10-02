@@ -128,3 +128,76 @@ void TradeBank::trade()
 		trader_set = false;
 	}
 }
+
+bool TradeBank::tradeWithBank(rsc* resDeck, player* p, char choice_recieve, char choice_give, int num_recieve, char harbor_type)
+{
+	switch(harbor_type)
+	{
+	case WOOD:
+		if(p->getResource(WOOD) >= 2 * num_recieve)
+		{
+			p->drawResource(resDeck, choice_recieve, num_recieve);
+			p->drawResource(resDeck, WOOD, (-2 * num_recieve));
+			return true;
+		}
+		break;
+	case WHEAT:
+		if(p->getResource(WHEAT) >= 2 * num_recieve)
+		{
+			p->drawResource(resDeck, choice_recieve, num_recieve);
+			p->drawResource(resDeck, WHEAT, (-2 * num_recieve));
+			return true;
+		}
+		break;
+	case STONE:
+		if(p->getResource(STONE) >= 2 * num_recieve)
+		{
+			p->drawResource(resDeck, choice_recieve, num_recieve);
+			p->drawResource(resDeck, STONE, (-2 * num_recieve));
+			return true;
+		}
+		break;
+	case BRICK:
+		if(p->getResource(BRICK) >= 2 * num_recieve)
+		{
+			p->drawResource(resDeck, choice_recieve, num_recieve);
+			p->drawResource(resDeck, BRICK, (-2 * num_recieve));
+			return true;
+		}
+		break;
+	case SHEEP:
+		if(p->getResource(SHEEP) >= 2 * num_recieve)
+		{
+			p->drawResource(resDeck, choice_recieve, num_recieve);
+			p->drawResource(resDeck, SHEEP, (-2 * num_recieve));
+			return true;
+		}
+		break;
+	case THREE_TO_ONE:
+		if(p->getResource(choice_give) >= 3 * num_recieve)
+		{
+			p->drawResource(resDeck, choice_recieve, num_recieve);
+			p->drawResource(resDeck, choice_give, (-3 * num_recieve));
+			return true;
+		}
+	default:
+		if(p->getResource(choice_give) >= 4 * num_recieve)
+		{
+			p->drawResource(resDeck, choice_recieve, num_recieve);
+			p->drawResource(resDeck, choice_give, (-4 * num_recieve));
+			return true;
+		}
+	};
+	return false;
+}
+
+bool TradeBank::tradeWithBank(rsc* resDeck, player* p, char choice_recieve, char choice_give, int num_recieve)
+{
+	if(p->getResource(choice_give) >= 4 * num_recieve)
+	{
+		p->drawResource(resDeck, choice_recieve, num_recieve);
+		p->drawResource(resDeck, choice_give, (-4 * num_recieve));
+		return true;
+	}
+	return false;
+}

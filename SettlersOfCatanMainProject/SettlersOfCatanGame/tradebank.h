@@ -29,4 +29,6 @@ public:
 	bool setGiveResources(int, int, int, int, int, player*);
 	bool setRecieveResources(int, int, int, int, int, player*);
 	void trade();
+	bool tradeWithBank(rsc* resDeck, player* p, char choice_recieve, char choice_give, int num_recieve, char harbor_type);
+	bool tradeWithBank(rsc* resDeck, player* p, char choice_recieve, char choice_give, int num_recieve);
 };

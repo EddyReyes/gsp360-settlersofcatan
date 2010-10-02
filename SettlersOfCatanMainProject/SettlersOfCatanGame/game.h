@@ -44,6 +44,7 @@ private:
 	Uint32 timer;
 	Uint32 changeTime;
 
+	//trade bank
 	TradeBank tradebank;
 
 

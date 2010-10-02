@@ -47,6 +47,10 @@ private:
 	//trade bank
 	TradeBank tradebank;
 
+	//need these for calculating largest army/ longest road, they store the player who has them.
+	player* ownerLargestArmy;
+	player* ownerLongestRoad;
+
 
 	void Game::initGame(int const & a_numPlayers);
 
@@ -56,5 +60,7 @@ public:
 	void update(int ms);
 	void input(SDL_Event & e);
 	void shutdown(void);
+	int calculateVictoryPoints(player* p);
+	void calcLargestArmy(player* p);
 };
 

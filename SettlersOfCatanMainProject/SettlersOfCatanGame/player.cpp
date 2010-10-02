@@ -158,6 +158,9 @@ void player::drawResource(rsc* resDeck, char type, int num)
 	}
 }
 
+/*
+//dont use this one
+//use the function in the game class
 bool player::CheckWin()
 {
 	//can take out currentVictoryPoints from the player and put it here, since its calculated each time
@@ -183,3 +186,4 @@ bool player::CheckWin()
 
 	return false;//player hasnt won yet
 }
+*/

@@ -1,8 +1,7 @@
 #include "SDL_music.h"
 #include "SDL/SDL_mixer.h"
 
-	////initializing gameSound
-	//gameSound = new sound();
+
 
 Music::Music(){fillMusic(); volume = 100;}
 Music::~Music(){}

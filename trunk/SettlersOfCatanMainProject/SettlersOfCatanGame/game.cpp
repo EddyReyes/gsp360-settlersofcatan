@@ -1,11 +1,13 @@
 #include "game.h"
 #include "map.h"
 #include "sdl/sdl.h"
+#include "SDL_music.h"
 #include "menu.h"
 #include <ctime>
 
 Game::Game()
-{
+{	
+	//gameSound = new Music();
 	gameState = Game::MENU;
 	underlyingBoard = new map();
 	underlyingBoard->initializeCenters();
@@ -30,7 +32,6 @@ void Game::initGame(int const & a_numPlayers)
 		p[i].ID = i;
 	}
 }
-
 void Game::shutdown(void)
 {
 	underlyingBoard->shutdownImages();
@@ -42,7 +43,7 @@ void Game::draw(SDL_Surface * screen)
 	switch(gameState)
 	{
 	case Game::MENU:
-
+					
 		SDL_FillRect(screen, 0, 0);
 		m.draw(screen);
 		SDL_Flip(screen);
@@ -73,8 +74,7 @@ void Game::update(int ms)
 	case Game::MENU:
 		break;
 	case Game::GAME:
-		if(underlyingBoard->mapState == map::ENDTURN)
-		{
+		if(underlyingBoard->mapState == map::ENDTURN)		{
 			if (underlyingBoard->overallTurn == 2)
 			{
 				placeHolderTurnTwo++;

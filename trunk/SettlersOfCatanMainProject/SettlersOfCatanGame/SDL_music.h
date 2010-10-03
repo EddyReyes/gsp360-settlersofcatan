@@ -5,7 +5,7 @@
 #include <string.h>
 #include <math.h>
 #include <iostream>
-#include "SDL/SDL_mixer.h"
+#include "sdl/sdl_mixer.h"
 #include "sdl/sdl.h"
 #include <string>
 using namespace std;

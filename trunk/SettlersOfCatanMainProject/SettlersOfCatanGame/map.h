@@ -1,5 +1,8 @@
 #pragma once
 
+// yo dawg, I heard you will need a Game class. so I'm putting a Game class before the Game class so you can declare before you declare.
+class Game;
+
 #include "sdl/sdl.h"
 #include <iostream>
 #include <ctime>
@@ -10,6 +13,7 @@
 #include "stndrd.h"
 #include "player.h"
 #include "dice.h"
+#include "game.h"
 
 using namespace std;
 
@@ -89,20 +93,20 @@ public:
 	int roadSelectron;
 	void map::whichNodeIsWithin(int const & x, int const & y, int radius);
 	void map::whichRoadIsWithin(int const & x, int const & y, int radius);
-	bool map::constructRoadOnMap(player * p);
-	bool map::constructSettlementOnMap(player * p);
-	bool map::constructSettlementOnMapAnywhere(player * p);
+	bool map::constructRoadOnMap(Game * g);
+	bool map::constructSettlementOnMap(Game * g);
+	bool map::constructSettlementOnMapAnywhere(Game * g);
 
 
 
 	//=======DRAW FUNCTIONS HANDLED IN THE mapImage.cpp FILE===============
-	void map::draw(SDL_Surface * screen, player * p);
+	void map::draw(SDL_Surface * screen, Game * g);
 	void map::loadImages(void);
 	void map::initializeImages(void);
-	void map::drawDiceRoll(SDL_Surface * screen, player * p);
+	void map::drawDiceRoll(SDL_Surface * screen, Game * g);
 	void map::drawtradeCard(SDL_Surface * screen);
 	void map::drawDevHand(SDL_Surface * screen);
-	void map::drawResourceList(SDL_Surface * screen, player * p);
+	void map::drawResourceList(SDL_Surface * screen, Game * g);
 	void map::drawBuildCard(SDL_Surface * screen);
 	void map::drawNodeSelectron(SDL_Surface * screen);
 	void map::drawRoadSelectron(SDL_Surface * screen);
@@ -114,19 +118,19 @@ public:
 
 	
 	//========HANDLE INPUTS, ALL IN THE mapInput.cpp FILE================
-	void map::handleInput(SDL_Event e, player * p);
-	void map::handleInput_BEGINTURN(SDL_Event e, player *p);
-	void map::handleInput_MAP(SDL_Event e, player * p);
-	void map::handleInput_BUILDCARD(SDL_Event e, player * p);
-	void map::handleInput_RESOURCELIST(SDL_Event e, player * p);
-	void map::handleInput_DEVHAND(SDL_Event e, player * p);
-	void map::handleInput_TRADE(SDL_Event e, player * p);
-	void map::handleInput_BUILDROAD(SDL_Event e, player * p);
-	void map::handleInput_BUILDSETTLEMENT(SDL_Event e, player * p);
-	void map::handleInput_BUILDCITY(SDL_Event e, player * p);
-	void map::handleInput_TURNONESETTLEMENT(SDL_Event e, player * p);
-	void map::handleInput_TURNONEROAD(SDL_Event e, player * p);
-	void map::handleInput_TURNTWOSETTLEMENT(SDL_Event e, player * p);
-	void map::handleInput_TURNTWOROAD(SDL_Event e, player * p);
+	void map::handleInput(SDL_Event e, Game * g);
+	void map::handleInput_BEGINTURN(SDL_Event e, Game * g);
+	void map::handleInput_MAP(SDL_Event e, Game * g);
+	void map::handleInput_BUILDCARD(SDL_Event e, Game * g);
+	void map::handleInput_RESOURCELIST(SDL_Event e, Game * g);
+	void map::handleInput_DEVHAND(SDL_Event e, Game * g);
+	void map::handleInput_TRADE(SDL_Event e, Game * g);
+	void map::handleInput_BUILDROAD(SDL_Event e, Game * g);
+	void map::handleInput_BUILDSETTLEMENT(SDL_Event e, Game * g);
+	void map::handleInput_BUILDCITY(SDL_Event e, Game * g);
+	void map::handleInput_TURNONESETTLEMENT(SDL_Event e, Game * g);
+	void map::handleInput_TURNONEROAD(SDL_Event e, Game * g);
+	void map::handleInput_TURNTWOSETTLEMENT(SDL_Event e, Game * g);
+	void map::handleInput_TURNTWOROAD(SDL_Event e, Game * g);
 
 };

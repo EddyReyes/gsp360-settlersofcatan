@@ -1,5 +1,7 @@
 #pragma once
 
+class map;
+
 #include "player.h"
 #include "map.h"
 #include "menu.h"
@@ -12,7 +14,6 @@
 #include <time.h>
 #include <stdio.h> // printf() 
 
-
 class Game
 {
 private:
@@ -22,7 +23,7 @@ private:
 	int placeHolderTurnTwo;
 
 	//map
-	map underlyingBoard;
+	map * underlyingBoard;
 
 	//sound
 	//Music gameSound;
@@ -40,11 +41,6 @@ private:
 	//Dice
 	Dice* die;
 	
-	// player
-	int numPlayers;
-	int activePlayer;
-	player * p;
-	
 	// timer. needed?
 	Uint32 timer;
 	Uint32 changeTime;
@@ -60,6 +56,12 @@ private:
 	void Game::initGame(int const & a_numPlayers);
 
 public:
+	// player
+	player * p;
+	int numPlayers;
+	int activePlayer;
+
+
 	Game();
 	//Music * gameSound;
 	void draw(SDL_Surface * screen);

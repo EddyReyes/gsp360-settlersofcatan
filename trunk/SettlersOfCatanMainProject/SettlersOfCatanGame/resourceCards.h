@@ -1,5 +1,8 @@
 #pragma once
 #include "stndrd.h"
+#include <iostream>
+
+using namespace std;
 
 
 class rsc
@@ -21,5 +24,5 @@ public:
 	}
 	int rsc::pullFromResourcePool(char type, int a_num);
 	void rsc::returnToResourcePool(char type, int a_num);
-	//void rsc::DisplayResourceBankStatus(void);
+	void rsc::DisplayResourceBankStatus(void);
 };

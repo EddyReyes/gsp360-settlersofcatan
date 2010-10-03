@@ -7,12 +7,12 @@ class Game;
 #include <iostream>
 #include <ctime>
 #include <windows.h>
+#include "dice.h"
 #include "edge.h"
 #include "node.h"
 #include "center.h"
 #include "stndrd.h"
 #include "player.h"
-#include "dice.h"
 #include "game.h"
 
 using namespace std;

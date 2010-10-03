@@ -223,7 +223,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\SDL_music.h"				>			</File>			<File				RelativePath=".\SDL_ttf.h"				>			</File>			<File				RelativePath=".\stndrd.h"
+				RelativePath=".\SDL_music.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SDL_ttf.h"
+				>
+			</File>
+			<File
+				RelativePath=".\stndrd.h"
 				>
 			</File>
 			<File

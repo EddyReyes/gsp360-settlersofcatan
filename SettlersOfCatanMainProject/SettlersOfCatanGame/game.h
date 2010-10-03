@@ -6,7 +6,7 @@ class map;
 #include "map.h"
 #include "menu.h"
 #include "tradebank.h"
-//#include "SDL_music.h"
+#include "SDL_music.h"
 #include "dice.h"
 #include <iostream>
 #include <string> 
@@ -26,7 +26,7 @@ private:
 	map * underlyingBoard;
 
 	//sound
-	//Music gameSound;
+	Music * gameSound;
 
 	//menu
 	Menu m;
@@ -37,10 +37,7 @@ private:
 	int gameState;
 	static const int GAME = 1; // play state
 	void gameInput(SDL_Event & e);
-	
-	//Dice
-	Dice* die;
-	
+
 	// timer. needed?
 	Uint32 timer;
 	Uint32 changeTime;

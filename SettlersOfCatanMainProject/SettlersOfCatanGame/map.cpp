@@ -229,7 +229,7 @@ int map::getEdgeFromCount(Edge * population, int popCount, Node * from)
 
 void map::initializeCenters(void)
 {
-	srand(time(0));
+	srand((unsigned int)time(0));
 	rand();
 	int woodLeft = 4;
 	int stoneLeft = 3;
@@ -301,7 +301,7 @@ int map::randomHarbor(int resource[])
 
 void map::setHarbor(Node* harbor)
 {
-	int num, resource[6] = {0, 0, 0, 0, 0, 0};
+	int resource[6] = {0, 0, 0, 0, 0, 0};
 
 	for(int i = 0; i < 54; i++)
 	{

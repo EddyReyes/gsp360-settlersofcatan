@@ -14,7 +14,7 @@ Game::Game()
 	changeTime = 5000;
 	timer = 0;
 	placeHolderTurnTwo = 0;
-	srand(time(0));
+	srand((unsigned int)time(0));
 	rand();
 	ownerLargestArmy = NULL;
 	ownerLongestRoad = NULL;

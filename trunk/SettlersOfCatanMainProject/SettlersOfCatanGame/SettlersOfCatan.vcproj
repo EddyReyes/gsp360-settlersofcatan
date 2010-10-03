@@ -62,7 +62,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				UseLibraryDependencyInputs="false"
-				AdditionalDependencies="SDL.lib SDLmain.lib SDL_ttf.lib"
+				AdditionalDependencies="SDL.lib SDLmain.lib SDL_ttf.lib SDL_mixer.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -223,7 +223,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\stndrd.h"
+				RelativePath=".\SDL_music.h"				>			</File>			<File				RelativePath=".\SDL_ttf.h"				>			</File>			<File				RelativePath=".\stndrd.h"
 				>
 			</File>
 			<File
@@ -288,6 +288,10 @@
 			</File>
 			<File
 				RelativePath=".\resourceCards.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SDL_music.cpp"
 				>
 			</File>
 			<File

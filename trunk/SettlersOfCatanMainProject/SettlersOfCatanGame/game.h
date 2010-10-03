@@ -4,6 +4,7 @@
 #include "map.h"
 #include "menu.h"
 #include "tradebank.h"
+//#include "SDL_music.h"
 #include "dice.h"
 #include <iostream>
 #include <string> 
@@ -22,6 +23,10 @@ private:
 
 	//map
 	map underlyingBoard;
+
+	//sound
+	//Music gameSound;
+
 	//menu
 	Menu m;
 	static const int MENU = 0; // menu state
@@ -56,6 +61,7 @@ private:
 
 public:
 	Game();
+	//Music * gameSound;
 	void draw(SDL_Surface * screen);
 	void update(int ms);
 	void input(SDL_Event & e);

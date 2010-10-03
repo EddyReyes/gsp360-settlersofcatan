@@ -32,7 +32,8 @@ map::map()
 	for(int i = 0; i < 54; ++i)
 	{
 		myNodes[i] = tempNodes[i];
-		myNodes[i].owner = 4;
+		myNodes[i].owner = NOT_A_PLAYER;
+		myNodes[i].cityType = 0;
 	}
 
 	for (int i = 0; i < 54; ++i)
@@ -91,7 +92,7 @@ map::map()
 	for(int i = 0; i < 19; ++i)
 	{
 		int allotedCenters = 0;
-		for (int j = 0; j < 54; j++)
+		for (int j = 0; j < 54; ++j)
 		{
 			if (myNodes[j].y == myCenters[i].y)
 			{
@@ -194,6 +195,9 @@ map::map()
 		myEdges[i].pixelX = ( (myEdges[i].from->pixelX + myEdges[i].to->pixelX) / 2 );
 		myEdges[i].pixelY = ( myEdges[i].from->pixelY + myEdges[i].to->pixelY ) / 2 ;
 	}
+
+	//=======DICE ROLL STUFF=================
+	rolledDice = false;
 
 }
 

@@ -47,6 +47,7 @@ public:
 	Dice dice;
 	int dice1;
 	int dice2;
+	bool rolledDice;
 
 
 	// =============== MAPSTATES (THEY ARE PUBLIC BECAUSE GAME.CPP NEEDS THEM SOMETIMES ====================
@@ -65,6 +66,7 @@ public:
 	static const int TURNTWOSETTLEMENT = 11;
 	static const int TURNTWOROAD = 12;
 	static const int ENDTURN = 99; // play state (mainly to trigger the changing of players in game.cpp)
+	static const int NOT_A_PLAYER = 4; // play state (mainly to trigger the changing of players in game.cpp)
 
 
 	//==============MAP INITIALIZERS SETUP IN THE map.cpp FILE===========

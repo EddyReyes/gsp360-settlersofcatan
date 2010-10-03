@@ -305,7 +305,7 @@ void Dice::drawDiceScreen(SDL_Surface * screen, int dice1, int dice2)
 }
 int Dice::random()
 {
-	srand(time(0));
+	srand((unsigned int)time(0));
 	rand();
 	return rand() % randomRange;
 

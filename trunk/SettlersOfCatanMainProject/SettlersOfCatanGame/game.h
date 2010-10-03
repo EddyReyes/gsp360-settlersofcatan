@@ -7,7 +7,7 @@ class map;
 #include "menu.h"
 #include "tradebank.h"
 #include "SDL_music.h"
-#include "dice.h"
+//#include "dice.h"
 #include <iostream>
 #include <string> 
 #include <ctime>

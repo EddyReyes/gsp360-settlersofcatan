@@ -12,7 +12,7 @@ using namespace std;
 
 enum SoundFX
 {
-	beat, Dice, crowdcheer/*, Music2, effect1, effect2*/
+	sound_beat, sound_dice, sound_crowdcheer/*, Music2, effect1, effect2*/
 };
 
 

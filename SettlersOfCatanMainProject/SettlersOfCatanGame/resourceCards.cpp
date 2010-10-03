@@ -44,7 +44,7 @@ int rsc::pullFromResourcePool(char type, int a_num)					// THIS FUNCTION TAKES I
 	return count;
 }
 
-/*
+
 void rsc::DisplayResourceBankStatus(void)
 {
 	cout << "Resource Bank Status" << endl
@@ -54,4 +54,3 @@ void rsc::DisplayResourceBankStatus(void)
 		 << "Sheep: " << sheepLeft << endl
 		 << "Brick: " << brickLeft << endl << endl;
 }
-*/

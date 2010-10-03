@@ -7,8 +7,9 @@
 Game::Game()
 {
 	gameState = Game::MENU;
-	underlyingBoard.initializeCenters();
-	underlyingBoard.loadImages();
+	underlyingBoard = new map();
+	underlyingBoard->initializeCenters();
+	underlyingBoard->loadImages();
 	m.loadImages();
 	changeTime = 5000;
 	timer = 0;
@@ -32,7 +33,7 @@ void Game::initGame(int const & a_numPlayers)
 
 void Game::shutdown(void)
 {
-	underlyingBoard.shutdownImages();
+	underlyingBoard->shutdownImages();
 	m.shutdownImages();
 }
 
@@ -52,7 +53,7 @@ void Game::draw(SDL_Surface * screen)
 		//printf("We are INSIDE the game!!!\n");
 
 		SDL_FillRect(screen, 0, 0);
-		underlyingBoard.draw(screen, &p[activePlayer]);
+		underlyingBoard->draw(screen, this);
 		SDL_Flip(screen);
 
 		break;
@@ -72,9 +73,9 @@ void Game::update(int ms)
 	case Game::MENU:
 		break;
 	case Game::GAME:
-		if(underlyingBoard.mapState == map::ENDTURN)
+		if(underlyingBoard->mapState == map::ENDTURN)
 		{
-			if (underlyingBoard.overallTurn == 2)
+			if (underlyingBoard->overallTurn == 2)
 			{
 				placeHolderTurnTwo++;
 				activePlayer = 0;
@@ -85,38 +86,38 @@ void Game::update(int ms)
 			if (activePlayer >= numPlayers)
 			{
 				activePlayer = 0;
-				underlyingBoard.overallTurn++;
+				underlyingBoard->overallTurn++;
 			}
 			//cout << "placeHolderTurnTwo is " << placeHolderTurnTwo << endl;
-			//cout << "Overall turn is " << underlyingBoard.overallTurn << endl;
+			//cout << "Overall turn is " << underlyingBoard->overallTurn << endl;
 			//cout << "placeHolderTurnTwo is " << placeHolderTurnTwo << endl;
-			//cout << "Overall turn is " << underlyingBoard.overallTurn << endl;
+			//cout << "Overall turn is " << underlyingBoard->overallTurn << endl;
 
-			if (underlyingBoard.overallTurn == 2)
+			if (underlyingBoard->overallTurn == 2)
 			{
 				if (placeHolderTurnTwo > (numPlayers - 1))
 				{
-					underlyingBoard.overallTurn++;
-					underlyingBoard.mapState = map::MAP;
+					underlyingBoard->overallTurn++;
+					underlyingBoard->mapState = map::MAP;
 				}
 				else
 				{
 					activePlayer = (numPlayers - 1) - placeHolderTurnTwo;
-					underlyingBoard.mapState = map::TURNTWOSETTLEMENT;
+					underlyingBoard->mapState = map::TURNTWOSETTLEMENT;
 				}
 			}
-			else if (underlyingBoard.overallTurn == 1)
+			else if (underlyingBoard->overallTurn == 1)
 			{
-				underlyingBoard.mapState = map::TURNONESETTLEMENT;
+				underlyingBoard->mapState = map::TURNONESETTLEMENT;
 			}
 
-			if (underlyingBoard.overallTurn >= 3)
+			if (underlyingBoard->overallTurn >= 3)
 			{
-				underlyingBoard.dice1 = rand() % 6 + 1;
-				underlyingBoard.dice2 = rand() % 6 + 1;
+				underlyingBoard->dice1 = rand() % 6 + 1;
+				underlyingBoard->dice2 = rand() % 6 + 1;
 				//cout << "A WHOLE NEW WORLD! TURN " << underlyingBoard.overallTurn << endl;
-				underlyingBoard.mapState = map::BEGINTURN;
-				//cout << "A WHOLE NEW WORLD! TURN " << underlyingBoard.overallTurn << endl;
+				underlyingBoard->mapState = map::BEGINTURN;
+				//cout << "A WHOLE NEW WORLD! TURN " << underlyingBoard->overallTurn << endl;
 			}
 		}
 
@@ -154,7 +155,7 @@ bool on_object = false;
 
 void Game::gameInput(SDL_Event & e)
 {
-	underlyingBoard.handleInput(e, &p[activePlayer]);
+	underlyingBoard->handleInput(e, this);
 }
 void Game::input(SDL_Event & e)
 {

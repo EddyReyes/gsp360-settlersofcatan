@@ -40,14 +40,14 @@ void map::whichRoadIsWithin(int const & x, int const & y, int radius)
 	}
 }
 
-bool map::constructRoadOnMap(player * p)
+bool map::constructRoadOnMap(Game * g)
 {
 	bool buildable = false;
 
 	if (myEdges[roadSelectron].owner == 4)
 	{
 		//cout << "got to 1" << endl;
-		if (myEdges[roadSelectron].from->owner == p->ID || myEdges[roadSelectron].to->owner == p->ID)
+		if (myEdges[roadSelectron].from->owner == g->p[g->activePlayer].ID || myEdges[roadSelectron].to->owner == g->p[g->activePlayer].ID)
 		{
 			buildable = true;
 			//cout << "got to 2b (FINISH)" << endl;
@@ -58,7 +58,7 @@ bool map::constructRoadOnMap(player * p)
 			for (int i = 0; i < myEdges[roadSelectron].to->numOfEdges; ++i)
 			{
 				//cout << "got to 3a" << endl;
-				if (myEdges[roadSelectron].to->nodeEdges[i]->owner == p->ID)
+				if (myEdges[roadSelectron].to->nodeEdges[i]->owner == g->p[g->activePlayer].ID)
 				{
 					//cout << "got to 4a FINISH" << endl;
 					buildable = true;
@@ -71,7 +71,7 @@ bool map::constructRoadOnMap(player * p)
 			for (int i = 0; i < myEdges[roadSelectron].to->numOfEdges; ++i)
 			{
 				//cout << "got to 3c" << endl;
-				if (myEdges[roadSelectron].from->nodeEdges[i]->owner == p->ID)
+				if (myEdges[roadSelectron].from->nodeEdges[i]->owner == g->p[g->activePlayer].ID)
 				{
 					//cout << "got to 4c FINISH" << endl;
 					buildable = true;
@@ -83,14 +83,14 @@ bool map::constructRoadOnMap(player * p)
 		if (buildable == true)
 		{
 			//cout << "got to BUILD!" << endl;
-			myEdges[roadSelectron].owner = p->ID;
+			myEdges[roadSelectron].owner = g->p[g->activePlayer].ID;
 			return true;
 		}
 	}
 	return false;
 }
 
-bool map::constructSettlementOnMap(player * p)
+bool map::constructSettlementOnMap(Game * g)
 {
 	bool buildable = false;
 	for (int i = 0; i < 54; ++i)
@@ -124,7 +124,7 @@ bool map::constructSettlementOnMap(player * p)
 	}
 	for (int i = 0; myNodes[nodeSelectron].numOfEdges; ++i)
 	{
-		if (myNodes[nodeSelectron].nodeEdges[i]->owner == p->ID)
+		if (myNodes[nodeSelectron].nodeEdges[i]->owner == g->p[g->activePlayer].ID)
 		{
 			buildable = true;
 		}
@@ -132,14 +132,14 @@ bool map::constructSettlementOnMap(player * p)
 
 	if (buildable == true && myNodes[nodeSelectron].owner == 4)
 	{
-		myNodes[nodeSelectron].owner = p->ID;
+		myNodes[nodeSelectron].owner = g->p[g->activePlayer].ID;
 		myNodes[nodeSelectron].cityType = 1;
 		return true;
 	}
 	return false;
 }
 
-bool map::constructSettlementOnMapAnywhere(player * p)
+bool map::constructSettlementOnMapAnywhere(Game * g)
 {
 	bool buildable = true;
 	for (int i = 0; i < 54; ++i)
@@ -173,8 +173,25 @@ bool map::constructSettlementOnMapAnywhere(player * p)
 	}
 	if (buildable == true && myNodes[nodeSelectron].owner == 4)
 	{
-		myNodes[nodeSelectron].owner = p->ID;
+		myNodes[nodeSelectron].owner = g->p[g->activePlayer].ID;
 		myNodes[nodeSelectron].cityType = 1;
+		if( overallTurn == 2 )
+		{
+			for (int i = 0; i < 19; ++i)
+			{
+				for (int j = 0; j < 6; ++j)
+				{
+					if (myCenters[i].connectedNodes[j]->owner == g->p[g->activePlayer].ID)
+					{
+						if (myNodes[nodeSelectron].ID == myCenters[i].connectedNodes[j]->ID)
+						{
+							char tempGive = myCenters[i].resource;
+							g->p[myCenters[i].connectedNodes[j]->owner].drawResource(&rsc, tempGive, 1);
+						}
+					}
+				}
+			}
+		}
 		return true;
 	}
 	return false;

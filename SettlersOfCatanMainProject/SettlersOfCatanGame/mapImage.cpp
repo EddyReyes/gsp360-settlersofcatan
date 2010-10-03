@@ -4,14 +4,14 @@
 
 //NOTE, WE SHOULD PROBABLY MAKE A UNIVERSAL drawControls(screen) FUNCTION. WE'LL TALK ABOUT THAT LATER.
 
-void map::draw(SDL_Surface * screen, player * p)
+void map::draw(SDL_Surface * screen, Game * g)
 {
 	switch(mapState)
 	{
-		case map::BEGINTURN:		drawDiceRoll(screen, p);		break;
+		case map::BEGINTURN:		drawDiceRoll(screen, g);		break;
 		case map::MAP:				drawBoard(screen);				break; 
 		case map::BUILDCARD:		drawBuildCard(screen);			break;
-		case map::RESOURCELIST:		drawResourceList(screen, p);	break;
+		case map::RESOURCELIST:		drawResourceList(screen, g);	break;
 		case map::DEVHAND:			drawDevHand(screen);			break;
 		case map::TRADE:			drawtradeCard(screen);			break;
 		case map::BUILDROAD:		drawBoard(screen);
@@ -258,7 +258,7 @@ void map::drawBuildCard(SDL_Surface * screen)
 	apply_surface( 0, 0, buildCard, screen, NULL );
 }
 
-void map::drawResourceList(SDL_Surface * screen, player * p)
+void map::drawResourceList(SDL_Surface * screen, Game * g)
 {
 	apply_surface( 0, 0, resourceCard, screen, NULL );
 }
@@ -273,7 +273,7 @@ void map::drawtradeCard(SDL_Surface * screen)
 	apply_surface( 0, 0, tradeCard, screen, NULL );
 }
 
-void map::drawDiceRoll(SDL_Surface * screen, player * p)
+void map::drawDiceRoll(SDL_Surface * screen, Game * g)
 {
 	dice.drawDiceScreen(screen, dice1, dice2);
 }

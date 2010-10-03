@@ -276,7 +276,6 @@ void map::drawtradeCard(SDL_Surface * screen)
 void map::drawDiceRoll(SDL_Surface * screen, player * p)
 {
 	dice.drawDiceScreen(screen, dice1, dice2);
-	cout << " THIS HAPPENED! " << endl;
 }
 
 //function to load images

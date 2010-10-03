@@ -28,15 +28,41 @@ void map::handleInput(SDL_Event e, player * p)
 
 void map::handleInput_BEGINTURN(SDL_Event e, player *p)
 {
-	// DiceRoll mechanics would happen here
-	// assigning of resources to players would happen here
-	// perhaps on-screen notification of which player recieved what resource.
+	if (rolledDice == false)
+	{
+		for (int i = 0; i < 19; ++i)
+		{
+			if (myCenters[i].chitWorth == dice1+dice2)
+			{
+				for (int j = 0; j < 6; ++j)
+				{
+					if (myCenters[i].connectedNodes[j]->owner != map::NOT_A_PLAYER)
+					{
+						int amount = myCenters[i].connectedNodes[j]->cityType;
+						char type = myCenters[i].resource;
+						//p[myCenters[i].connectedNodes[j]->owner].drawResource(&rsc, type, amount);
+						p->drawResource(&rsc, type, amount);
+						//cout << "AWARDED " << amount << " " << type << " to player " << p[myCenters[i].connectedNodes[j]->owner].ID << endl;
+						cout << "AWARDED " << amount << " " << type << " to player " << p->ID << endl;
+						cout << " I IS " << i << "\tJ IS " << j << endl;
+						printf("%x\n", p[myCenters[i].connectedNodes[j]->owner].ID);
+						cout << myCenters[i].connectedNodes[j]->owner << endl;
+					}
+				}
+			}
+		}
+	}
+	rolledDice = true;
+	
+
+
 	switch(e.type)
 	{
 		case SDL_KEYDOWN:
 			switch(e.key.keysym.sym)
 			{
-				case SDLK_SPACE:	mapState= map::MAP;		break;	// THIS SWITCH FUNCTION MEANS THAT THIS 
+			case SDLK_SPACE:		rolledDice = false; 
+									mapState= map::MAP;		break;	// THIS SWITCH FUNCTION MEANS THAT THIS 
 																	// STATE WILL WAIT UNTIL THE PLAYER ACKNOWLEDGES 
 																	// THE FACT THAT IT IS HIS OR HER TURN AND HE OR 
 																	// SHE HAS ROLLED A #.

@@ -6,7 +6,6 @@
 
 Game::Game()
 {
-	//die = new Dice[2];
 	gameState = Game::MENU;
 	underlyingBoard.initializeCenters();
 	underlyingBoard.loadImages();
@@ -80,7 +79,7 @@ void Game::update(int ms)
 				placeHolderTurnTwo++;
 				activePlayer = 0;
 			}
-			cout << "placeHolderTurnTwo is " << placeHolderTurnTwo << endl;
+			//cout << "placeHolderTurnTwo is " << placeHolderTurnTwo << endl;
 			//cout << "placeHolderTurnTwo is " << placeHolderTurnTwo << endl;
 			activePlayer++;
 			if (activePlayer >= numPlayers)
@@ -88,8 +87,8 @@ void Game::update(int ms)
 				activePlayer = 0;
 				underlyingBoard.overallTurn++;
 			}
-			cout << "placeHolderTurnTwo is " << placeHolderTurnTwo << endl;
-			cout << "Overall turn is " << underlyingBoard.overallTurn << endl;
+			//cout << "placeHolderTurnTwo is " << placeHolderTurnTwo << endl;
+			//cout << "Overall turn is " << underlyingBoard.overallTurn << endl;
 			//cout << "placeHolderTurnTwo is " << placeHolderTurnTwo << endl;
 			//cout << "Overall turn is " << underlyingBoard.overallTurn << endl;
 
@@ -115,9 +114,9 @@ void Game::update(int ms)
 			{
 				underlyingBoard.dice1 = rand() % 6 + 1;
 				underlyingBoard.dice2 = rand() % 6 + 1;
-				cout << "A WHOLE NEW WORLD! TURN " << underlyingBoard.overallTurn << endl;
+				//cout << "A WHOLE NEW WORLD! TURN " << underlyingBoard.overallTurn << endl;
 				underlyingBoard.mapState = map::BEGINTURN;
-				cout << "A WHOLE NEW WORLD! TURN " << underlyingBoard.overallTurn << endl;
+				//cout << "A WHOLE NEW WORLD! TURN " << underlyingBoard.overallTurn << endl;
 			}
 		}
 

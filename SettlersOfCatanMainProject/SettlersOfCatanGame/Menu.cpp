@@ -8,7 +8,6 @@ Menu::Menu()
 
 void Menu::loadImages()
 {
-	//splash = load_image( "splash.bmp" );
 	menuScreen = load_image( "PlaceHolderMenuScreen.bmp" );
 	background = load_image( "background.bmp" );
 }

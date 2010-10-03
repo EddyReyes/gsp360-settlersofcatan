@@ -62,5 +62,7 @@ public:
 	void shutdown(void);
 	int calculateVictoryPoints(player* p);
 	void calcLargestArmy(player* p);
+	void steal(player* thief, player* victim);
+	void thiefIsRolled(rsc* resDeck, player* p[]);
 };
 

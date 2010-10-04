@@ -227,10 +227,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\SDL_ttf.h"
-				>
-			</File>
-			<File
 				RelativePath=".\stndrd.h"
 				>
 			</File>

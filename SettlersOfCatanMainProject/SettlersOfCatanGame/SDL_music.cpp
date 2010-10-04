@@ -17,11 +17,13 @@ bool Music::fillMusic()
 }
 void Music::playWAV(int wav)
 {
+	/*
     Mix_Chunk *music;
     Mix_OpenAudio(44100, AUDIO_S16SYS, 2, 2048);
     music = Mix_LoadWAV(soundArray[wav].c_str());
 	Mix_Volume(wav, volume);
     Mix_PlayChannel(wav,music,-1);
+	*/
 }
 void Music::increaseVolume(int chan, int amount)
 {

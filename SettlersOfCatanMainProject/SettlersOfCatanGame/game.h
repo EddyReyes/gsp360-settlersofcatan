@@ -25,9 +25,6 @@ private:
 	//map
 	map * underlyingBoard;
 
-	//sound
-	Music * gameSound;
-
 	//menu
 	Menu m;
 	static const int MENU = 0; // menu state
@@ -53,6 +50,10 @@ private:
 	void Game::initGame(int const & a_numPlayers);
 
 public:
+	//sound
+	Music * gameSound;
+
+
 	// player
 	player * p;
 	int numPlayers;

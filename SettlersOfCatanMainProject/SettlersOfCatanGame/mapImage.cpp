@@ -8,25 +8,25 @@ void map::draw(SDL_Surface * screen, Game * g)
 {
 	switch(mapState)
 	{
-		case map::BEGINTURN:		drawDiceRoll(screen, g);		break;
-		case map::MAP:				drawBoard(screen);				break; 
-		case map::BUILDCARD:		drawBuildCard(screen);			break;
-		case map::RESOURCELIST:		drawResourceList(screen, g);	break;
-		case map::DEVHAND:			drawDevHand(screen);			break;
-		case map::TRADE:			drawtradeCard(screen);			break;
-		case map::BUILDROAD:		drawBoard(screen);
+		case map::BEGINTURN:		g->gameSound->playWAV(2); drawDiceRoll(screen, g);	drawPlayerTag(screen, g);		break;
+		case map::MAP:				drawBoard(screen);			drawPlayerTag(screen, g);			break; 
+		case map::BUILDCARD:		drawBuildCard(screen);		drawPlayerTag(screen, g);		break;
+		case map::RESOURCELIST:		drawResourceList(screen, g);drawPlayerTag(screen, g);		break;
+		case map::DEVHAND:			drawDevHand(screen);		drawPlayerTag(screen, g);		break;
+		case map::TRADE:			drawtradeCard(screen);		drawPlayerTag(screen, g);		break;
+		case map::BUILDROAD:		drawBoard(screen);			drawPlayerTag(screen, g);
 									drawRoadSelectron(screen);		break;
-		case map::BUILDSETTLEMENT:	drawBoard(screen);
+		case map::BUILDSETTLEMENT:	drawBoard(screen);			drawPlayerTag(screen, g);
 									drawNodeSelectron(screen);		break;
-		case map::BUILDCITY:		drawBoard(screen);
+		case map::BUILDCITY:		drawBoard(screen);			drawPlayerTag(screen, g);
 									drawNodeSelectron(screen);		break;
-		case map::TURNONESETTLEMENT:		drawBoard(screen);
+		case map::TURNONESETTLEMENT:		drawBoard(screen);	drawPlayerTag(screen, g);
 									drawNodeSelectron(screen);		break;
-		case map::TURNONEROAD:		drawBoard(screen);
+		case map::TURNONEROAD:		drawBoard(screen);			drawPlayerTag(screen, g);
 									drawRoadSelectron(screen);		break;
-		case map::TURNTWOSETTLEMENT:		drawBoard(screen);
+		case map::TURNTWOSETTLEMENT:		drawBoard(screen);	drawPlayerTag(screen, g);
 									drawNodeSelectron(screen);		break;
-		case map::TURNTWOROAD:		drawBoard(screen);
+		case map::TURNTWOROAD:		drawBoard(screen);			drawPlayerTag(screen, g);
 									drawRoadSelectron(screen);		break;
 	}
 	// this is where drawControls(screen) would go, because then it would print on every map screen in addition to the other draw functions.
@@ -36,6 +36,7 @@ void map::draw(SDL_Surface * screen, Game * g)
 
 void map::loadImages()
 {
+	font = TTF_OpenFont( "SNAP.ttf", 72);
 	tradeCard = load_image( "tradeCard.bmp" );
 	DevHand = load_image( "DevHand.bmp" );
 	resourceCard = load_image( "resourceCard.bmp" );
@@ -74,6 +75,7 @@ void map::loadImages()
 void map::initializeImages()
 {
 	dice.loadImages();
+	font = NULL;
 	tradeCard = NULL;
 	DevHand = NULL;
 	resourceCard = NULL;
@@ -261,6 +263,69 @@ void map::drawBuildCard(SDL_Surface * screen)
 void map::drawResourceList(SDL_Surface * screen, Game * g)
 {
 	apply_surface( 0, 0, resourceCard, screen, NULL );
+
+	char * specResTypes[5] = {"Brick", "Wood", "Stone", "Sheep", "Wheat"};
+	int spacingX = 103;
+
+	font = TTF_OpenFont( "SNAP.ttf", 72);
+	textColor.r = 0;
+	textColor.g = 0;
+	textColor.b = 0;
+
+	for (int i = 0; i < 5; ++i)
+	{
+		char buffer [1024];
+
+		char * resAndAmt = "%d";
+		char * rotResType = specResTypes[i];
+		int amountResourceStuff;
+		switch(i)
+		{
+			case 0:	amountResourceStuff = g->p[g->activePlayer].brick; break;
+			case 1:	amountResourceStuff = g->p[g->activePlayer].wood; break;
+			case 2:	amountResourceStuff = g->p[g->activePlayer].stone; break;
+			case 3:	amountResourceStuff = g->p[g->activePlayer].sheep; break;
+			case 4:	amountResourceStuff = g->p[g->activePlayer].wheat; break;
+		}
+		sprintf(buffer, resAndAmt, amountResourceStuff);
+		resourceListMsg[i] = TTF_RenderText_Solid( font, buffer, textColor );
+		apply_surface( 160 + spacingX*i, 420, resourceListMsg[i], screen, NULL );
+		SDL_FreeSurface(resourceListMsg[i]);
+	}
+}
+void map::drawPlayerTag(SDL_Surface * screen, Game * g)
+{
+	char buffer [1024];
+	font = TTF_OpenFont( "SNAP.ttf", 40);
+	switch(g->activePlayer)
+	{
+	case 0: 
+		textColor.r = 255;
+		textColor.g = 0;
+		textColor.b = 0;
+		break;
+	case 1:
+		textColor.r = 0;
+		textColor.g = 0;
+		textColor.b = 255;
+		break;
+	case 2:
+		textColor.r = 255;
+		textColor.g = 255;
+		textColor.b = 255;
+		break;
+	case 3:
+		textColor.r = 255;
+		textColor.g = 133;
+		textColor.b = 0;
+		break;
+	}
+	int playerNumber = g->activePlayer + 1;
+	char * playerTurnCharStar = "Player %d";
+	sprintf(buffer, playerTurnCharStar, playerNumber);
+	playerTag = TTF_RenderText_Solid( font, buffer, textColor );
+	apply_surface( 30, 20, playerTag, screen, NULL );
+	SDL_FreeSurface(playerTag);
 }
 
 void map::drawDevHand(SDL_Surface * screen)
@@ -322,6 +387,7 @@ void map::apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destinat
 
 void map::shutdownImages()
 {
+	SDL_FreeSurface(playerTag);
 	SDL_FreeSurface(tradeCard);
 	SDL_FreeSurface(DevHand);
 	SDL_FreeSurface(buildCard);
@@ -343,4 +409,9 @@ void map::shutdownImages()
 		SDL_FreeSurface(cityTile[i]);
 		SDL_FreeSurface(roadTile[i]);
 	}
+	for (int i = 0; i < 5; ++i)
+	{
+		SDL_FreeSurface(resourceListMsg[i]);
+	}
+	TTF_CloseFont(font);
 }

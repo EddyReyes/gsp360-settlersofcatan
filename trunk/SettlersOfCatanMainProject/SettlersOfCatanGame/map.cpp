@@ -199,6 +199,19 @@ map::map()
 	//=======DICE ROLL STUFF=================
 	rolledDice = false;
 
+	//=======TextMapImageStuff====================
+	textColor.r = 255;//yellowish text for now 255,255,9
+	textColor.g = 255;
+	textColor.b = 9;
+
+	font = NULL;
+	resourceListMsg[0] = NULL;
+	resourceListMsg[1] = NULL;
+	resourceListMsg[2] = NULL;
+	resourceListMsg[3] = NULL;
+	resourceListMsg[4] = NULL;
+	playerTag = NULL;
+
 }
 
 Node * map::getNode(Node * population, int popCount, int ID)

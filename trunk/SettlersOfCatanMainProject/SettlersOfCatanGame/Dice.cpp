@@ -246,33 +246,37 @@ void Dice::drawDiceScreen(SDL_Surface * screen, int dice1, int dice2)
 		*/
 
 		int totalDice = dice1+dice2;
-		switch(totalDice)
-		{
-			case 2: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 2" , textColor );
-		apply_surface( 100, 150, message, screen, NULL ); break;
-			case 3: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 3." , textColor );
-		apply_surface( 100, 150, message, screen, NULL ); break;
-			case 4: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 4." , textColor );
-		apply_surface( 100, 150, message, screen, NULL ); break;
-			case 5: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 5." , textColor );
-		apply_surface( 100, 150, message, screen, NULL ); break;
-			case 6: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 6." , textColor );
-		apply_surface( 100, 150, message, screen, NULL ); break;
-			case 7: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 7." , textColor );
-		apply_surface( 100, 150, message, screen, NULL ); break;
-			case 8: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 8." , textColor );
-		apply_surface( 100, 150, message, screen, NULL ); break;
-			case 9: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 9." , textColor );
-		apply_surface( 100, 150, message, screen, NULL ); break;
-			case 10: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 10." , textColor );
-		apply_surface( 100, 150, message, screen, NULL ); break;
-			case 11: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 11." , textColor );
-		apply_surface( 100, 150, message, screen, NULL ); break;
-			case 12: message = TTF_RenderText_Solid( font, "YOU HAVE ROLLED A 12." , textColor );
-		apply_surface( 100, 150, message, screen, NULL ); break;
-		}
+		// an arbitrarily sized character array to put text into.
+		char buffer [1024];
+		char * youHaveRolled = "YOU HAVE ROLLED A %d";
+		sprintf(buffer, youHaveRolled, totalDice);
+		/*
+		char buffer[1024];
+		// how you want a string formatted
+		char * youHaveRolled = "YOU HAVE %s A %d";
+		
+		char * verbed[] = {
+			"ROLLED",
+			"LOLed",
+			"pooped",
+			"programmed",
+			"coughed"
+		};
+		int randomVerbIndex = rand()%(sizeof(verbed)/sizeof(char*));
+		char * randomVerb = verbed[randomVerbIndex];
+		// string-print-formatted
+			// buffer is where the string will be printed to
+			// youHaveRolled is the format
+			// totalDice is a variable referenced in the youHaveRolled format
+		sprintf(buffer, youHaveRolled, randomVerb, totalDice);
+		*/
+		// ALLOCATED A NEW IMAGE (must be released) with the given text written in the given font at the given color
+		message = TTF_RenderText_Solid( font, buffer, textColor );
+		// applies the image to the screen
+		apply_surface( 100, 150, message, screen, NULL );
 
-
+		// ZOMG FREE THE IMAGE!
+		SDL_FreeSurface(message);
 
 //===========================================================================================
 

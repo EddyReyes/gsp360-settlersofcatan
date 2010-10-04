@@ -74,7 +74,9 @@ void Game::update(int ms)
 	case Game::MENU:
 		break;
 	case Game::GAME:
-		if(underlyingBoard->mapState == map::ENDTURN)		{
+		if(underlyingBoard->mapState == map::ENDTURN)		
+		{
+			activePlayer++;
 			if (underlyingBoard->overallTurn == 2)
 			{
 				placeHolderTurnTwo++;
@@ -82,7 +84,6 @@ void Game::update(int ms)
 			}
 			//cout << "placeHolderTurnTwo is " << placeHolderTurnTwo << endl;
 			//cout << "placeHolderTurnTwo is " << placeHolderTurnTwo << endl;
-			activePlayer++;
 			if (activePlayer >= numPlayers)
 			{
 				activePlayer = 0;

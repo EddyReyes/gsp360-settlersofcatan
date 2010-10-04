@@ -4,9 +4,11 @@
 class Game;
 
 #include "sdl/sdl.h"
+#include "sdl/sdl_ttf.h"
 #include <iostream>
 #include <ctime>
 #include <windows.h>
+#include <string> 
 #include "dice.h"
 #include "edge.h"
 #include "node.h"
@@ -21,6 +23,8 @@ class map
 {
 private:
 	//===surfaces used for images===============
+	SDL_Surface *playerTag;
+	SDL_Surface *resourceListMsg[5];
 	SDL_Surface *tradeCard;
 	SDL_Surface *buildCard;
 	SDL_Surface *resourceCard;
@@ -111,6 +115,7 @@ public:
 	void map::drawNodeSelectron(SDL_Surface * screen);
 	void map::drawRoadSelectron(SDL_Surface * screen);
 	void map::drawBoard(SDL_Surface * screen);
+	void map::drawPlayerTag(SDL_Surface * screen, Game * g);
 	void map::shutdownImages(void);
 
 
@@ -132,5 +137,9 @@ public:
 	void map::handleInput_TURNONEROAD(SDL_Event e, Game * g);
 	void map::handleInput_TURNTWOSETTLEMENT(SDL_Event e, Game * g);
 	void map::handleInput_TURNTWOROAD(SDL_Event e, Game * g);
+
+	//=======MAP TTFs====================
+	TTF_Font *font;
+	SDL_Color textColor;
 
 };

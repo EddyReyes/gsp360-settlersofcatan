@@ -7,11 +7,6 @@ class player
 {
 private:
 	char color;
-	int wood;
-	int wheat;
-	int stone;
-	int sheep;
-	int brick;
 	int currentVictoryPoints;
 	int usedSoldiers;
 	int usedVictoryPoints;
@@ -24,6 +19,11 @@ private:
 	bool hasLargestArmy;
 
 public: 
+	int wood;
+	int wheat;
+	int stone;
+	int sheep;
+	int brick;
 	int numUnusedRoads;
 	int numUnusedSettlements;
 	int numUnusedCities;

@@ -163,6 +163,20 @@ void map::handleInput_DEVHAND(SDL_Event e, Game * g)
 
 void map::handleInput_TRADE(SDL_Event e, Game * g)
 {
+	static int wheatactive = 0;
+	static int stoneactive = 0;
+	static int brickactive = 0;
+	static int woodactive = 0;
+	static int sheepactive = 0;
+
+	static int wheattrader = 0;
+	static int stonetrader = 0;
+	static int bricktrader = 0;
+	static int woodtrader = 0;
+	static int sheeptrader = 0;
+
+	int playerNumber = 0;
+
 	switch(e.type)
 	{
 		case SDL_KEYDOWN:
@@ -173,6 +187,72 @@ void map::handleInput_TRADE(SDL_Event e, Game * g)
 			case SDLK_3:	mapState= map::RESOURCELIST;	break;
 			case SDLK_4:	mapState= map::DEVHAND;			break;
 			//ADD TRADE FUNCTIONALITY. DON'T KNOW HOW.
+			
+			//i think we could do something like this, it seems to add to the numbers, then when its traded, just set them back to 0
+			case SDLK_q:	brickactive++; break;
+			case SDLK_w:	woodactive++; break;
+			case SDLK_e:	stoneactive++; break;
+			case SDLK_r:	sheepactive++; break;
+			case SDLK_t:	wheatactive++; break;
+
+			case SDLK_a:	bricktrader++; break;
+			case SDLK_s:	woodtrader++; break;
+			case SDLK_d:	stonetrader++; break;
+			case SDLK_f:	sheeptrader++; break;
+			case SDLK_g:	wheattrader++; break;
+
+			case SDLK_z:	playerNumber = 0; break;
+			case SDLK_x:	playerNumber = 1; break;
+			case SDLK_c:	playerNumber = 2; break;
+			case SDLK_v:	playerNumber = 3; break;
+
+			//bool TradeBank::setGiveResources(Game* g, int a_wood, int a_wheat, int a_stone, int a_sheep, int a_brick);
+			//bool TradeBank::setRecieveResources(Game* g, int a_trader_num, int a_wood, int a_wheat, int a_stone, int a_sheep, int a_brick);
+
+				//setting the resources for trading seems to crash the game, but i dont know why
+				//i also couldnt close the console window
+			case SDLK_j:/*	
+				if(tradebank->setGiveResources(g, woodactive, wheatactive, stoneactive, sheepactive, brickactive))
+					cout << "Active Player set!!" << endl;
+				else
+					cout << "Active Player not set!!" << endl;
+				break;*/
+
+			case SDLK_k:/*	
+				if(tradebank->setRecieveResources(g, playerNumber, woodtrader, wheattrader, stonetrader, sheeptrader, bricktrader))
+					cout << "Trader Set!!" << endl;
+				else
+					cout << "Trader not set!!!" << endl;
+				break;*/
+
+			case SDLK_l:	
+				//if(tradebank->trade())
+				{
+					woodactive = 0;
+					wheatactive = 0;
+					stoneactive = 0;
+					sheepactive = 0;
+					brickactive = 0;
+
+					woodtrader = 0;
+					wheattrader = 0;
+					stonetrader = 0;
+					sheeptrader = 0;
+					bricktrader = 0;
+				}
+				break;
+			case SDLK_p:
+				cout << woodactive << endl;
+				cout << wheatactive << endl;
+				cout << stoneactive << endl;
+				cout << sheepactive << endl; 
+				cout << brickactive << endl; 
+
+				cout << woodtrader << endl; 
+				cout << wheattrader << endl; 
+				cout << stonetrader << endl; 
+				cout << sheeptrader << endl; 
+				cout << bricktrader << endl; break;
 			}
 			break;
 	}

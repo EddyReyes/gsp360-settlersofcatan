@@ -44,48 +44,100 @@ bool map::constructRoadOnMap(Game * g)
 {
 	bool buildable = false;
 
-	if (myEdges[roadSelectron].owner == 4)
+	if (myEdges[roadSelectron].owner == NOT_A_PLAYER && myEdges[roadSelectron].sisterEdge->owner == NOT_A_PLAYER)
 	{
-		//cout << "got to 1" << endl;
+		cout << "GETS TO A" << endl;
 		if (myEdges[roadSelectron].from->owner == g->p[g->activePlayer].ID || myEdges[roadSelectron].to->owner == g->p[g->activePlayer].ID)
 		{
 			buildable = true;
-			//cout << "got to 2b (FINISH)" << endl;
+			cout << "GETS TO B" << endl;
+			//THIS IS TRUE IF EDGE IS OWNERLESS AND TO OR FROM IS PLAYER's, OR TRUE IF SISTER'EDGE IS OWNERLESS AND SISTER'EDGE TO OR SISTER'EDGE FROM IS PLAYER's
 		}
-		else if ( myEdges[roadSelectron].to->owner == 4)
+		if ( myEdges[roadSelectron].to->owner == NOT_A_PLAYER)
 		{
-			//cout << "got to 2a" << endl;
+			cout << "GETS TO C" << endl;
+			cout << "myEdges[roadSelectron].to->numOfEdges == " << myEdges[roadSelectron].to->numOfEdges << endl;
 			for (int i = 0; i < myEdges[roadSelectron].to->numOfEdges; ++i)
 			{
-				//cout << "got to 3a" << endl;
 				if (myEdges[roadSelectron].to->nodeEdges[i]->owner == g->p[g->activePlayer].ID)
 				{
-					//cout << "got to 4a FINISH" << endl;
+					cout << "GETS TO D" << endl;
 					buildable = true;
+					//THIS IS TRUE IF EDGE IS OWNERLESS, THE "To's" NODE IS OWNERLESS, AND ONE OF THE "TO's" EDGES IS OWNED BY THE PLAYER
+				}
+				if (myEdges[roadSelectron].to->nodeEdges[i]->sisterEdge->owner == g->p[g->activePlayer].ID)
+				{
+					cout << "GETS TO E" << endl;
+					buildable = true;
+					//THIS IS TRUE IF SISTER'EDGE IS OWNERLESS, THE SISTER'"To's" NODE IS OWNERLESS, AND ONE OF THE SISTER'"TO's" EDGES IS OWNED BY THE PLAYER
 				}
 			}
 		}
-		else if ( myEdges[roadSelectron].from->owner == 4)
+		if ( myEdges[roadSelectron].sisterEdge->to->owner == NOT_A_PLAYER)
 		{
-			//cout << "got to 2c" << endl;
-			for (int i = 0; i < myEdges[roadSelectron].to->numOfEdges; ++i)
+			cout << "GETS TO F" << endl;
+			cout << "myEdges[roadSelectron].sisterEdge->to->numOfEdges == " << myEdges[roadSelectron].sisterEdge->to->numOfEdges << endl;
+			for (int i = 0; i < myEdges[roadSelectron].sisterEdge->to->numOfEdges; ++i)
 			{
-				//cout << "got to 3c" << endl;
+				if (myEdges[roadSelectron].sisterEdge->to->nodeEdges[i]->owner == g->p[g->activePlayer].ID)
+				{
+					cout << "GETS TO G" << endl;
+					buildable = true;
+					//THIS IS TRUE IF SISTER'EDGE IS OWNERLESS, THE SISTER'"To's" NODE IS OWNERLESS, AND ONE OF THE SISTER'"TO's" EDGES IS OWNED BY THE PLAYER
+				}
+				if (myEdges[roadSelectron].sisterEdge->to->nodeEdges[i]->sisterEdge->owner == g->p[g->activePlayer].ID)
+				{
+					cout << "GETS TO H" << endl;
+					buildable = true;
+					//THIS IS TRUE IF SISTER'EDGE IS OWNERLESS, THE SISTER'"To's" NODE IS OWNERLESS, AND ONE OF THE SISTER'"TO's" EDGES IS OWNED BY THE PLAYER
+				}
+			}
+		}
+		if ( myEdges[roadSelectron].from->owner == NOT_A_PLAYER)
+		{
+			cout << "GETS TO I" << endl;
+			cout << "myEdges[roadSelectron].from->numOfEdges == " << myEdges[roadSelectron].from->numOfEdges << endl;
+			for (int i = 0; i < myEdges[roadSelectron].from->numOfEdges; ++i)
+			{
 				if (myEdges[roadSelectron].from->nodeEdges[i]->owner == g->p[g->activePlayer].ID)
 				{
-					//cout << "got to 4c FINISH" << endl;
+					cout << "GETS TO J" << endl;
 					buildable = true;
+					//THIS IS TRUE IF EDGE IS OWNERLESS, THE "To's" NODE IS OWNERLESS, AND ONE OF THE "TO's" EDGES IS OWNED BY THE PLAYER
+				}
+				if (myEdges[roadSelectron].from->nodeEdges[i]->sisterEdge->owner == g->p[g->activePlayer].ID)
+				{
+					cout << "GETS TO K" << endl;
+					buildable = true;
+					//THIS IS TRUE IF SISTER'EDGE IS OWNERLESS, THE SISTER'"To's" NODE IS OWNERLESS, AND ONE OF THE SISTER'"TO's" EDGES IS OWNED BY THE PLAYER
 				}
 			}
 		}
-		
-		
-		if (buildable == true)
+		if ( myEdges[roadSelectron].sisterEdge->from->owner == NOT_A_PLAYER)
 		{
-			//cout << "got to BUILD!" << endl;
-			myEdges[roadSelectron].owner = g->p[g->activePlayer].ID;
-			return true;
+			cout << "GETS TO L" << endl;
+			cout << "myEdges[roadSelectron].sisterEdge->from->numOfEdges " << myEdges[roadSelectron].sisterEdge->from->numOfEdges << endl;
+			for (int i = 0; i < myEdges[roadSelectron].sisterEdge->from->numOfEdges; ++i)
+			{
+				if (myEdges[roadSelectron].sisterEdge->from->nodeEdges[i]->owner == g->p[g->activePlayer].ID)
+				{
+					cout << "GETS TO M" << endl;
+					buildable = true;
+					//THIS IS TRUE IF SISTER'EDGE IS OWNERLESS, THE SISTER'"To's" NODE IS OWNERLESS, AND ONE OF THE SISTER'"TO's" EDGES IS OWNED BY THE PLAYER
+				}
+				if (myEdges[roadSelectron].sisterEdge->from->nodeEdges[i]->sisterEdge->owner == g->p[g->activePlayer].ID)
+				{
+					cout << "GETS TO N" << endl;
+					buildable = true;
+					//THIS IS TRUE IF SISTER'EDGE IS OWNERLESS, THE SISTER'"To's" NODE IS OWNERLESS, AND ONE OF THE SISTER'"TO's" EDGES IS OWNED BY THE PLAYER
+				}
+			}
 		}
+	}
+	if (buildable == true)
+	{
+		myEdges[roadSelectron].owner = g->p[g->activePlayer].ID;
+		return true;
 	}
 	return false;
 }

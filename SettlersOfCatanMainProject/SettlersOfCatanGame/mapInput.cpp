@@ -100,22 +100,20 @@ void map::handleInput_BUILDCARD(SDL_Event e, Game * g)
 			case SDLK_4:	mapState= map::DEVHAND;			break;
 			case SDLK_5:	mapState= map::TRADE;			break;
 			case SDLK_0:	mapState= map::ENDTURN;			break;
-			case SDLK_r:	if (overallTurn == 1 || overallTurn == 2 || g->p[g->activePlayer].checkBuildSomething('R', &dvc) == true)
+			case SDLK_r:	if (g->p[g->activePlayer].checkBuildSomething('R', &dvc) == true)
 							{
-								g->p[g->activePlayer].actuallyBuildSomething('R', &rsc, &dvc);
 								mapState = map::BUILDROAD;	break;
 							}
-			case SDLK_s:	if (overallTurn == 1 || overallTurn == 2 || g->p[g->activePlayer].checkBuildSomething('S', &dvc) == true)
+			case SDLK_s:	if (g->p[g->activePlayer].checkBuildSomething('S', &dvc) == true)
 							{
-								g->p[g->activePlayer].actuallyBuildSomething('S', &rsc, &dvc);
 								mapState = map::BUILDSETTLEMENT;	break;
 							}
-			case SDLK_c:	if (overallTurn != 1 || overallTurn != 2 || g->p[g->activePlayer].checkBuildSomething('C', &dvc) == true)
+			case SDLK_c:	if (g->p[g->activePlayer].checkBuildSomething('C', &dvc) == true)
 							{
 								g->p[g->activePlayer].actuallyBuildSomething('C', &rsc, &dvc);
 								mapState = map::BUILDCITY;	break;
 							}
-			case SDLK_d:	if (overallTurn != 1 || overallTurn != 2 || g->p[g->activePlayer].checkBuildSomething('D', &dvc) == true)
+			case SDLK_d:	if (g->p[g->activePlayer].checkBuildSomething('D', &dvc) == true)
 							{
 								g->p[g->activePlayer].actuallyBuildSomething('D', &rsc, &dvc);
 								mapState = map::MAP;	break;
@@ -189,7 +187,13 @@ void map::handleInput_BUILDROAD(SDL_Event e, Game * g)
 		case SDL_MOUSEBUTTONDOWN:
 			switch(e.button.button)
 			{
-			case SDL_BUTTON_LEFT:	if(constructRoadOnMap(g) == true){ mapState = map::MAP;}	break;
+			case SDL_BUTTON_LEFT:	
+				if(constructRoadOnMap(g) == true)
+				{ 
+					g->p[g->activePlayer].actuallyBuildSomething('R', &rsc, &dvc);
+					mapState = map::MAP;
+				}	
+				break;
 			}
 			break;
 	}
@@ -204,7 +208,13 @@ void map::handleInput_BUILDSETTLEMENT(SDL_Event e, Game * g)
 		case SDL_MOUSEBUTTONDOWN:
 			switch(e.button.button)
 			{
-			case SDL_BUTTON_LEFT:	if(constructSettlementOnMap(g) == true){ mapState = map::MAP;}	break;
+			case SDL_BUTTON_LEFT:	
+				if(constructSettlementOnMap(g) == true)
+				{ 
+					g->p[g->activePlayer].actuallyBuildSomething('S', &rsc, &dvc);
+					mapState = map::MAP;
+				}	
+				break;
 			}
 			break;
 	}

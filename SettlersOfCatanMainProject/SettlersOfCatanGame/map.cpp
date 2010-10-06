@@ -158,6 +158,18 @@ map::map()
 		}
 	}
 
+	for (int i = 0; i < count; ++i)
+	{
+		myNodes[i].numOfEdges = myNodes[i].numOfEdges+myNodes[i].numOfEdges;
+	}
+
+	//cout << "TOTAL NUM OF EDGES == " << amountEdges << endl;
+
+	for (int i = 0; i < count; ++i)
+	{
+		myNodes[i].setUnusedEdges();
+	}
+
 
 	const int eCount = amountEdges;
 
@@ -165,9 +177,17 @@ map::map()
 	{
 		myEdges[i] = tempEdges[i];
 		myEdges[i].ID = i;
-		myEdges[i].owner = 4; // 4 means player 5, and is treated as never.
-		myEdges[i].to->addNewEdge(&myEdges[i]); //cout << "called function 2" << endl;
-		myEdges[i].from->addNewEdge(&myEdges[i]); //cout << "called function" << endl;
+		myEdges[i].owner = NOT_A_PLAYER; // 4 means player 5, and is treated as never.
+		for (int j = 0; j < eCount; ++j)
+		{
+			if (myEdges[i].from == myEdges[j].to && myEdges[i].to == myEdges[j].from)
+			{
+				myEdges[i].sisterEdge = &myEdges[j];
+				myEdges[i].sisterEdge->sisterEdge = &myEdges[i];
+			}
+		}
+		myEdges[i].to->addNewEdge(&myEdges[i]);
+		myEdges[i].from->addNewEdge(&myEdges[i]); 
 	}
 
 	delete tempEdges;

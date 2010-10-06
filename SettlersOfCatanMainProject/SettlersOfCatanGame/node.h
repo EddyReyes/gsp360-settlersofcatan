@@ -16,9 +16,9 @@ public:
 	int x;
 	int y; 
 	int numOfEdges;
+	int unusedEdges;
 	char icon;
-	Edge * nodeEdges[3];
-	//Edge * tempEdges;
+	Edge * nodeEdges[6];
 	int pixelX;
 	int pixelY;
 
@@ -29,8 +29,13 @@ public:
 		y = a_y;
 		icon = '@';
 		numOfEdges = 0;
+		unusedEdges = 0;
 		ID = a_ID;
 		cityType = 0;
+		for (int i = 0; i < 6; ++i)
+		{
+			nodeEdges[i] = NULL;
+		}
 	}
 
 	void Node::setEdgeCount(int a_numOfEdges)
@@ -38,19 +43,15 @@ public:
 		numOfEdges = a_numOfEdges;
 	}
 
+	void Node::setUnusedEdges(void)
+	{
+		unusedEdges = numOfEdges;
+	}
+
 	void Node::addNewEdge(Edge * sentEdge)
 	{
-		int j = 0;
-		for (int i = 0; i < 3; ++i)
-		{
-			if (nodeEdges[i] == NULL)
-			{
-				j = i;
-				break;
-			}
-		}
-		nodeEdges[j] = sentEdge;
-		numOfEdges = j++;
+		nodeEdges[numOfEdges-unusedEdges] = sentEdge;
+		unusedEdges--;
 	}
 
 	void Node::setEdge(int a_index, Edge * e)
@@ -63,7 +64,6 @@ public:
 		x = a_x;
 		y = a_y;
 		icon = '@';
-		//nodeEdges = NULL;
 		numOfEdges = 0;
 		ID = a_ID;
 	}

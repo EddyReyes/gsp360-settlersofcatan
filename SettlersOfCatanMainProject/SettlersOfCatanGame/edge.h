@@ -16,6 +16,7 @@ public:
 	int ID;
 	int pixelX;
 	int pixelY;
+	Edge * sisterEdge;
 	//constructor
 	Edge::Edge(){}
 	Edge::Edge(Node * a_from, Node * a_to)

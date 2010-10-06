@@ -22,9 +22,6 @@ private:
 	// tricky turn two placeholder
 	int placeHolderTurnTwo;
 
-	//map
-	map * underlyingBoard;
-
 	//menu
 	Menu m;
 	static const int MENU = 0; // menu state
@@ -39,26 +36,23 @@ private:
 	Uint32 timer;
 	Uint32 changeTime;
 
-	//trade bank
-	TradeBank tradebank;
-
-	//need these for calculating largest army/ longest road, they store the player who has them.
-	player* ownerLargestArmy;
-	player* ownerLongestRoad;
-
-
 	void Game::initGame(int const & a_numPlayers);
 
 public:
 	//sound
 	Music * gameSound;
 
+	//map
+	map * underlyingBoard;
 
 	// player
 	player * p;
 	int numPlayers;
 	int activePlayer;
 
+	//need these for calculating largest army/ longest road, they store the player who has them.
+	player* ownerLargestArmy;
+	player* ownerLongestRoad;
 
 	Game();
 	//Music * gameSound;
@@ -66,9 +60,5 @@ public:
 	void update(int ms);
 	void input(SDL_Event & e);
 	void shutdown(void);
-	int calculateVictoryPoints(player* p);
-	void calcLargestArmy(player* p);
-	void steal(player* thief, player* victim);
-	void thiefIsRolled(rsc* resDeck, player* p[]);
 };
 

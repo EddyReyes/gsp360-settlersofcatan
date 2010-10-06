@@ -1,4 +1,5 @@
 #include "tradebank.h"
+#include "game.h"
 
 TradeBank::TradeBank()
 {
@@ -21,9 +22,9 @@ TradeBank::TradeBank()
 	trader_set = false;
 }
 
-bool TradeBank::setGiveResources(int a_wood, int a_wheat, int a_stone, int a_sheep, int a_brick, player* a_active)
+bool TradeBank::setGiveResources(Game* g, int a_wood, int a_wheat, int a_stone, int a_sheep, int a_brick)
 {
-	active = a_active;
+	active = &g->p[g->activePlayer];
 
 	if(active->getResource(WOOD) < a_wood)
 		return false;
@@ -49,9 +50,9 @@ bool TradeBank::setGiveResources(int a_wood, int a_wheat, int a_stone, int a_she
 	return true;
 }
 
-bool TradeBank::setRecieveResources(int a_wood, int a_wheat, int a_stone, int a_sheep, int a_brick, player* a_trader)
+bool TradeBank::setRecieveResources(Game* g, int a_trader_num, int a_wood, int a_wheat, int a_stone, int a_sheep, int a_brick)
 {
-	trader = a_trader;
+	trader = &g->p[a_trader_num];
 
 	if(trader->getResource(WOOD) < a_wood)
 		return false;
@@ -129,82 +130,82 @@ void TradeBank::trade()
 	}
 }
 
-bool TradeBank::tradeWithBank(rsc* resDeck, player* p, char choice_recieve, char choice_give, int num_recieve, char harbor_type)
+bool TradeBank::tradeWithBank(char harbor_type, Game* g, char choice_recieve, char choice_give, int num_recieve)
 {
 	switch(harbor_type)
 	{
 	case WOOD:
-		if(p->getResource(WOOD) >= 2 * num_recieve)
+		if(g->p[g->activePlayer].getResource(WOOD) >= 2 * num_recieve)
 		{
-			p->drawResource(resDeck, choice_recieve, num_recieve);
-			p->changeResource(WOOD, -2 * num_recieve);
-			resDeck->returnToResourcePool(WOOD, 2 * num_recieve);
+			g->p[g->activePlayer].drawResource(&g->underlyingBoard->rsc, choice_recieve, num_recieve);
+			g->p[g->activePlayer].changeResource(WOOD, -2 * num_recieve);
+			g->underlyingBoard->rsc.returnToResourcePool(WOOD, 2 * num_recieve);
 			return true;
 		}
 		break;
 	case WHEAT:
-		if(p->getResource(WHEAT) >= 2 * num_recieve)
+		if(g->p[g->activePlayer].getResource(WHEAT) >= 2 * num_recieve)
 		{
-			p->drawResource(resDeck, choice_recieve, num_recieve);
-			p->changeResource(WHEAT, -2 * num_recieve);
-			resDeck->returnToResourcePool(WHEAT, 2 * num_recieve);
+			g->p[g->activePlayer].drawResource(&g->underlyingBoard->rsc, choice_recieve, num_recieve);
+			g->p[g->activePlayer].changeResource(WHEAT, -2 * num_recieve);
+			g->underlyingBoard->rsc.returnToResourcePool(WHEAT, 2 * num_recieve);
 			return true;
 		}
 		break;
 	case STONE:
-		if(p->getResource(STONE) >= 2 * num_recieve)
+		if(g->p[g->activePlayer].getResource(STONE) >= 2 * num_recieve)
 		{
-			p->drawResource(resDeck, choice_recieve, num_recieve);
-			p->changeResource(STONE, -2 * num_recieve);
-			resDeck->returnToResourcePool(STONE, 2 * num_recieve);
+			g->p[g->activePlayer].drawResource(&g->underlyingBoard->rsc, choice_recieve, num_recieve);
+			g->p[g->activePlayer].changeResource(STONE, -2 * num_recieve);
+			g->underlyingBoard->rsc.returnToResourcePool(STONE, 2 * num_recieve);
 			return true;
 		}
 		break;
 	case BRICK:
-		if(p->getResource(BRICK) >= 2 * num_recieve)
+		if(g->p[g->activePlayer].getResource(BRICK) >= 2 * num_recieve)
 		{
-			p->drawResource(resDeck, choice_recieve, num_recieve);
-			p->changeResource(BRICK, -2 * num_recieve);
-			resDeck->returnToResourcePool(BRICK, 2 * num_recieve);
+			g->p[g->activePlayer].drawResource(&g->underlyingBoard->rsc, choice_recieve, num_recieve);
+			g->p[g->activePlayer].changeResource(BRICK, -2 * num_recieve);
+			g->underlyingBoard->rsc.returnToResourcePool(BRICK, 2 * num_recieve);
 			return true;
 		}
 		break;
 	case SHEEP:
-		if(p->getResource(SHEEP) >= 2 * num_recieve)
+		if(g->p[g->activePlayer].getResource(SHEEP) >= 2 * num_recieve)
 		{
-			p->drawResource(resDeck, choice_recieve, num_recieve);
-			p->changeResource(SHEEP, -2 * num_recieve);
-			resDeck->returnToResourcePool(SHEEP, 2 * num_recieve);
+			g->p[g->activePlayer].drawResource(&g->underlyingBoard->rsc, choice_recieve, num_recieve);
+			g->p[g->activePlayer].changeResource(SHEEP, -2 * num_recieve);
+			g->underlyingBoard->rsc.returnToResourcePool(SHEEP, 2 * num_recieve);
 			return true;
 		}
 		break;
 	case THREE_TO_ONE:
-		if(p->getResource(choice_give) >= 3 * num_recieve)
+		if(g->p[g->activePlayer].getResource(choice_give) >= 3 * num_recieve)
 		{
-			p->drawResource(resDeck, choice_recieve, num_recieve);
-			p->changeResource(choice_give, -3 * num_recieve);
-			resDeck->returnToResourcePool(choice_give, 3 * num_recieve);
+			g->p[g->activePlayer].drawResource(&g->underlyingBoard->rsc, choice_recieve, num_recieve);
+			g->p[g->activePlayer].changeResource(choice_give, -3 * num_recieve);
+			g->underlyingBoard->rsc.returnToResourcePool(choice_give, 3 * num_recieve);
 			return true;
 		}
 	default:
-		if(p->getResource(choice_give) >= 4 * num_recieve)
+		if(g->p[g->activePlayer].getResource(choice_give) >= 4 * num_recieve)
 		{
-			p->drawResource(resDeck, choice_recieve, num_recieve);
-			p->changeResource(choice_give, -4 * num_recieve);
-			resDeck->returnToResourcePool(choice_give, 4 * num_recieve);
+			g->p[g->activePlayer].drawResource(&g->underlyingBoard->rsc, choice_recieve, num_recieve);
+			g->p[g->activePlayer].changeResource(choice_give, -4 * num_recieve);
+			g->underlyingBoard->rsc.returnToResourcePool(choice_give, 4 * num_recieve);
 			return true;
 		}
 	};
 	return false;
 }
 
-bool TradeBank::tradeWithBank(rsc* resDeck, player* p, char choice_recieve, char choice_give, int num_recieve)
+bool TradeBank::tradeWithBank(Game* g, char choice_recieve, char choice_give, int num_recieve)
 {
-	if(p->getResource(choice_give) >= 4 * num_recieve)
+	if(g->p[g->activePlayer].getResource(choice_give) >= 4 * num_recieve)
 	{
-		p->drawResource(resDeck, choice_recieve, num_recieve);
-		p->changeResource(choice_give, -4 * num_recieve);
-		resDeck->returnToResourcePool(choice_give, 4 * num_recieve);
+		g->p[g->activePlayer].drawResource(&g->underlyingBoard->rsc, choice_recieve, num_recieve);
+		g->p[g->activePlayer].changeResource(choice_give, -4 * num_recieve);
+		g->underlyingBoard->rsc.returnToResourcePool(choice_give, 4 * num_recieve);
 		return true;
 	}
 	return false;

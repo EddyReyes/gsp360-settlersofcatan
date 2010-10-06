@@ -2,6 +2,7 @@
 
 // yo dawg, I heard you will need a Game class. so I'm putting a Game class before the Game class so you can declare before you declare.
 class Game;
+class TradeBank;
 
 #include "sdl/sdl.h"
 #include "sdl/sdl_ttf.h"
@@ -16,6 +17,7 @@ class Game;
 #include "stndrd.h"
 #include "player.h"
 #include "game.h"
+#include "tradebank.h"
 
 using namespace std;
 
@@ -41,9 +43,7 @@ private:
 	SDL_Surface *wheatTile;
 	SDL_Surface *chitTile[10];
 
-	//=== the map is initialized with an internal resourceDeck and developmentDeck
-	rsc rsc;
-	dvc dvc;
+
 
 	//=== map-only load_image and apply_surface
 	SDL_Surface *load_image( std::string filename );
@@ -51,11 +51,17 @@ private:
 
 
 public:
+	//============Trade stuff=====================
+	TradeBank* tradebank;
 	// ============== DICE STUFF =========================
 	Dice dice;
 	int dice1;
 	int dice2;
 	bool rolledDice;
+
+	//=== the map is initialized with an internal resourceDeck and developmentDeck
+	rsc rsc;
+	dvc dvc;
 
 
 	// =============== MAPSTATES (THEY ARE PUBLIC BECAUSE GAME.CPP NEEDS THEM SOMETIMES ====================
@@ -142,5 +148,13 @@ public:
 	//=======MAP TTFs====================
 	TTF_Font *font;
 	SDL_Color textColor;
+
+
+	//mapGameplay.cpp
+	bool map::calculateVictoryPoints(Game* g);
+	bool map::calculateLongestRoad(Game* g);
+	void map::thiefIsRolled(Game* g);
+	void map::steal(Game* g, int victim);
+	void map::calcLargestArmy(Game* g);
 
 };

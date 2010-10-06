@@ -110,7 +110,6 @@ void map::handleInput_BUILDCARD(SDL_Event e, Game * g)
 							}
 			case SDLK_c:	if (g->p[g->activePlayer].checkBuildSomething('C', &dvc) == true)
 							{
-								g->p[g->activePlayer].actuallyBuildSomething('C', &rsc, &dvc);
 								mapState = map::BUILDCITY;	break;
 							}
 			case SDLK_d:	if (g->p[g->activePlayer].checkBuildSomething('D', &dvc) == true)
@@ -175,6 +174,7 @@ void map::handleInput_TRADE(SDL_Event e, Game * g)
 			case SDLK_4:	mapState= map::DEVHAND;			break;
 			//ADD TRADE FUNCTIONALITY. DON'T KNOW HOW.
 			}
+			break;
 	}
 }
 
@@ -194,6 +194,13 @@ void map::handleInput_BUILDROAD(SDL_Event e, Game * g)
 					mapState = map::MAP;
 				}	
 				break;
+			}
+			break;
+
+		case SDL_KEYDOWN:
+			switch(e.key.keysym.sym)
+			{
+				case SDLK_0:	mapState= map::MAP;				break;
 			}
 			break;
 	}
@@ -217,6 +224,12 @@ void map::handleInput_BUILDSETTLEMENT(SDL_Event e, Game * g)
 				break;
 			}
 			break;
+		case SDL_KEYDOWN:
+			switch(e.key.keysym.sym)
+			{
+				case SDLK_0:	mapState= map::MAP;				break;
+			}
+			break;
 	}
 }
 
@@ -225,6 +238,26 @@ void map::handleInput_BUILDCITY(SDL_Event e, Game * g)
 	switch(e.type)
 	{
 		case SDL_MOUSEMOTION:	whichNodeIsWithin(e.motion.x, e.motion.y, 100); break;
+
+		case SDL_MOUSEBUTTONDOWN:
+			switch(e.button.button)
+			{
+			case SDL_BUTTON_LEFT:	
+				if(constructCityOnMap(g) == true)
+				{ 
+					g->p[g->activePlayer].actuallyBuildSomething('C', &rsc, &dvc);
+					mapState = map::MAP;
+				}	
+				break;
+			}
+			break;
+
+		case SDL_KEYDOWN:
+			switch(e.key.keysym.sym)
+			{
+				case SDLK_0:	mapState= map::MAP;				break;
+			}
+			break;
 	}
 }
 

@@ -100,6 +100,7 @@ public:
 	bool map::constructRoadOnMap(Game * g);
 	bool map::constructSettlementOnMap(Game * g);
 	bool map::constructSettlementOnMapAnywhere(Game * g);
+	bool map::constructCityOnMap(Game * g);
 
 
 

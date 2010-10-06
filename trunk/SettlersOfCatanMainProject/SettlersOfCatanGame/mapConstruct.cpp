@@ -44,30 +44,26 @@ bool map::constructRoadOnMap(Game * g)
 {
 	bool buildable = false;
 
-	if (myEdges[roadSelectron].owner == NOT_A_PLAYER && myEdges[roadSelectron].sisterEdge->owner == NOT_A_PLAYER)
+	int edgeOwner = myEdges[roadSelectron].owner;
+
+	if (edgeOwner == NOT_A_PLAYER && myEdges[roadSelectron].sisterEdge->owner == NOT_A_PLAYER)
 	{
-		cout << "GETS TO A" << endl;
 		if (myEdges[roadSelectron].from->owner == g->p[g->activePlayer].ID || myEdges[roadSelectron].to->owner == g->p[g->activePlayer].ID)
 		{
 			buildable = true;
-			cout << "GETS TO B" << endl;
 			//THIS IS TRUE IF EDGE IS OWNERLESS AND TO OR FROM IS PLAYER's, OR TRUE IF SISTER'EDGE IS OWNERLESS AND SISTER'EDGE TO OR SISTER'EDGE FROM IS PLAYER's
 		}
 		if ( myEdges[roadSelectron].to->owner == NOT_A_PLAYER)
 		{
-			cout << "GETS TO C" << endl;
-			cout << "myEdges[roadSelectron].to->numOfEdges == " << myEdges[roadSelectron].to->numOfEdges << endl;
 			for (int i = 0; i < myEdges[roadSelectron].to->numOfEdges; ++i)
 			{
 				if (myEdges[roadSelectron].to->nodeEdges[i]->owner == g->p[g->activePlayer].ID)
 				{
-					cout << "GETS TO D" << endl;
 					buildable = true;
 					//THIS IS TRUE IF EDGE IS OWNERLESS, THE "To's" NODE IS OWNERLESS, AND ONE OF THE "TO's" EDGES IS OWNED BY THE PLAYER
 				}
 				if (myEdges[roadSelectron].to->nodeEdges[i]->sisterEdge->owner == g->p[g->activePlayer].ID)
 				{
-					cout << "GETS TO E" << endl;
 					buildable = true;
 					//THIS IS TRUE IF SISTER'EDGE IS OWNERLESS, THE SISTER'"To's" NODE IS OWNERLESS, AND ONE OF THE SISTER'"TO's" EDGES IS OWNED BY THE PLAYER
 				}
@@ -75,19 +71,16 @@ bool map::constructRoadOnMap(Game * g)
 		}
 		if ( myEdges[roadSelectron].sisterEdge->to->owner == NOT_A_PLAYER)
 		{
-			cout << "GETS TO F" << endl;
-			cout << "myEdges[roadSelectron].sisterEdge->to->numOfEdges == " << myEdges[roadSelectron].sisterEdge->to->numOfEdges << endl;
+			//cout << "myEdges[roadSelectron].sisterEdge->to->numOfEdges == " << myEdges[roadSelectron].sisterEdge->to->numOfEdges << endl;
 			for (int i = 0; i < myEdges[roadSelectron].sisterEdge->to->numOfEdges; ++i)
 			{
 				if (myEdges[roadSelectron].sisterEdge->to->nodeEdges[i]->owner == g->p[g->activePlayer].ID)
 				{
-					cout << "GETS TO G" << endl;
 					buildable = true;
 					//THIS IS TRUE IF SISTER'EDGE IS OWNERLESS, THE SISTER'"To's" NODE IS OWNERLESS, AND ONE OF THE SISTER'"TO's" EDGES IS OWNED BY THE PLAYER
 				}
 				if (myEdges[roadSelectron].sisterEdge->to->nodeEdges[i]->sisterEdge->owner == g->p[g->activePlayer].ID)
 				{
-					cout << "GETS TO H" << endl;
 					buildable = true;
 					//THIS IS TRUE IF SISTER'EDGE IS OWNERLESS, THE SISTER'"To's" NODE IS OWNERLESS, AND ONE OF THE SISTER'"TO's" EDGES IS OWNED BY THE PLAYER
 				}
@@ -95,19 +88,15 @@ bool map::constructRoadOnMap(Game * g)
 		}
 		if ( myEdges[roadSelectron].from->owner == NOT_A_PLAYER)
 		{
-			cout << "GETS TO I" << endl;
-			cout << "myEdges[roadSelectron].from->numOfEdges == " << myEdges[roadSelectron].from->numOfEdges << endl;
 			for (int i = 0; i < myEdges[roadSelectron].from->numOfEdges; ++i)
 			{
 				if (myEdges[roadSelectron].from->nodeEdges[i]->owner == g->p[g->activePlayer].ID)
 				{
-					cout << "GETS TO J" << endl;
 					buildable = true;
 					//THIS IS TRUE IF EDGE IS OWNERLESS, THE "To's" NODE IS OWNERLESS, AND ONE OF THE "TO's" EDGES IS OWNED BY THE PLAYER
 				}
 				if (myEdges[roadSelectron].from->nodeEdges[i]->sisterEdge->owner == g->p[g->activePlayer].ID)
 				{
-					cout << "GETS TO K" << endl;
 					buildable = true;
 					//THIS IS TRUE IF SISTER'EDGE IS OWNERLESS, THE SISTER'"To's" NODE IS OWNERLESS, AND ONE OF THE SISTER'"TO's" EDGES IS OWNED BY THE PLAYER
 				}
@@ -115,19 +104,15 @@ bool map::constructRoadOnMap(Game * g)
 		}
 		if ( myEdges[roadSelectron].sisterEdge->from->owner == NOT_A_PLAYER)
 		{
-			cout << "GETS TO L" << endl;
-			cout << "myEdges[roadSelectron].sisterEdge->from->numOfEdges " << myEdges[roadSelectron].sisterEdge->from->numOfEdges << endl;
 			for (int i = 0; i < myEdges[roadSelectron].sisterEdge->from->numOfEdges; ++i)
 			{
 				if (myEdges[roadSelectron].sisterEdge->from->nodeEdges[i]->owner == g->p[g->activePlayer].ID)
 				{
-					cout << "GETS TO M" << endl;
 					buildable = true;
 					//THIS IS TRUE IF SISTER'EDGE IS OWNERLESS, THE SISTER'"To's" NODE IS OWNERLESS, AND ONE OF THE SISTER'"TO's" EDGES IS OWNED BY THE PLAYER
 				}
 				if (myEdges[roadSelectron].sisterEdge->from->nodeEdges[i]->sisterEdge->owner == g->p[g->activePlayer].ID)
 				{
-					cout << "GETS TO N" << endl;
 					buildable = true;
 					//THIS IS TRUE IF SISTER'EDGE IS OWNERLESS, THE SISTER'"To's" NODE IS OWNERLESS, AND ONE OF THE SISTER'"TO's" EDGES IS OWNED BY THE PLAYER
 				}
@@ -145,44 +130,46 @@ bool map::constructRoadOnMap(Game * g)
 bool map::constructSettlementOnMap(Game * g)
 {
 	bool buildable = false;
-	for (int i = 0; i < 54; ++i)
-	{
-		if (nodeSelectron != i)
-		{
-			if (myNodes[i].owner != 4)
-			{
-				if							(!(
 
-					((myNodes[i].x + 1 == myNodes[nodeSelectron].x ||
-					myNodes[i].x - 1 == myNodes[nodeSelectron].x) 
-											&&
-					(myNodes[i].y + 1 == myNodes[nodeSelectron].y ||
-					myNodes[i].y - 1 == myNodes[nodeSelectron].y)) 
-					
-											&&
-
-
-					((myNodes[i].x + 2 == myNodes[nodeSelectron].x ||
-					myNodes[i].x - 2 == myNodes[nodeSelectron].x)
-											&&
-					(myNodes[i].y == myNodes[nodeSelectron].y))
-					
-											))
-				{
-					buildable = true;
-				}
-			}
-		}
-	}
-	for (int i = 0; myNodes[nodeSelectron].numOfEdges; ++i)
+	for (int i = 0; i < myNodes[nodeSelectron].numOfEdges; ++i)
 	{
 		if (myNodes[nodeSelectron].nodeEdges[i]->owner == g->p[g->activePlayer].ID)
 		{
+			cout << "got this far!" << endl;
 			buildable = true;
 		}
 	}
 
-	if (buildable == true && myNodes[nodeSelectron].owner == 4)
+	for (int i = 0; i < 54; ++i)
+	{
+		if (nodeSelectron != i)
+		{
+			if (myNodes[i].owner != NOT_A_PLAYER)
+			{
+				if	(
+						(
+							(
+								(myNodes[i].x + 1 == myNodes[nodeSelectron].x || myNodes[i].x - 1 == myNodes[nodeSelectron].x) 
+								&&
+								(myNodes[i].y + 1 == myNodes[nodeSelectron].y || myNodes[i].y - 1 == myNodes[nodeSelectron].y)
+							) 
+							||
+							(
+								(myNodes[i].x + 2 == myNodes[nodeSelectron].x || myNodes[i].x - 2 == myNodes[nodeSelectron].x)
+								&&
+								(myNodes[i].y == myNodes[nodeSelectron].y)
+							)
+						)
+					
+					)
+				{
+					buildable = false;
+				}
+			}
+		}
+	}
+
+	if (buildable == true && myNodes[nodeSelectron].owner == NOT_A_PLAYER)
 	{
 		myNodes[nodeSelectron].owner = g->p[g->activePlayer].ID;
 		myNodes[nodeSelectron].cityType = 1;
@@ -244,6 +231,18 @@ bool map::constructSettlementOnMapAnywhere(Game * g)
 				}
 			}
 		}
+		return true;
+	}
+	return false;
+}
+
+bool map::constructCityOnMap(Game * g)
+{
+	if (myNodes[nodeSelectron].owner == g->p[g->activePlayer].ID
+		&&
+		myNodes[nodeSelectron].cityType == 1)
+	{
+		myNodes[nodeSelectron].cityType = 2;
 		return true;
 	}
 	return false;

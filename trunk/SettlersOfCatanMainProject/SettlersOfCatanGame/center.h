@@ -12,9 +12,12 @@ private:
 public:
 	int x;
 	int y;
+	int pixelX;
+	int pixelY;
 	int ID;
 	char resource;
 	int chitWorth;
+	bool thiefHere;
 	Node * connectedNodes[6];
 	Center::Center(){};
 

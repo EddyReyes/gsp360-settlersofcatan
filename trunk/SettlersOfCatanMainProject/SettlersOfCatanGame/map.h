@@ -86,6 +86,8 @@ public:
 	static const int TURNTWOROAD = 12;
 	static const int FREETWOROADS = 13;
 	static const int FREETWORESOURCES = 14;
+	static const int PICKMONOPOLY = 15;
+	static const int SETTHETHIEF = 16;
 	static const int SOMEONEWON = 20;
 	static const int ENDTURN = 99; // play state (mainly to trigger the changing of players in game.cpp)
 	static const int NOT_A_PLAYER = 4; // play state (mainly to trigger the changing of players in game.cpp)
@@ -109,12 +111,15 @@ public:
 	//====CONSTRUCTION DEVICS HANDLED IN THE mapConstruct.cpp FILE=============
 	int nodeSelectron;
 	int roadSelectron;
+	int centerSelectron;
 	void map::whichNodeIsWithin(int const & x, int const & y, int radius);
 	void map::whichRoadIsWithin(int const & x, int const & y, int radius);
+	void map::whichCenterIsWithin(int const & x, int const & y, int radius);
 	bool map::constructRoadOnMap(Game * g);
 	bool map::constructSettlementOnMap(Game * g);
 	bool map::constructSettlementOnMapAnywhere(Game * g);
 	bool map::constructCityOnMap(Game * g);
+	bool map::constructThiefOnMap(Game * g);
 
 
 
@@ -156,6 +161,7 @@ public:
 	void map::handleInput_TURNTWOROAD(SDL_Event e, Game * g);
 	void map::handleInput_FREETWOROADS(SDL_Event e, Game * g);
 	void map::handleInput_FREETWORESOURCES(SDL_Event e, Game * g);
+	void map::handleInput_PICKMONOPOLY(SDL_Event e, Game * g);
 
 	//=======MAP TTFs====================
 	TTF_Font *font;
@@ -168,5 +174,6 @@ public:
 	void map::thiefIsRolled(Game* g);
 	void map::steal(Game* g, int victim);
 	void map::calcLargestArmy(Game* g);
+	void map::playMonopolyCard(char type, Game * g);
 
 };

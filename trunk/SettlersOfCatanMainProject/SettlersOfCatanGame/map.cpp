@@ -133,6 +133,34 @@ map::map()
 		}
 	}
 
+	//============= CENTER PIXEL ASSIGNMENTS =================
+	int centerPixelPlaceHolder = 0;
+	for (int i = 0; i < 19; ++i)
+	{
+		if(i == 0 || i == 4 || i == 9 || i == 14 || i == 18)
+		{
+			centerPixelPlaceHolder = 0;
+		}
+		else if(i == 1 || i == 6 || i == 11 || i == 16)
+		{
+			centerPixelPlaceHolder = -32;
+		}
+		else if(i == 2 || i == 7 || i == 12 || i == 17)
+		{
+			centerPixelPlaceHolder = 32;
+		}
+		else if(i == 3 || i == 8 || i == 13)
+		{
+			centerPixelPlaceHolder = -64;
+		}
+		else if(i == 5 || i == 10 || i == 15)
+		{
+			centerPixelPlaceHolder = 64;
+		}
+		myCenters[i].pixelX = myCenters[i].x * (400 / 9) - centerPixelPlaceHolder - 19;
+		myCenters[i].pixelY = myCenters[i].y * 50 - 19;
+	}
+
 	//=============EDGE ASSIGNMENT=========================
 
 	int amountEdges = 0;
@@ -216,6 +244,7 @@ map::map()
 	//===========SELECTRON====================
 	nodeSelectron = NULL;
 	roadSelectron = NULL;
+	centerSelectron = NULL;
 
 	//============SETTING THE EDGES IN TERMS OF PIXELS=========================
 

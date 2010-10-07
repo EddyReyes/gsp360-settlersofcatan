@@ -40,6 +40,7 @@ void map::draw(SDL_Surface * screen, Game * g)
 		case map::FREETWORESOURCES:	drawResourceGrab(screen);	drawPlayerTag(screen, g);	break;
 		case map::FREETWOROADS:		drawBoard(screen); drawRoadSelectron(screen); drawPlayerTag(screen, g);  break;
 		case map::SOMEONEWON:		drawWinScreen(screen);		drawPlayerTag(screen, g);		break;
+		case map::PICKMONOPOLY:		drawResourceGrab(screen); drawPlayerTag(screen, g); break;
 	}
 	// this is where drawControls(screen) would go, because then it would print on every map screen in addition to the other draw functions.
 }
@@ -222,8 +223,8 @@ void map::drawBoard(SDL_Surface * screen)
 		if(myCenters[i].chitWorth >= 8){ ++y; }
 		if(myCenters[i].chitWorth != 0)
 		{
-			apply_surface(	myCenters[i].x * (400 / 9) - x - 19,
-							myCenters[i].y * 50 - 19,
+			apply_surface(	myCenters[i].pixelX, // * (400 / 9) - x - 19,
+							myCenters[i].pixelY, // * 50 - 19,
 							chitTile[myCenters[i].chitWorth - y],
 							screen,
 							NULL);
@@ -262,6 +263,19 @@ void map::drawBoard(SDL_Surface * screen)
 							screen,
 							NULL);
 		}
+	}
+	for (int i = 0; i < 19; ++i)
+	{
+		/*
+		if (myCenters[i].thiefHere == true)
+		{
+			apply_surface(	myCenters[i].pixelX, // * (400 / 9) - x - 19,
+							myCenters[i].pixelY, // * 50 - 19,
+							,
+							screen,
+							NULL);
+		}
+		*/
 	}
 }
 

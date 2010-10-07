@@ -8,48 +8,39 @@ void map::draw(SDL_Surface * screen, Game * g)
 {
 	switch(mapState)
 	{
-	case map::BEGINTURN:
-		if (soundQueue == 20)
-		{
-			g->gameSound->playDiceWAV();
-			soundQueue--;
-		}
-		drawDiceRoll(screen, g);	
-		drawPlayerTag(screen, g);
-		break;
+		case map::BEGINTURN:
+			if (soundQueue == 20)
+			{
+				g->gameSound->playWAV();
+				soundQueue--;
+			}
+			drawDiceRoll(screen, g);	
+			drawPlayerTag(screen, g);
+			break;
 
-	case map::MAP:				drawBoard(screen);drawPlayerTag(screen, g);					break; 
-	
-	case map::BUILDCARD:
-		if (soundQueue == 20)
-		{
-			g->gameSound->playCheerWAV();
-			soundQueue--;
-		}		
-		drawBuildCard(screen);	
-		drawPlayerTag(screen, g);		
-		break;
-	case map::RESOURCELIST:		drawResourceList(screen, g);drawPlayerTag(screen, g);		break;
-	case map::DEVHAND:			drawDevHand(screen, g);		drawPlayerTag(screen, g);		break;
-	case map::TRADE:			drawtradeCard(screen);		drawPlayerTag(screen, g);		break;
-	case map::BUILDROAD:		drawBoard(screen);			drawPlayerTag(screen, g);
-		drawRoadSelectron(screen);		break;
-	case map::BUILDSETTLEMENT:	drawBoard(screen);			drawPlayerTag(screen, g);
-		drawNodeSelectron(screen);		break;
-	case map::BUILDCITY:		drawBoard(screen);			drawPlayerTag(screen, g);
-		drawNodeSelectron(screen);		break;
-	case map::TURNONESETTLEMENT:		drawBoard(screen);	drawPlayerTag(screen, g);
-		drawNodeSelectron(screen);		break;
-	case map::TURNONEROAD:		drawBoard(screen);			drawPlayerTag(screen, g);
-		drawRoadSelectron(screen);		break;
-	case map::TURNTWOSETTLEMENT:		drawBoard(screen);	drawPlayerTag(screen, g);
-		drawNodeSelectron(screen);		break;
-	case map::TURNTWOROAD:		drawBoard(screen);			drawPlayerTag(screen, g);
-		drawRoadSelectron(screen);		break;
-	case map::FREETWORESOURCES:	drawResourceGrab(screen);	drawPlayerTag(screen, g);	break;
-	case map::FREETWOROADS:		drawBoard(screen); drawRoadSelectron(screen); drawPlayerTag(screen, g);  break;
-	case map::SOMEONEWON:		drawWinScreen(screen);		drawPlayerTag(screen, g);		break;
-	case map::PICKMONOPOLY:		drawResourceGrab(screen); drawPlayerTag(screen, g); break;
+		case map::MAP:				drawBoard(screen);			drawPlayerTag(screen, g);		break; 
+		case map::BUILDCARD:		drawBuildCard(screen);		drawPlayerTag(screen, g);		break;
+		case map::RESOURCELIST:		drawResourceList(screen, g);drawPlayerTag(screen, g);		break;
+		case map::DEVHAND:			drawDevHand(screen, g);		drawPlayerTag(screen, g);		break;
+		case map::TRADE:			drawtradeCard(screen);		drawPlayerTag(screen, g);		break;
+		case map::BUILDROAD:		drawBoard(screen);			drawPlayerTag(screen, g);
+									drawRoadSelectron(screen);		break;
+		case map::BUILDSETTLEMENT:	drawBoard(screen);			drawPlayerTag(screen, g);
+									drawNodeSelectron(screen);		break;
+		case map::BUILDCITY:		drawBoard(screen);			drawPlayerTag(screen, g);
+									drawNodeSelectron(screen);		break;
+		case map::TURNONESETTLEMENT:		drawBoard(screen);	drawPlayerTag(screen, g);
+									drawNodeSelectron(screen);		break;
+		case map::TURNONEROAD:		drawBoard(screen);			drawPlayerTag(screen, g);
+									drawRoadSelectron(screen);		break;
+		case map::TURNTWOSETTLEMENT:		drawBoard(screen);	drawPlayerTag(screen, g);
+									drawNodeSelectron(screen);		break;
+		case map::TURNTWOROAD:		drawBoard(screen);			drawPlayerTag(screen, g);
+									drawRoadSelectron(screen);		break;
+		case map::FREETWORESOURCES:	drawResourceGrab(screen);	drawPlayerTag(screen, g);	break;
+		case map::FREETWOROADS:		drawBoard(screen); drawRoadSelectron(screen); drawPlayerTag(screen, g);  break;
+		case map::SOMEONEWON:		drawWinScreen(screen);		drawPlayerTag(screen, g);		break;
+		case map::PICKMONOPOLY:		drawResourceGrab(screen); drawPlayerTag(screen, g); break;
 		case map::SETTHETHIEF:		drawBoard(screen);	drawCenterSelectron(screen);		drawPlayerTag(screen, g); break;
 	}
 	// this is where drawControls(screen) would go, because then it would print on every map screen in addition to the other draw functions.
@@ -129,10 +120,10 @@ void map::drawNodeSelectron(SDL_Surface * screen)
 	if (nodeSelectron >= 0 && nodeSelectron <= 53)
 	{
 		apply_surface(	myNodes[nodeSelectron].pixelX,
-			myNodes[nodeSelectron].pixelY,
-			testSelect,
-			screen,
-			NULL );
+						myNodes[nodeSelectron].pixelY,
+						testSelect,
+						screen,
+						NULL );
 	}
 }
 
@@ -141,10 +132,10 @@ void map::drawRoadSelectron(SDL_Surface * screen)
 	if (roadSelectron >= 0 && roadSelectron <= 143)
 	{
 		apply_surface(	myEdges[roadSelectron].pixelX,
-			myEdges[roadSelectron].pixelY,
-			testSelect,
-			screen,
-			NULL );
+						myEdges[roadSelectron].pixelY,
+						testSelect,
+						screen,
+						NULL );
 	}
 }
 
@@ -189,35 +180,35 @@ void map::drawBoard(SDL_Surface * screen)
 		switch(myCenters[i].resource)
 		{
 		case WOOD:		apply_surface(	myCenters[i].x * (400 / 9) - x,
-							myCenters[i].y * 50 - 55,
-							woodTile,
-							screen,
-							NULL); break;
+										myCenters[i].y * 50 - 55,
+										woodTile,
+										screen,
+										NULL); break;
 		case WHEAT:		apply_surface(	myCenters[i].x * (400 / 9) - x,
-							myCenters[i].y * 50 - 55,
-							wheatTile,
-							screen,
-							NULL); break;
+										myCenters[i].y * 50 - 55,
+										wheatTile,
+										screen,
+										NULL); break;
 		case STONE:		apply_surface(	myCenters[i].x * (400 / 9) - x,
-							myCenters[i].y * 50 - 55,
-							stoneTile,
-							screen,
-							NULL); break;
+										myCenters[i].y * 50 - 55,
+										stoneTile,
+										screen,
+										NULL); break;
 		case SHEEP:		apply_surface(	myCenters[i].x * (400 / 9) - x,
-							myCenters[i].y * 50 - 55,
-							sheepTile,
-							screen,
-							NULL); break;
+										myCenters[i].y * 50 - 55,
+										sheepTile,
+										screen,
+										NULL); break;
 		case BRICK:		apply_surface(	myCenters[i].x * (400 / 9) - x,
-							myCenters[i].y * 50 - 55,
-							brickTile,
-							screen,
-							NULL); break;
+										myCenters[i].y * 50 - 55,
+										brickTile,
+										screen,
+										NULL); break;
 		case 'D':		apply_surface(	myCenters[i].x * (400 / 9) - x,
-							myCenters[i].y * 50 - 55,
-							hexTile,
-							screen,
-							NULL); break;
+										myCenters[i].y * 50 - 55,
+										hexTile,
+										screen,
+										NULL); break;
 		}
 	}
 	x = 0;
@@ -248,10 +239,10 @@ void map::drawBoard(SDL_Surface * screen)
 		if(myCenters[i].chitWorth != 0)
 		{
 			apply_surface(	myCenters[i].pixelX, // * (400 / 9) - x - 19,
-				myCenters[i].pixelY, // * 50 - 19,
-				chitTile[myCenters[i].chitWorth - y],
-				screen,
-				NULL);
+							myCenters[i].pixelY, // * 50 - 19,
+							chitTile[myCenters[i].chitWorth - y],
+							screen,
+							NULL);
 		}
 		if(myCenters[i].thiefHere == true)
 		{
@@ -270,18 +261,18 @@ void map::drawBoard(SDL_Surface * screen)
 			if (myNodes[i].cityType == 1)
 			{
 				apply_surface(	myNodes[i].pixelX,
-					myNodes[i].pixelY,
-					settlementTile[myNodes[i].owner],
-					screen,
-					NULL);
+								myNodes[i].pixelY,
+								settlementTile[myNodes[i].owner],
+								screen,
+								NULL);
 			}
 			else if (myNodes[i].cityType == 2)
 			{
 				apply_surface(	myNodes[i].pixelX,
-					myNodes[i].pixelY,
-					cityTile[myNodes[i].owner],
-					screen,
-					NULL);
+								myNodes[i].pixelY,
+								cityTile[myNodes[i].owner],
+								screen,
+								NULL);
 			}
 		}
 	}
@@ -290,26 +281,13 @@ void map::drawBoard(SDL_Surface * screen)
 		if (myEdges[i].owner != 4)
 		{
 			apply_surface(	myEdges[i].pixelX,
-				myEdges[i].pixelY,
-				roadTile[myEdges[i].owner],
-				screen,
-				NULL);
+							myEdges[i].pixelY,
+							roadTile[myEdges[i].owner],
+							screen,
+							NULL);
 		}
 	}
-<<<<<<< .mine	for (int i = 0; i < 19; ++i)
-	{
-		/*
-		if (myCenters[i].thiefHere == true)
-		{
-		apply_surface(	myCenters[i].pixelX, // * (400 / 9) - x - 19,
-		myCenters[i].pixelY, // * 50 - 19,
-		,
-		screen,
-		NULL);
-		}
-		*/
-	}
-=======>>>>>>> .theirs}
+}
 
 //more draws!
 ////////////////////////////////////////////
@@ -345,11 +323,11 @@ void map::drawResourceList(SDL_Surface * screen, Game * g)
 		int amountResourceStuff;
 		switch(i)
 		{
-		case 0:	amountResourceStuff = g->p[g->activePlayer].brick; break;
-		case 1:	amountResourceStuff = g->p[g->activePlayer].wood; break;
-		case 2:	amountResourceStuff = g->p[g->activePlayer].stone; break;
-		case 3:	amountResourceStuff = g->p[g->activePlayer].sheep; break;
-		case 4:	amountResourceStuff = g->p[g->activePlayer].wheat; break;
+			case 0:	amountResourceStuff = g->p[g->activePlayer].brick; break;
+			case 1:	amountResourceStuff = g->p[g->activePlayer].wood; break;
+			case 2:	amountResourceStuff = g->p[g->activePlayer].stone; break;
+			case 3:	amountResourceStuff = g->p[g->activePlayer].sheep; break;
+			case 4:	amountResourceStuff = g->p[g->activePlayer].wheat; break;
 		}
 		sprintf(buffer, resAndAmt, amountResourceStuff);
 		resourceListMsg[i] = TTF_RenderText_Solid( font, buffer, textColor );
@@ -378,11 +356,11 @@ void map::drawResourceGrab(SDL_Surface * screen)
 		char amountResourceStuff;
 		switch(i)
 		{
-		case 0:	amountResourceStuff = 'B' ; break;
-		case 1:	amountResourceStuff = 'L' ; break;
-		case 2:	amountResourceStuff = 'S' ; break;
-		case 3:	amountResourceStuff = 'E' ; break;
-		case 4:	amountResourceStuff = 'W' ; break;
+			case 0:	amountResourceStuff = 'B' ; break;
+			case 1:	amountResourceStuff = 'L' ; break;
+			case 2:	amountResourceStuff = 'S' ; break;
+			case 3:	amountResourceStuff = 'E' ; break;
+			case 4:	amountResourceStuff = 'W' ; break;
 		}
 		sprintf(buffer, resAndAmt, amountResourceStuff);
 		resourceListMsg[i] = TTF_RenderText_Solid( font, buffer, textColor );
@@ -446,11 +424,11 @@ void map::drawDevHand(SDL_Surface * screen, Game * g)
 		int amountResourceStuff;
 		switch(i)
 		{
-		case 0:	amountResourceStuff = g->p[g->activePlayer].inHandTwoRoads; break;
-		case 1:	amountResourceStuff = g->p[g->activePlayer].inHandYearOfPlenty; break;
-		case 2:	amountResourceStuff = g->p[g->activePlayer].inHandMonopolies; break;
-		case 3:	amountResourceStuff = g->p[g->activePlayer].inHandSoldiers; break;
-		case 4:	amountResourceStuff = g->p[g->activePlayer].inHandVictoryPoints; break;
+			case 0:	amountResourceStuff = g->p[g->activePlayer].inHandTwoRoads; break;
+			case 1:	amountResourceStuff = g->p[g->activePlayer].inHandYearOfPlenty; break;
+			case 2:	amountResourceStuff = g->p[g->activePlayer].inHandMonopolies; break;
+			case 3:	amountResourceStuff = g->p[g->activePlayer].inHandSoldiers; break;
+			case 4:	amountResourceStuff = g->p[g->activePlayer].inHandVictoryPoints; break;
 		}
 		sprintf(buffer, resAndAmt, amountResourceStuff);
 		resourceListMsg[i] = TTF_RenderText_Solid( font, buffer, textColor );
@@ -466,11 +444,11 @@ void map::drawDevHand(SDL_Surface * screen, Game * g)
 		char amountResourceStuff;
 		switch(i)
 		{
-		case 0:	amountResourceStuff = 'R'; break;
-		case 1:	amountResourceStuff = 'Y'; break;
-		case 2:	amountResourceStuff = 'M'; break;
-		case 3:	amountResourceStuff = 'S'; break;
-		case 4:	amountResourceStuff = 'V'; break;
+			case 0:	amountResourceStuff = 'R'; break;
+			case 1:	amountResourceStuff = 'Y'; break;
+			case 2:	amountResourceStuff = 'M'; break;
+			case 3:	amountResourceStuff = 'S'; break;
+			case 4:	amountResourceStuff = 'V'; break;
 		}
 		sprintf(buffer, resAndAmt, amountResourceStuff);
 		resourceListMsg[i] = TTF_RenderText_Solid( font, buffer, textColor );
@@ -496,7 +474,7 @@ SDL_Surface* map::load_image( std::string filename )
 	SDL_Surface* loadedImage = NULL;
 	//The optimized image that will be used
 	SDL_Surface* optimizedImage = NULL;
-
+	
 	//Load the image
 	loadedImage = SDL_LoadBMP( filename.c_str() ); 
 
@@ -509,12 +487,12 @@ SDL_Surface* map::load_image( std::string filename )
 		SDL_FreeSurface( loadedImage );
 		if (optimizedImage != NULL)
 		{
-			Uint32 colorkey = SDL_MapRGB( optimizedImage->format, 0xC0, 0xC0, 0xC0 ); //GRAYSCALE COLOR KEY ( 192, 192, 192 )
+            Uint32 colorkey = SDL_MapRGB( optimizedImage->format, 0xC0, 0xC0, 0xC0 ); //GRAYSCALE COLOR KEY ( 192, 192, 192 )
 			SDL_SetColorKey( optimizedImage, SDL_SRCCOLORKEY, colorkey );
 		}
 	} 
-	//Return the optimized image
-	return optimizedImage;
+//Return the optimized image
+return optimizedImage;
 }
 
 void map::apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination, SDL_Rect* clip = NULL) 

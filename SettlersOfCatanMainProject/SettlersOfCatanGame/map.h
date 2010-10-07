@@ -129,7 +129,7 @@ public:
 	void map::loadImages(void);
 	void map::initializeImages(void);
 	void map::drawDiceRoll(SDL_Surface * screen, Game * g);
-	void map::drawtradeCard(SDL_Surface * screen);
+	void map::drawtradeCard(SDL_Surface * screen, Game* g);
 	void map::drawDevHand(SDL_Surface * screen, Game * g);
 	void map::drawResourceList(SDL_Surface * screen, Game * g);
 	void map::drawBuildCard(SDL_Surface * screen);

@@ -22,7 +22,7 @@ void map::draw(SDL_Surface * screen, Game * g)
 		case map::BUILDCARD:		drawBuildCard(screen);		drawPlayerTag(screen, g);		break;
 		case map::RESOURCELIST:		drawResourceList(screen, g);drawPlayerTag(screen, g);		break;
 		case map::DEVHAND:			drawDevHand(screen, g);		drawPlayerTag(screen, g);		break;
-		case map::TRADE:			drawtradeCard(screen);		drawPlayerTag(screen, g);		break;
+		case map::TRADE:			drawtradeCard(screen, g);	drawPlayerTag(screen, g);		break;
 		case map::BUILDROAD:		drawBoard(screen);			drawPlayerTag(screen, g);
 									drawRoadSelectron(screen);		break;
 		case map::BUILDSETTLEMENT:	drawBoard(screen);			drawPlayerTag(screen, g);
@@ -457,9 +457,59 @@ void map::drawDevHand(SDL_Surface * screen, Game * g)
 	}
 }
 
-void map::drawtradeCard(SDL_Surface * screen)
+void map::drawtradeCard(SDL_Surface * screen, Game* g)
 {
 	apply_surface( 0, 0, tradeCard, screen, NULL );
+
+	char * specResTypes[5] = {"Brick", "Wood", "Stone", "Sheep", "Wheat"};
+	int spacingX = 105;
+
+	font = TTF_OpenFont( "SNAP.ttf", 72);
+	textColor.r = 0;
+	textColor.g = 0;
+	textColor.b = 0;
+
+	for (int i = 0; i < 5; ++i)
+	{
+		char buffer [1024];
+
+		char * resAndAmt = "%d";
+		char * rotResType = specResTypes[i];
+		int amountResourceStuff;
+		switch(i)
+		{
+			case 0:	amountResourceStuff = g->brickactive; break;
+			case 1:	amountResourceStuff = g->woodactive; break;
+			case 2:	amountResourceStuff = g->stoneactive; break;
+			case 3:	amountResourceStuff = g->sheepactive; break;
+			case 4:	amountResourceStuff = g->wheatactive; break;
+		}
+		sprintf(buffer, resAndAmt, amountResourceStuff);
+		resourceListMsg[i] = TTF_RenderText_Solid( font, buffer, textColor );
+		apply_surface( 150 + spacingX*i, 300, resourceListMsg[i], screen, NULL );
+		SDL_FreeSurface(resourceListMsg[i]);
+	}
+
+	for (int i = 0; i < 5; ++i)
+	{
+		char buffer [1024];
+
+		char * resAndAmt = "%d";
+		char * rotResType = specResTypes[i];
+		int amountResourceStuff;
+		switch(i)
+		{
+			case 0:	amountResourceStuff = g->bricktrader; break;
+			case 1:	amountResourceStuff = g->woodtrader; break;
+			case 2:	amountResourceStuff = g->stonetrader; break;
+			case 3:	amountResourceStuff = g->sheeptrader; break;
+			case 4:	amountResourceStuff = g->wheattrader; break;
+		}
+		sprintf(buffer, resAndAmt, amountResourceStuff);
+		resourceListMsg[i] = TTF_RenderText_Solid( font, buffer, textColor );
+		apply_surface( 150 + spacingX*i, 475, resourceListMsg[i], screen, NULL );
+		SDL_FreeSurface(resourceListMsg[i]);
+	}
 }
 
 void map::drawDiceRoll(SDL_Surface * screen, Game * g)

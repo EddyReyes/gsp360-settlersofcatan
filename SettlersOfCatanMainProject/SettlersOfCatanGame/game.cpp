@@ -20,6 +20,20 @@ Game::Game()
 	rand();
 	ownerLargestArmy = NULL;
 	ownerLongestRoad = NULL;
+
+	wheatactive = 0;
+	stoneactive = 0;
+	brickactive = 0;
+	woodactive = 0;
+	sheepactive = 0;
+	
+	wheattrader = 0;
+	stonetrader = 0;
+	bricktrader = 0;
+	woodtrader = 0;
+	sheeptrader = 0;
+	
+	playerNumber = 0;
 }
 
 void Game::initGame(int const & a_numPlayers)

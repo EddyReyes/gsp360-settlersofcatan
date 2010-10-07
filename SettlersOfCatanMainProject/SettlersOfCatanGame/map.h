@@ -56,6 +56,7 @@ public:
 
 	//============PLACEHOLDER NUM FOR FREE TWO ROADS AND FREE TWO RESOURCES
 	int placeholderFREE;
+	int soundQueue;
 
 	// ============== DICE STUFF =========================
 	Dice dice;

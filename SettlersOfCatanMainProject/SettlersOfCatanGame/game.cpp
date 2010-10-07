@@ -82,18 +82,11 @@ void Game::update(int ms)
 				placeHolderTurnTwo++;
 				activePlayer = 0;
 			}
-			//cout << "placeHolderTurnTwo is " << placeHolderTurnTwo << endl;
-			//cout << "placeHolderTurnTwo is " << placeHolderTurnTwo << endl;
 			if (activePlayer >= numPlayers)
 			{
 				activePlayer = 0;
 				underlyingBoard->overallTurn++;
 			}
-			//cout << "placeHolderTurnTwo is " << placeHolderTurnTwo << endl;
-			//cout << "Overall turn is " << underlyingBoard->overallTurn << endl;
-			//cout << "placeHolderTurnTwo is " << placeHolderTurnTwo << endl;
-			//cout << "Overall turn is " << underlyingBoard->overallTurn << endl;
-
 			if (underlyingBoard->overallTurn == 2)
 			{
 				if (placeHolderTurnTwo > (numPlayers - 1))
@@ -116,9 +109,19 @@ void Game::update(int ms)
 			{
 				underlyingBoard->dice1 = rand() % 6 + 1;
 				underlyingBoard->dice2 = rand() % 6 + 1;
-				//cout << "A WHOLE NEW WORLD! TURN " << underlyingBoard.overallTurn << endl;
-				underlyingBoard->mapState = map::BEGINTURN;
-				//cout << "A WHOLE NEW WORLD! TURN " << underlyingBoard->overallTurn << endl;
+				while ((underlyingBoard->dice1 + underlyingBoard->dice2 == 7) && (underlyingBoard->overallTurn < 6))
+				{
+					underlyingBoard->dice1 = rand() % 6 + 1;
+					underlyingBoard->dice2 = rand() % 6 + 1;
+				}
+				if (underlyingBoard->dice1 + underlyingBoard->dice2 == 7)
+				{
+					underlyingBoard->mapState = map::SETTHETHIEF;
+				}
+				else
+				{
+					underlyingBoard->mapState = map::BEGINTURN;
+				}
 			}
 		}
 

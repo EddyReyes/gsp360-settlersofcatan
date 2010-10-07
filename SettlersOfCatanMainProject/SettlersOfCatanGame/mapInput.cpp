@@ -153,7 +153,7 @@ void map::handleInput_DEVHAND(SDL_Event e, Game * g)
 			case SDLK_5:	mapState= map::TRADE;			break;
 			case SDLK_m:	if (g->p[g->activePlayer].playDevCard('M'))
 							{
-								//MONOPOLY FUNCTIONALITY GO!
+								mapState = map::PICKMONOPOLY;
 							}
 							break;
 			case SDLK_s:	if (g->p[g->activePlayer].playDevCard('S'))
@@ -504,5 +504,22 @@ void map::handleInput_FREETWORESOURCES(SDL_Event e, Game * g)
 	if (placeholderFREE == 0)
 	{
 		mapState = map::MAP;
+	}
+}
+
+void map::handleInput_PICKMONOPOLY(SDL_Event e, Game * g)
+{
+	switch(e.type)
+	{
+		case SDL_KEYDOWN:
+			switch(e.key.keysym.sym)
+			{
+			case SDLK_b:	playMonopolyCard(BRICK, g);	mapState = map::MAP;	break;
+			case SDLK_l:	playMonopolyCard(WOOD, g);	mapState = map::MAP;	break;
+			case SDLK_s:	playMonopolyCard(STONE, g);	mapState = map::MAP;	break;
+			case SDLK_e:	playMonopolyCard(SHEEP, g);	mapState = map::MAP;	break;
+			case SDLK_w:	playMonopolyCard(WHEAT, g);	mapState = map::MAP;	break;	
+			}
+		break;
 	}
 }

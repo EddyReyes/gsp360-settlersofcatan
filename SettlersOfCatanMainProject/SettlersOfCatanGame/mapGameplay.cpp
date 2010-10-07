@@ -126,3 +126,14 @@ void map::thiefIsRolled(Game* g)//, int numPlayers)//since this is in the game c
 
 	delete [] numCardsToRemove;
 }
+
+void map::playMonopolyCard(char type, Game * g)
+{
+	int amount = 0;
+	for (int i = 0; i < g->numPlayers; ++i)
+	{
+		amount += g->p[i].getResource(type);
+		g->p[i].changeResource(type, - (g->p[i].getResource(type)));
+	}
+	g->p[g->activePlayer].changeResource(type, amount);
+}

@@ -247,3 +247,36 @@ bool map::constructCityOnMap(Game * g)
 	}
 	return false;
 }
+
+void map::whichCenterIsWithin(int const & x, int const & y, int radius)
+{
+	float minDistance, distance, dx, dy, maxRadius = (float)(radius*radius);
+	minDistance = 2500;
+	Center * closest = NULL;
+	for(int i = 0; i < 19; ++i)
+	{
+		dx = (float)(myCenters[i].pixelX + 16- x);
+		dy = (float)(myCenters[i].pixelY + 16 - y);
+		distance = dx*dx + dy*dy;
+		if(distance < maxRadius 
+		&& (closest != NULL || distance < minDistance))
+		{
+			minDistance = distance;
+			centerSelectron = myCenters[i].ID - 1;
+		}
+	}
+}
+
+bool map::constructThiefOnMap(Game * g)
+{
+	if (myCenters[centerSelectron].thiefHere == false)
+	{
+		for (int i = 0; i < 19; ++i)
+		{
+			myCenters[i].thiefHere = false;
+		}
+		myCenters[centerSelectron].thiefHere = true;
+		return true;
+	}
+	return false;
+}

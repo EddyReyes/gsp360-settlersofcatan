@@ -12,7 +12,7 @@ void Music::playWAV()
 { 
     Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 );
     _dice = Mix_LoadWAV("dice_sound.wav");
-   Mix_PlayChannelTimed( -1, _dice, 1, -1);
+   Mix_PlayChannelTimed( -1, _dice, 0, -1); //    Mix_PlayChannelTimed( -1, _dice, 1, -1);
 }
 
 void Music::stopMusic()

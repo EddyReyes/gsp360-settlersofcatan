@@ -332,10 +332,11 @@ void map::initializeCenters(void)
 	}
 }
 
-int map::randomHarbor(int resource[])
+char map::randomHarbor(int resource[])
 {
 	srand(0);
 	int num;
+	char type = ' ';
 	bool acceptable = false;
 
 	//determine if the harbor has already been placed
@@ -347,6 +348,24 @@ int map::randomHarbor(int resource[])
 			if(resource[num] < 1)
 			{
 				acceptable = true;
+				switch(num)
+				{
+				case 0:
+					type = SHEEP;
+					break;
+				case 1:
+					type = WOOD;
+					break;
+				case 2:
+					type = WHEAT;
+					break;
+				case 3:
+					type = BRICK;
+					break;
+				case 4:
+					type = STONE;
+					break;
+				}
 				resource[num]++;
 			}
 			else
@@ -360,6 +379,7 @@ int map::randomHarbor(int resource[])
 			{
 				resource[num]++;
 				acceptable = true;
+				type = THREE_TO_ONE;
 			}
 			else
 			{
@@ -367,78 +387,79 @@ int map::randomHarbor(int resource[])
 			}
 		}
 	}
-	return num;
+	return type;
 }
 
 void map::setHarbor(Node* harbor)
 {
 	int resource[6] = {0, 0, 0, 0, 0, 0};
+	char type = ' ';
 
 	for(int i = 0; i < 54; i++)
 	{
 		//places harbor on pre-determined nodes
-		/*
+		
 		switch(i)
 		{
 		case 2:
-			num = randomHarbor(resource);
-			harbor[i].harborType = num;
+			type = randomHarbor(resource);
+			harbor[i].harborType = type;
 			break;
 		case 3:
 			harbor[i].harborType = harbor[2].harborType;
 			break;
 		case 4:
-			num = randomHarbor(resource);
-			harbor[i].harborType = num;
+			type = randomHarbor(resource);
+			harbor[i].harborType = type;
 			break;
 		case 5:
 			harbor[i].harborType = harbor[4].harborType;
 			break;
 		case 6:
-			num = randomHarbor(resource);
-			harbor[i].harborType = num;
+			type = randomHarbor(resource);
+			harbor[i].harborType = type;
 			break;
 		case 12:
 			harbor[i].harborType = harbor[6].harborType;
 			break;
 		case 11:
-			num = randomHarbor(resource);
-			harbor[i].harborType = num;
+			type = randomHarbor(resource);
+			harbor[i].harborType = type;
 			break;
 		case 17:
 			harbor[i].harborType = harbor[11].harborType;
 			break;
 		case 24:
-			num = randomHarbor(resource);
-			harbor[i].harborType = num;
+			type = randomHarbor(resource);
+			harbor[i].harborType = type;
 			break;
 		case 30:
 			harbor[i].harborType = harbor[24].harborType;
 			break;
 		case 29:
-			num = randomHarbor(resource);
-			harbor[i].harborType = num;
+			type = randomHarbor(resource);
+			harbor[i].harborType = type;
 			break;
 		case 35:
 			harbor[i].harborType = harbor[29].harborType;
 			break;
 		case 43:
-			num = randomHarbor(resource);
-			harbor[i].harborType = num;
+			type = randomHarbor(resource);
+			harbor[i].harborType = type;
 			break;
 		case 49:
 			harbor[i].harborType = harbor[43].harborType;
 			break;
 		case 46:
-			num = randomHarbor(resource);
-			harbor[i].harborType = num;
+			type = randomHarbor(resource);
+			harbor[i].harborType = type;
 			break;
 		case 51:
 			harbor[i].harborType = harbor[46].harborType;
 			break;
 		case 52:
-			num = randomHarbor(resource);
-			harbor[i].harborType = num;
+			type = randomHarbor(resource);
+			harbor[i].harborType = type;
 			break;
 		case 53:
 			harbor[i].harborType = harbor[52].harborType;
@@ -446,6 +467,6 @@ void map::setHarbor(Node* harbor)
 		default:
 			harbor[i].harborType = NULL;
 		}
-		*/
+		
 	}
 }

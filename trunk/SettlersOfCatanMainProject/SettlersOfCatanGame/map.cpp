@@ -272,6 +272,9 @@ map::map()
 	resourceListMsg[4] = NULL;
 	playerTag = NULL;
 
+	//=============TradeBank Stuff================
+	tradebank = new TradeBank;
+
 }
 
 Node * map::getNode(Node * population, int popCount, int ID)

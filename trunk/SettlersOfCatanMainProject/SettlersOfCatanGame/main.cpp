@@ -1,3 +1,9 @@
+//=========================================
+//         TEAM UBER AWESOME SAUCE
+//			  SETTLERS OF CATAN
+//		  $Midterm Applied Project$
+//=========================================
+
 #include "sdl/sdl.h"
 #include "game.h"
 

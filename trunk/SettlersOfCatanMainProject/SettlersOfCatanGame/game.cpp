@@ -43,7 +43,8 @@ void Game::draw(SDL_Surface * screen)
 	switch(gameState)
 	{
 	case Game::MENU:
-					
+		
+		//gameSound->playThemeWAV();		
 		SDL_FillRect(screen, 0, 0);
 		m.draw(screen);
 		SDL_Flip(screen);

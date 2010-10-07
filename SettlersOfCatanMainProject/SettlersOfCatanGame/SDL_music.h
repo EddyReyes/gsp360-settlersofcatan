@@ -19,9 +19,7 @@ public:
 	Music();
 	//Music Deconstructor
 	~Music();
-	void playDiceWAV();
-	void playCheerWAV();
-	void playThemeWAV();
+	void playWAV();
 	void stopMusic();
 
 };

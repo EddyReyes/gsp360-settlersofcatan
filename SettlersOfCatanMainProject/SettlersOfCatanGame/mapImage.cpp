@@ -28,6 +28,7 @@ void map::draw(SDL_Surface * screen, Game * g)
 									drawNodeSelectron(screen);		break;
 		case map::TURNTWOROAD:		drawBoard(screen);			drawPlayerTag(screen, g);
 									drawRoadSelectron(screen);		break;
+		case map::SOMEONEWON:		drawWinScreen(screen);		drawPlayerTag(screen, g);		break;
 	}
 	// this is where drawControls(screen) would go, because then it would print on every map screen in addition to the other draw functions.
 }
@@ -255,6 +256,12 @@ void map::drawBoard(SDL_Surface * screen)
 
 //more draws!
 ////////////////////////////////////////////
+
+void map::drawWinScreen(SDL_Surface * screen)
+{
+
+}
+
 void map::drawBuildCard(SDL_Surface * screen)
 {
 	apply_surface( 0, 0, buildCard, screen, NULL );

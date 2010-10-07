@@ -101,6 +101,19 @@ bool player::checkBuildSomething(char type, dvc * dvc)
 	return false;
 }
 
+void player::freeBuildSomething(char type, rsc* rsc, dvc* dvc) //ADD roads,settlements.h and points.
+{
+	switch(type)
+	{
+		case 'R':	numUnusedRoads--; 
+				break;
+		case 'S':	numUnusedSettlements--; 
+				break;
+		default: break;
+	}
+}
+
+
 void player::actuallyBuildSomething(char type, rsc* rsc, dvc* dvc) //ADD roads,settlements.h and points.
 {
 	switch(type)
@@ -112,16 +125,25 @@ void player::actuallyBuildSomething(char type, rsc* rsc, dvc* dvc) //ADD roads,s
 					rsc->returnToResourcePool(BRICK, 1);
 				break;
 		case 'S':	numUnusedSettlements--; 
+					wood--;
+					sheep--;
+					brick--;
+					wheat--;
 					rsc->returnToResourcePool(WOOD, 1);
 					rsc->returnToResourcePool(SHEEP, 1);
 					rsc->returnToResourcePool(BRICK, 1);
 					rsc->returnToResourcePool(WHEAT, 1);
 				break;
 		case 'C':	numUnusedCities--; 
+					wheat -= 2;
+					stone -= 3;
 					rsc->returnToResourcePool(WHEAT, 2);
 					rsc->returnToResourcePool(STONE, 3);
 				break;
 		case 'D':	drawDevCard(dvc);
+					wheat--;
+					stone--;
+					sheep--;
 					rsc->returnToResourcePool(WHEAT, 1);
 					rsc->returnToResourcePool(STONE, 1);
 					rsc->returnToResourcePool(SHEEP, 1);

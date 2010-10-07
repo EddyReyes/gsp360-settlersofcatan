@@ -79,6 +79,7 @@ public:
 	static const int TURNONEROAD = 10;
 	static const int TURNTWOSETTLEMENT = 11;
 	static const int TURNTWOROAD = 12;
+	static const int SOMEONEWON = 13;
 	static const int ENDTURN = 99; // play state (mainly to trigger the changing of players in game.cpp)
 	static const int NOT_A_PLAYER = 4; // play state (mainly to trigger the changing of players in game.cpp)
 
@@ -123,6 +124,7 @@ public:
 	void map::drawRoadSelectron(SDL_Surface * screen);
 	void map::drawBoard(SDL_Surface * screen);
 	void map::drawPlayerTag(SDL_Surface * screen, Game * g);
+	void map::drawWinScreen(SDL_Surface * screen);
 	void map::shutdownImages(void);
 
 

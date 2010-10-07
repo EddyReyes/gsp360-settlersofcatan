@@ -271,7 +271,14 @@ void map::handleInput_BUILDROAD(SDL_Event e, Game * g)
 				if(constructRoadOnMap(g) == true)
 				{ 
 					g->p[g->activePlayer].actuallyBuildSomething('R', &rsc, &dvc);
-					mapState = map::MAP;
+					if (calculateVictoryPoints(g))
+					{
+						mapState = map::SOMEONEWON;
+					}
+					else
+					{
+						mapState = map::MAP;
+					}
 				}	
 				break;
 			}
@@ -299,7 +306,14 @@ void map::handleInput_BUILDSETTLEMENT(SDL_Event e, Game * g)
 				if(constructSettlementOnMap(g) == true)
 				{ 
 					g->p[g->activePlayer].actuallyBuildSomething('S', &rsc, &dvc);
-					mapState = map::MAP;
+					if (calculateVictoryPoints(g))
+					{
+						mapState = map::SOMEONEWON;
+					}
+					else
+					{
+						mapState = map::MAP;
+					}
 				}	
 				break;
 			}
@@ -326,7 +340,14 @@ void map::handleInput_BUILDCITY(SDL_Event e, Game * g)
 				if(constructCityOnMap(g) == true)
 				{ 
 					g->p[g->activePlayer].actuallyBuildSomething('C', &rsc, &dvc);
-					mapState = map::MAP;
+					if (calculateVictoryPoints(g))
+					{
+						mapState = map::SOMEONEWON;
+					}
+					else
+					{
+						mapState = map::MAP;
+					}
 				}	
 				break;
 			}
@@ -349,7 +370,13 @@ void map::handleInput_TURNONESETTLEMENT(SDL_Event e, Game * g)
 		case SDL_MOUSEBUTTONDOWN:
 			switch(e.button.button)
 			{
-				case SDL_BUTTON_LEFT:	if(constructSettlementOnMapAnywhere(g) == true){ mapState = map::TURNONEROAD;}	break;
+				case SDL_BUTTON_LEFT:	
+					if(constructSettlementOnMapAnywhere(g) == true)
+					{ 
+						g->p[g->activePlayer].freeBuildSomething('S', &rsc, &dvc);
+						mapState = map::TURNONEROAD;
+					}	
+					break;
 			}
 			break;
 	}
@@ -363,7 +390,13 @@ void map::handleInput_TURNONEROAD(SDL_Event e, Game * g)
 		case SDL_MOUSEBUTTONDOWN:
 			switch(e.button.button)
 			{
-			case SDL_BUTTON_LEFT:	if (constructRoadOnMap(g) == true){ mapState = map::ENDTURN;} break;
+			case SDL_BUTTON_LEFT:	
+				if (constructRoadOnMap(g) == true)
+				{ 
+					g->p[g->activePlayer].freeBuildSomething('R', &rsc, &dvc);
+					mapState = map::ENDTURN;
+				} 
+				break;
 			}
 			break;
 	}
@@ -377,7 +410,13 @@ void map::handleInput_TURNTWOSETTLEMENT(SDL_Event e, Game * g)
 		case SDL_MOUSEBUTTONDOWN:
 			switch(e.button.button)
 			{
-				case SDL_BUTTON_LEFT:	if(constructSettlementOnMapAnywhere(g) == true){ mapState = map::TURNTWOROAD;}	break;
+				case SDL_BUTTON_LEFT:	
+					if(constructSettlementOnMapAnywhere(g) == true)
+					{ 
+						g->p[g->activePlayer].freeBuildSomething('S', &rsc, &dvc);
+						mapState = map::TURNTWOROAD;
+					}	
+					break;
 			}
 			break;
 	}
@@ -391,7 +430,13 @@ void map::handleInput_TURNTWOROAD(SDL_Event e, Game * g)
 		case SDL_MOUSEBUTTONDOWN:
 			switch(e.button.button)
 			{
-				case SDL_BUTTON_LEFT:	if (constructRoadOnMap(g) == true){ mapState = map::ENDTURN;} break;
+				case SDL_BUTTON_LEFT:	
+					if (constructRoadOnMap(g) == true)
+					{ 
+						g->p[g->activePlayer].freeBuildSomething('R', &rsc, &dvc);
+						mapState = map::ENDTURN;
+					} 
+					break;
 			}
 			break;
 	}

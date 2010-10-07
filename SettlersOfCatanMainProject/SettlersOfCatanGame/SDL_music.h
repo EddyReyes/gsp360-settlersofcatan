@@ -10,28 +10,16 @@
 #include <string>
 using namespace std;
 
-enum SoundFX
-{
-	sound_beat, sound_dice, sound_crowdcheer/*, Music2, effect1, effect2*/
-};
-
-
 class Music
 {
 private:
-	int volume;
 
 public:
 	//Music constructor
 	Music();
 	//Music Deconstructor
 	~Music();
-	//Music Array
-	string *soundArray;
-	void playWAV(int);
-	bool fillMusic();
-	void increaseVolume(int, int);
-	void decreaseVolume(int, int);
-	void stopMusic(int);
+	void playWAV();
+	void stopMusic();
 
 };

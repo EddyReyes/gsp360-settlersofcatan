@@ -8,8 +8,27 @@ void map::draw(SDL_Surface * screen, Game * g)
 {
 	switch(mapState)
 	{
-		case map::BEGINTURN:		g->gameSound->playWAV(2); drawDiceRoll(screen, g);	drawPlayerTag(screen, g);		break;
-		case map::MAP:				drawBoard(screen);			drawPlayerTag(screen, g);			break; 
+		case map::BEGINTURN:
+bool quit = NULL;
+			//While the user hasn't quit 
+			while( quit == false ) 
+			{ 
+			//While there's events to handle 
+			while( SDL_PollEvent( &event ) ) 
+			{ 
+			//If a key was pressed 
+		if( event.type == SDL_KEYDOWN ) 
+		{ 
+			//If 1 was pressed 
+			if( event.key.keysym.sym == SDLK_1 ) 
+			{ 
+			g->gameSound->playWAV();
+			drawDiceRoll(screen, g);	
+			drawPlayerTag(screen, g);
+			}
+			break;
+
+		case map::MAP:				drawBoard(screen);			drawPlayerTag(screen, g);		break; 
 		case map::BUILDCARD:		drawBuildCard(screen);		drawPlayerTag(screen, g);		break;
 		case map::RESOURCELIST:		drawResourceList(screen, g);drawPlayerTag(screen, g);		break;
 		case map::DEVHAND:			drawDevHand(screen, g);		drawPlayerTag(screen, g);		break;

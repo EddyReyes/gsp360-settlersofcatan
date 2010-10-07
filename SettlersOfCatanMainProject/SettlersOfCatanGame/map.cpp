@@ -94,7 +94,9 @@ map::map()
 	};
 
 	for(int i = 0; i < 19; ++i)
+	{
 		myCenters[i] = tempCenters[i];
+	}
 
 	//=============CENTER GETTING NODES====================
 
@@ -315,19 +317,19 @@ void map::initializeCenters(void)
 	{
 		selector = rand();
 		selector = selector % (woodLeft + sheepLeft + brickLeft + stoneLeft + wheatLeft + desertLeft);
-		if (selector < woodLeft){myCenters[i].resource = WOOD; woodLeft--;}
-		else if (selector < woodLeft + sheepLeft){myCenters[i].resource = SHEEP; sheepLeft--;}
-		else if (selector < woodLeft + sheepLeft + brickLeft){myCenters[i].resource = BRICK; brickLeft--;}
-		else if (selector < woodLeft + sheepLeft + brickLeft + stoneLeft){myCenters[i].resource = STONE; stoneLeft--;}
-		else if (selector < woodLeft + sheepLeft + brickLeft + stoneLeft + wheatLeft){myCenters[i].resource = WHEAT; wheatLeft--;}
-		else {myCenters[i].resource = 'D'; desertLeft--;}
+		if (selector < woodLeft){myCenters[i].resource = WOOD; myCenters[i].thiefHere = false; woodLeft--;}
+		else if (selector < woodLeft + sheepLeft){myCenters[i].resource = SHEEP; myCenters[i].thiefHere = false;  sheepLeft--;}
+		else if (selector < woodLeft + sheepLeft + brickLeft){myCenters[i].resource = BRICK; myCenters[i].thiefHere = false;  brickLeft--;}
+		else if (selector < woodLeft + sheepLeft + brickLeft + stoneLeft){myCenters[i].resource = STONE; myCenters[i].thiefHere = false;  stoneLeft--;}
+		else if (selector < woodLeft + sheepLeft + brickLeft + stoneLeft + wheatLeft){myCenters[i].resource = WHEAT; myCenters[i].thiefHere = false;  wheatLeft--;}
+		else {myCenters[i].resource = 'D'; myCenters[i].thiefHere = true; desertLeft--;}
 	}
 
 	int tempInts[] = {5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 8, 10, 9, 4, 5, 6, 3, 11};
 	int tempIntCenters[] = {13, 16, 18, 17, 15, 10, 5, 2, 0, 1, 3, 8, 11, 14, 12, 7, 4, 6, 9};
 	for (int i = 0; i < 19; ++i)
 	{
-		if (myCenters[tempIntCenters[i]].resource == 'D'){desertPass = 1; myCenters[tempIntCenters[i]].chitWorth = 0;}
+		if (myCenters[tempIntCenters[i]].resource == 'D'){desertPass = 1; myCenters[tempIntCenters[i]].thiefHere = true; myCenters[tempIntCenters[i]].chitWorth = 0;}
 		else {myCenters[tempIntCenters[i]].chitWorth = tempInts[i - desertPass];}
 	}
 }

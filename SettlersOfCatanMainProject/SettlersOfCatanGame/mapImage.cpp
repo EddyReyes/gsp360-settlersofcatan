@@ -41,6 +41,7 @@ void map::draw(SDL_Surface * screen, Game * g)
 		case map::FREETWOROADS:		drawBoard(screen); drawRoadSelectron(screen); drawPlayerTag(screen, g);  break;
 		case map::SOMEONEWON:		drawWinScreen(screen);		drawPlayerTag(screen, g);		break;
 		case map::PICKMONOPOLY:		drawResourceGrab(screen); drawPlayerTag(screen, g); break;
+		case map::SETTHETHIEF:		drawBoard(screen);	drawCenterSelectron(screen);		drawPlayerTag(screen, g); break;
 	}
 	// this is where drawControls(screen) would go, because then it would print on every map screen in addition to the other draw functions.
 }
@@ -49,6 +50,7 @@ void map::draw(SDL_Surface * screen, Game * g)
 
 void map::loadImages()
 {
+	thief = load_image( "placeholderThief.bmp ");
 	font = TTF_OpenFont( "SNAP.ttf", 72);
 	tradeCard = load_image( "tradeCard.bmp" );
 	DevHand = load_image( "DevHand.bmp" );
@@ -87,6 +89,7 @@ void map::loadImages()
 
 void map::initializeImages()
 {
+	thief = NULL;
 	dice.loadImages();
 	font = NULL;
 	tradeCard = NULL;
@@ -130,6 +133,18 @@ void map::drawRoadSelectron(SDL_Surface * screen)
 	{
 		apply_surface(	myEdges[roadSelectron].pixelX,
 						myEdges[roadSelectron].pixelY,
+						testSelect,
+						screen,
+						NULL );
+	}
+}
+
+void map::drawCenterSelectron(SDL_Surface * screen)
+{
+	if (centerSelectron >= 0 && centerSelectron <= 143)
+	{
+		apply_surface(	myCenters[centerSelectron].pixelX,
+						myCenters[centerSelectron].pixelY,
 						testSelect,
 						screen,
 						NULL );
@@ -229,6 +244,14 @@ void map::drawBoard(SDL_Surface * screen)
 							screen,
 							NULL);
 		}
+		if(myCenters[i].thiefHere == true)
+		{
+			apply_surface(	myCenters[i].pixelX, // * (400 / 9) - x - 19,
+							myCenters[i].pixelY, // * 50 - 19,
+							thief,
+							screen,
+							NULL);
+		}
 	}
 
 	for (int i = 0; i < 54; ++i)
@@ -263,19 +286,6 @@ void map::drawBoard(SDL_Surface * screen)
 							screen,
 							NULL);
 		}
-	}
-	for (int i = 0; i < 19; ++i)
-	{
-		/*
-		if (myCenters[i].thiefHere == true)
-		{
-			apply_surface(	myCenters[i].pixelX, // * (400 / 9) - x - 19,
-							myCenters[i].pixelY, // * 50 - 19,
-							,
-							screen,
-							NULL);
-		}
-		*/
 	}
 }
 
@@ -502,6 +512,7 @@ void map::apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destinat
 void map::shutdownImages()
 {
 	SDL_FreeSurface(playerTag);
+	SDL_FreeSurface(thief);
 	SDL_FreeSurface(tradeCard);
 	SDL_FreeSurface(DevHand);
 	SDL_FreeSurface(buildCard);

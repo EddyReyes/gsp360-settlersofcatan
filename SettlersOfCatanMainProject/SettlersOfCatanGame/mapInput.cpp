@@ -23,7 +23,8 @@ void map::handleInput(SDL_Event e, Game * g)
 		case map::TURNTWOSETTLEMENT:	handleInput_TURNTWOSETTLEMENT(e, g);	break;
 		case map::TURNTWOROAD:			handleInput_TURNTWOROAD(e, g);			break;
 		case map::FREETWORESOURCES:		handleInput_FREETWORESOURCES(e, g);		break;
-		case map::FREETWOROADS:			handleInput_FREETWOROADS(e,g );			break;
+		case map::FREETWOROADS:			handleInput_FREETWOROADS(e, g);			break;
+		case map::SETTHETHIEF:			handleInput_SETTHETHIEF(e, g);			break;
 		case map::ENDTURN:														break;
 		}
 }
@@ -35,7 +36,7 @@ void map::handleInput_BEGINTURN(SDL_Event e, Game * g)
 		cout << " ROLLED A " << dice1+dice2 << endl;
 		for (int i = 0; i < 19; ++i)
 		{
-			if (myCenters[i].chitWorth == dice1+dice2)
+			if (myCenters[i].chitWorth == dice1+dice2 && myCenters[i].thiefHere == false)
 			{
 				for (int j = 0; j < 6; ++j)
 				{
@@ -158,7 +159,7 @@ void map::handleInput_DEVHAND(SDL_Event e, Game * g)
 							break;
 			case SDLK_s:	if (g->p[g->activePlayer].playDevCard('S'))
 							{
-								//SOLDIER FUNCTIONALITY GO!
+								mapState = map::SETTHETHIEF;
 							}
 							break;
 			case SDLK_y:	if (g->p[g->activePlayer].playDevCard('Y'))
@@ -521,5 +522,24 @@ void map::handleInput_PICKMONOPOLY(SDL_Event e, Game * g)
 			case SDLK_w:	playMonopolyCard(WHEAT, g);	mapState = map::MAP;	break;	
 			}
 		break;
+	}
+}
+
+void map::handleInput_SETTHETHIEF(SDL_Event e, Game * g)
+{
+	switch(e.type)
+	{
+		case SDL_MOUSEMOTION:	whichCenterIsWithin(e.motion.x, e.motion.y, 100); break;
+		case SDL_MOUSEBUTTONDOWN:
+			switch(e.button.button)
+			{
+				case SDL_BUTTON_LEFT:	
+					if (constructThiefOnMap(g) == true)
+					{ 
+						mapState = map::MAP;
+					} 
+					break;
+			}
+			break;
 	}
 }

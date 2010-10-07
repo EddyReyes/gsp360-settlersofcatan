@@ -53,6 +53,10 @@ private:
 public:
 	//============Trade stuff=====================
 	TradeBank* tradebank;
+
+	//============PLACEHOLDER NUM FOR FREE TWO ROADS AND FREE TWO RESOURCES
+	int placeholderFREE;
+
 	// ============== DICE STUFF =========================
 	Dice dice;
 	int dice1;
@@ -79,7 +83,9 @@ public:
 	static const int TURNONEROAD = 10;
 	static const int TURNTWOSETTLEMENT = 11;
 	static const int TURNTWOROAD = 12;
-	static const int SOMEONEWON = 13;
+	static const int FREETWOROADS = 13;
+	static const int FREETWORESOURCES = 14;
+	static const int SOMEONEWON = 20;
 	static const int ENDTURN = 99; // play state (mainly to trigger the changing of players in game.cpp)
 	static const int NOT_A_PLAYER = 4; // play state (mainly to trigger the changing of players in game.cpp)
 
@@ -117,7 +123,7 @@ public:
 	void map::initializeImages(void);
 	void map::drawDiceRoll(SDL_Surface * screen, Game * g);
 	void map::drawtradeCard(SDL_Surface * screen);
-	void map::drawDevHand(SDL_Surface * screen);
+	void map::drawDevHand(SDL_Surface * screen, Game * g);
 	void map::drawResourceList(SDL_Surface * screen, Game * g);
 	void map::drawBuildCard(SDL_Surface * screen);
 	void map::drawNodeSelectron(SDL_Surface * screen);
@@ -125,6 +131,7 @@ public:
 	void map::drawBoard(SDL_Surface * screen);
 	void map::drawPlayerTag(SDL_Surface * screen, Game * g);
 	void map::drawWinScreen(SDL_Surface * screen);
+	void map::drawResourceGrab(SDL_Surface * screen);
 	void map::shutdownImages(void);
 
 
@@ -146,6 +153,8 @@ public:
 	void map::handleInput_TURNONEROAD(SDL_Event e, Game * g);
 	void map::handleInput_TURNTWOSETTLEMENT(SDL_Event e, Game * g);
 	void map::handleInput_TURNTWOROAD(SDL_Event e, Game * g);
+	void map::handleInput_FREETWOROADS(SDL_Event e, Game * g);
+	void map::handleInput_FREETWORESOURCES(SDL_Event e, Game * g);
 
 	//=======MAP TTFs====================
 	TTF_Font *font;

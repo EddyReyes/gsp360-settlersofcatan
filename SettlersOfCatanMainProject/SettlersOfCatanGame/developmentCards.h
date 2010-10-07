@@ -23,5 +23,6 @@ public:
 	}
 	bool dvc::drawAvailable(void);
 	char dvc::pullCard(void);
+	void dvc::initTimeDVC(void);
 };
 

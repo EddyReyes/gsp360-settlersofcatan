@@ -10,6 +10,12 @@
 
 map::map()
 {
+	//========PLACEHOLDER FOR FREE TWO ROADS AND FREE TWO RESOURCES.
+	placeholderFREE = 2;
+
+	//=========INIT TIME IN DVC
+	dvc.initTimeDVC();
+
 	//=====NODE ASSIGNMENT==================
 	int count;
 	mapState = map::TURNONESETTLEMENT;

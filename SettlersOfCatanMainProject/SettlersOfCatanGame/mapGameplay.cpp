@@ -1,5 +1,7 @@
 #include "map.h"
 
+
+
 //returns true if the player wins
 bool map::calculateVictoryPoints(Game* g)
 {

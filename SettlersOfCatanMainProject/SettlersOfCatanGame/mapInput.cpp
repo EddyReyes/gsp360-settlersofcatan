@@ -22,6 +22,8 @@ void map::handleInput(SDL_Event e, Game * g)
 		case map::TURNONEROAD:			handleInput_TURNONEROAD(e, g);			break;
 		case map::TURNTWOSETTLEMENT:	handleInput_TURNTWOSETTLEMENT(e, g);	break;
 		case map::TURNTWOROAD:			handleInput_TURNTWOROAD(e, g);			break;
+		case map::FREETWORESOURCES:		handleInput_FREETWORESOURCES(e, g);		break;
+		case map::FREETWOROADS:			handleInput_FREETWOROADS(e,g );			break;
 		case map::ENDTURN:														break;
 		}
 }
@@ -69,6 +71,7 @@ void map::handleInput_BEGINTURN(SDL_Event e, Game * g)
 
 void map::handleInput_MAP(SDL_Event e, Game * g)
 {
+	placeholderFREE = 2; // POOR PLACEMENT, BUT IT MUST BE DONE!
 	switch(e.type)
 	{
 		case SDL_KEYDOWN:
@@ -147,16 +150,32 @@ void map::handleInput_DEVHAND(SDL_Event e, Game * g)
 			case SDLK_2:	mapState= map::BUILDCARD;		break;
 			case SDLK_3:	mapState= map::RESOURCELIST;	break;
 			case SDLK_5:	mapState= map::TRADE;			break;
-			case SDLK_m:	g->p[g->activePlayer].playDevCard('M');			break;
-							//MONOPOLY FUNCTIONALITY GO!
-			case SDLK_s:	g->p[g->activePlayer].playDevCard('S');
-							//SOLDIER FUNCTIONALITY GO!
-			case SDLK_y:	g->p[g->activePlayer].playDevCard('Y');
-							//YEAR OF PLENTY FUNCTIONALITY GO!
-			case SDLK_t:	g->p[g->activePlayer].playDevCard('T');
-							//TWO ROADS FUNCTIONALITY GO!
-			case SDLK_v:	g->p[g->activePlayer].playDevCard('V');
-							//VICTORY POINT FUNCTIONALITY GO!
+			case SDLK_m:	if (g->p[g->activePlayer].playDevCard('M'))
+							{
+								//MONOPOLY FUNCTIONALITY GO!
+							}
+							break;
+			case SDLK_s:	if (g->p[g->activePlayer].playDevCard('S'))
+							{
+								//SOLDIER FUNCTIONALITY GO!
+							}
+							break;
+			case SDLK_y:	if (g->p[g->activePlayer].playDevCard('Y'))
+							{	
+								mapState = map::FREETWORESOURCES;
+							}
+							break;
+			case SDLK_r:	if (g->p[g->activePlayer].playDevCard('T'))
+							{
+								mapState = map::FREETWOROADS;
+							}
+							break;
+			case SDLK_v:	if (g->p[g->activePlayer].playDevCard('V'))
+							{
+								mapState= map::MAP;
+							}
+							break;
+							
 			}
 	}
 }
@@ -439,5 +458,50 @@ void map::handleInput_TURNTWOROAD(SDL_Event e, Game * g)
 					break;
 			}
 			break;
+	}
+}
+
+void map::handleInput_FREETWOROADS(SDL_Event e, Game * g)
+{
+	switch(e.type)
+	{
+		case SDL_MOUSEMOTION:	whichRoadIsWithin(e.motion.x, e.motion.y, 100); break;
+		case SDL_MOUSEBUTTONDOWN:
+			switch(e.button.button)
+			{
+				case SDL_BUTTON_LEFT:	
+					if (constructRoadOnMap(g) == true)
+					{ 
+						g->p[g->activePlayer].freeBuildSomething('R', &rsc, &dvc);
+						placeholderFREE--;
+					} 
+					break;
+			}
+			break;
+	}
+	if (placeholderFREE == 0)
+	{
+		mapState = map::MAP;
+	}
+}
+
+void map::handleInput_FREETWORESOURCES(SDL_Event e, Game * g)
+{
+	switch(e.type)
+	{
+		case SDL_KEYDOWN:
+			switch(e.key.keysym.sym)
+			{
+			case SDLK_b:	g->p[g->activePlayer].drawResource(&rsc, BRICK, 1);	placeholderFREE--;			break;		
+			case SDLK_l:	g->p[g->activePlayer].drawResource(&rsc, WOOD, 1);	placeholderFREE--;			break;	
+			case SDLK_s:	g->p[g->activePlayer].drawResource(&rsc, STONE, 1); placeholderFREE--;			break;	
+			case SDLK_e:	g->p[g->activePlayer].drawResource(&rsc, SHEEP, 1);	placeholderFREE--;			break;	
+			case SDLK_w:	g->p[g->activePlayer].drawResource(&rsc, WHEAT, 1);	placeholderFREE--;			break;	
+			}
+		break;
+	}
+	if (placeholderFREE == 0)
+	{
+		mapState = map::MAP;
 	}
 }

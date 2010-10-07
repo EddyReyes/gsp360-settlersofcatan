@@ -55,7 +55,6 @@ public:
 	player* ownerLongestRoad;
 
 	Game();
-	//Music * gameSound;
 	void draw(SDL_Surface * screen);
 	void update(int ms);
 	void input(SDL_Event & e);

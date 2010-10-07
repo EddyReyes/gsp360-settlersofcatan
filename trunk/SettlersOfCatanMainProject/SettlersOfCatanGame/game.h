@@ -54,6 +54,20 @@ public:
 	player* ownerLargestArmy;
 	player* ownerLongestRoad;
 
+	int wheatactive;
+	int stoneactive;
+	int brickactive;
+	int woodactive;
+	int sheepactive;
+
+	int wheattrader;
+	int stonetrader;
+	int bricktrader;
+	int woodtrader;
+	int sheeptrader;
+
+	int playerNumber;
+
 	Game();
 	//Music * gameSound;
 	void draw(SDL_Surface * screen);

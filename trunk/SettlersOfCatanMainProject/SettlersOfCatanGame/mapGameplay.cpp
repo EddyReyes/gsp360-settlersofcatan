@@ -6,7 +6,8 @@ bool map::calculateVictoryPoints(Game* g)
 	int tempVP = 0;
 
 	tempVP += 5 - g->p[g->activePlayer].getNumUnusedSettlements();//settlements
-	tempVP += (4 - g->p[g->activePlayer].getNumUnusedCities()) * 2;//cities
+
+	tempVP += ((4 - g->p[g->activePlayer].getNumUnusedCities()) * 2);//cities
 
 	tempVP += g->p[g->activePlayer].getNumUsedVictoryPoints();//played victory points
 

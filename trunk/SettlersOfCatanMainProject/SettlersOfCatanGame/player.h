@@ -37,6 +37,7 @@ public:
 	void player::drawDevCard(dvc* devDeck);
 	bool player::checkBuildSomething(char type, dvc* dvc);
 	void player::actuallyBuildSomething(char type, rsc* rsc, dvc* dvc);
+	void player::freeBuildSomething(char type, rsc* rsc, dvc* dvc);
 	void player::awardLongestRoad(void);
 	void player::retractLongestRoad(void);
 	void player::awardLargestArmy(void);
@@ -51,7 +52,7 @@ public:
 	//added these for the calcVictoryPoints function
 	void setVictoryPoints(int vp) { currentVictoryPoints = vp; }
 	int getNumUnusedSettlements() { return numUnusedSettlements; }
-	int getNumUnusedCities() { return numUnusedSettlements; }
+	int getNumUnusedCities() { return numUnusedCities; }
 	bool getHasLargestArmy() { return hasLargestArmy; }
 	bool getHasLongestRoad() { return hasLongestRoad; }
 	int getNumUsedSoldiers() { return usedSoldiers; }

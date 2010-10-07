@@ -12,7 +12,7 @@ void map::draw(SDL_Surface * screen, Game * g)
 		case map::MAP:				drawBoard(screen);			drawPlayerTag(screen, g);			break; 
 		case map::BUILDCARD:		drawBuildCard(screen);		drawPlayerTag(screen, g);		break;
 		case map::RESOURCELIST:		drawResourceList(screen, g);drawPlayerTag(screen, g);		break;
-		case map::DEVHAND:			drawDevHand(screen);		drawPlayerTag(screen, g);		break;
+		case map::DEVHAND:			drawDevHand(screen, g);		drawPlayerTag(screen, g);		break;
 		case map::TRADE:			drawtradeCard(screen);		drawPlayerTag(screen, g);		break;
 		case map::BUILDROAD:		drawBoard(screen);			drawPlayerTag(screen, g);
 									drawRoadSelectron(screen);		break;
@@ -28,6 +28,8 @@ void map::draw(SDL_Surface * screen, Game * g)
 									drawNodeSelectron(screen);		break;
 		case map::TURNTWOROAD:		drawBoard(screen);			drawPlayerTag(screen, g);
 									drawRoadSelectron(screen);		break;
+		case map::FREETWORESOURCES:	drawResourceGrab(screen);	drawPlayerTag(screen, g);	break;
+		case map::FREETWOROADS:		drawBoard(screen); drawRoadSelectron(screen); drawPlayerTag(screen, g);  break;
 		case map::SOMEONEWON:		drawWinScreen(screen);		drawPlayerTag(screen, g);		break;
 	}
 	// this is where drawControls(screen) would go, because then it would print on every map screen in addition to the other draw functions.
@@ -300,6 +302,40 @@ void map::drawResourceList(SDL_Surface * screen, Game * g)
 		SDL_FreeSurface(resourceListMsg[i]);
 	}
 }
+
+void map::drawResourceGrab(SDL_Surface * screen)
+{
+	apply_surface( 0, 0, resourceCard, screen, NULL );
+
+	char * specResTypes[5] = {"Brick", "Wood", "Stone", "Sheep", "Wheat"};
+	int spacingX = 103;
+
+	font = TTF_OpenFont( "SNAP.ttf", 72);
+	textColor.r = 0;
+	textColor.g = 0;
+	textColor.b = 0;
+
+	for (int i = 0; i < 5; ++i)
+	{
+		char buffer [1024];
+
+		char * resAndAmt = "%c";
+		char amountResourceStuff;
+		switch(i)
+		{
+			case 0:	amountResourceStuff = 'B' ; break;
+			case 1:	amountResourceStuff = 'L' ; break;
+			case 2:	amountResourceStuff = 'S' ; break;
+			case 3:	amountResourceStuff = 'E' ; break;
+			case 4:	amountResourceStuff = 'W' ; break;
+		}
+		sprintf(buffer, resAndAmt, amountResourceStuff);
+		resourceListMsg[i] = TTF_RenderText_Solid( font, buffer, textColor );
+		apply_surface( 160 + spacingX*i, 420, resourceListMsg[i], screen, NULL );
+		SDL_FreeSurface(resourceListMsg[i]);
+	}
+}
+
 void map::drawPlayerTag(SDL_Surface * screen, Game * g)
 {
 	char buffer [1024];
@@ -335,9 +371,57 @@ void map::drawPlayerTag(SDL_Surface * screen, Game * g)
 	SDL_FreeSurface(playerTag);
 }
 
-void map::drawDevHand(SDL_Surface * screen)
+void map::drawDevHand(SDL_Surface * screen, Game * g)
 {
 	apply_surface( 0, 0, DevHand, screen, NULL );
+	char * specResTypes[5] = {"Brick", "Wood", "Stone", "Sheep", "Wheat"};
+	int spacingX = 105;
+
+	font = TTF_OpenFont( "SNAP.ttf", 72);
+	textColor.r = 0;
+	textColor.g = 0;
+	textColor.b = 0;
+
+	for (int i = 0; i < 5; ++i)
+	{
+		char buffer [1024];
+
+		char * resAndAmt = "%d";
+		char * rotResType = specResTypes[i];
+		int amountResourceStuff;
+		switch(i)
+		{
+			case 0:	amountResourceStuff = g->p[g->activePlayer].inHandTwoRoads; break;
+			case 1:	amountResourceStuff = g->p[g->activePlayer].inHandYearOfPlenty; break;
+			case 2:	amountResourceStuff = g->p[g->activePlayer].inHandMonopolies; break;
+			case 3:	amountResourceStuff = g->p[g->activePlayer].inHandSoldiers; break;
+			case 4:	amountResourceStuff = g->p[g->activePlayer].inHandVictoryPoints; break;
+		}
+		sprintf(buffer, resAndAmt, amountResourceStuff);
+		resourceListMsg[i] = TTF_RenderText_Solid( font, buffer, textColor );
+		apply_surface( 150 + spacingX*i, 300, resourceListMsg[i], screen, NULL );
+		SDL_FreeSurface(resourceListMsg[i]);
+	}
+
+	for (int i = 0; i < 5; ++i)
+	{
+		char buffer [1024];
+
+		char * resAndAmt = "%c";
+		char amountResourceStuff;
+		switch(i)
+		{
+			case 0:	amountResourceStuff = 'R'; break;
+			case 1:	amountResourceStuff = 'Y'; break;
+			case 2:	amountResourceStuff = 'M'; break;
+			case 3:	amountResourceStuff = 'S'; break;
+			case 4:	amountResourceStuff = 'V'; break;
+		}
+		sprintf(buffer, resAndAmt, amountResourceStuff);
+		resourceListMsg[i] = TTF_RenderText_Solid( font, buffer, textColor );
+		apply_surface( 150 + spacingX*i, 360, resourceListMsg[i], screen, NULL );
+		SDL_FreeSurface(resourceListMsg[i]);
+	}
 }
 
 void map::drawtradeCard(SDL_Surface * screen)

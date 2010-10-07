@@ -10,15 +10,15 @@ private:
 	int currentVictoryPoints;
 	int usedSoldiers;
 	int usedVictoryPoints;
+	bool hasLongestRoad;
+	bool hasLargestArmy;
+
+public: 
 	int inHandVictoryPoints;
 	int inHandSoldiers;
 	int inHandMonopolies;
 	int inHandTwoRoads;
 	int inHandYearOfPlenty; // TWO OF ANY RESOURCE
-	bool hasLongestRoad;
-	bool hasLargestArmy;
-
-public: 
 	int wood;
 	int wheat;
 	int stone;
@@ -42,7 +42,7 @@ public:
 	void player::retractLongestRoad(void);
 	void player::awardLargestArmy(void);
 	void player::retractLargestArmy(void);
-	void player::playDevCard(char type);
+	bool player::playDevCard(char type);
 	int player::getResource(char type);
 	void player::changeResource(char type, int num);
 	//void player::addResource(char type, int num);

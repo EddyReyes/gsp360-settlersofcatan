@@ -53,7 +53,7 @@ void player::retractLargestArmy(void)
 	hasLargestArmy = false;
 }
 
-void player::playDevCard(char type)
+bool player::playDevCard(char type)
 {
 	switch(type)
 	{
@@ -61,31 +61,57 @@ void player::playDevCard(char type)
 					{
 						inHandSoldiers--; 
 						usedSoldiers++;
+						return true;
+					}
+					else
+					{
+						return false;
 					}
 				break;
 		case 'M':	if (inHandMonopolies > 0)
 					{
 						inHandMonopolies--; 
+						return true;
+					}
+					else
+					{
+						return false;
 					}
 				break;
 		case 'Y':	if (inHandYearOfPlenty > 0)
 					{
 						inHandYearOfPlenty--; 
+						return true;
+					}
+					else
+					{
+						return false;
 					}
 				break;
 		case 'T':	if(inHandTwoRoads > 0)
 					{
 						inHandTwoRoads--; 
+						return true;
+					}
+					else
+					{
+						return false;
 					}
 				break;
 		case 'V':	if(inHandVictoryPoints > 0)
 					{
 						inHandVictoryPoints--; 
 						usedVictoryPoints++;
+						return true;
+					}
+					else
+					{
+						return false;
 					}
 				break;
-		default: break;
+		default: return false; break;
 	}
+	return false;
 }
 
 bool player::checkBuildSomething(char type, dvc * dvc)

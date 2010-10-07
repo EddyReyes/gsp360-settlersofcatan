@@ -15,100 +15,126 @@ TradeBank::TradeBank()
 	sheep_recieve = 0;
 	brick_recieve = 0;
 
-	//active = NULL;
-	//trader = NULL;
-
 	active_set = false;
 	trader_set = false;
 }
 
-bool TradeBank::setGiveResources(Game* g, int a_wood, int a_wheat, int a_stone, int a_sheep, int a_brick)
+bool TradeBank::setGiveResources(Game* g, int a_trader_num, int a_wood, int a_wheat, int a_stone, int a_sheep, int a_brick)
 {
-	active = g->p[g->activePlayer];
+	cout << "Just entered setGiveResources!" << endl;
+	if(g->activePlayer != a_trader_num)
+	{
+		cout << "Inside if statement" << endl;
+		cout << "num wood player owned" << g->p[g->activePlayer].getResource(WOOD) << endl;
+		cout << "num passed for wood" << a_wood << endl;
+		if(g->p[g->activePlayer].getResource(WOOD) >= a_wood)
+			this->wood_give = a_wood;
+		else
+			return false;
 
-	if(active.getResource(WOOD) < a_wood)
-		return false;
-	wood_give = a_wood;
+		cout << "woodactive is set" << endl;
 
-	if(active.getResource(WHEAT) < a_wheat)
-		return false;
-	wheat_give = a_wheat;
+		if(g->p[g->activePlayer].getResource(WHEAT) >= a_wheat)
+			wheat_give = a_wheat;
+		else
+			return false;
 
-	if(active.getResource(STONE) < a_stone)
-		return false;
-	stone_give = a_stone;
+		cout << "wheatactive is set" << endl;
 
-	if(active.getResource(SHEEP) < a_sheep)
-		return false;
-	sheep_give = a_sheep;
+		if(g->p[g->activePlayer].getResource(STONE) >= a_stone)
+			stone_give = a_stone;
+		else
+			return false;
+		
+		cout << "stoneactive is set" << endl;
 
-	if(active.getResource(BRICK) < a_brick)
-		return false;
-	brick_give = a_brick;
+		if(g->p[g->activePlayer].getResource(SHEEP) >= a_sheep)
+			sheep_give = a_sheep;
+		else
+			return false;
+		
+		cout << "sheepactive is set" << endl;
 
-	active_set = true;
-	return true;
+		if(g->p[g->activePlayer].getResource(BRICK) >= a_brick)
+			brick_give = a_brick;
+		else
+			return false;
+
+		cout << "brickactive is set" << endl;
+
+		active_set = true;
+		cout << "active_set = true!" << endl;
+		return true;
+	}
+	return false;
 }
 
 bool TradeBank::setRecieveResources(Game* g, int a_trader_num, int a_wood, int a_wheat, int a_stone, int a_sheep, int a_brick)
 {
-	trader = g->p[a_trader_num];
+	if(g->activePlayer != a_trader_num)
+	{
+		if(g->p[a_trader_num].getResource(WOOD) >= a_wood)
+			wood_recieve = a_wood;
+		else
+			return false;
+		
+		if(g->p[a_trader_num].getResource(WHEAT) >= a_wheat)
+			wheat_recieve = a_wheat;
+		else
+			return false;
 
-	if(trader.getResource(WOOD) < a_wood)
-		return false;
-	wood_recieve = a_wood;
+		if(g->p[a_trader_num].getResource(STONE) >= a_stone)
+			stone_recieve = a_stone;
+		else
+			return false;
+		
+		if(g->p[a_trader_num].getResource(SHEEP) >= a_sheep)
+			sheep_recieve = a_sheep;
+		else
+			return false;
+		
+		if(g->p[a_trader_num].getResource(BRICK) >= a_brick)
+			brick_recieve = a_brick;
+		else
+			return false;
 
-	if(trader.getResource(WHEAT) < a_wheat)
-		return false;
-	wheat_recieve = a_wheat;
-
-	if(trader.getResource(STONE) < a_stone)
-		return false;
-	stone_recieve = a_stone;
-
-	if(trader.getResource(SHEEP) < a_sheep)
-		return false;
-	sheep_recieve = a_sheep;
-
-	if(trader.getResource(BRICK) < a_brick)
-		return false;
-	brick_recieve = a_brick;
-
-	trader_set = true;
-	return true;
+		trader_set = true;
+		return true;
+	}
+	return false;
 }
 
-bool TradeBank::trade()
+bool TradeBank::trade(Game* g, int a_trader_num)
 {
-	if(active_set == true && trader_set == true)//so it wont try to trade to null players
+	if(active_set == true && trader_set == true && g->activePlayer != a_trader_num)//so it wont try to trade to null players
 	{
-		//taking away the resources that the active player is trading
-		active.changeResource(WOOD, -wood_give);
-		active.changeResource(WHEAT, -wheat_give);
-		active.changeResource(STONE, -stone_give);
-		active.changeResource(SHEEP, -sheep_give);
-		active.changeResource(BRICK, -brick_give);
+		//taking away the resources that the g->p[g->activePlayer]   (active)   player is trading
+		g->p[g->activePlayer].changeResource(WOOD, -wood_give);
+		g->p[g->activePlayer].changeResource(WHEAT, -wheat_give);
+		g->p[g->activePlayer].changeResource(STONE, -stone_give);
+		g->p[g->activePlayer].changeResource(SHEEP, -sheep_give);
+		g->p[g->activePlayer].changeResource(BRICK, -brick_give);
 
-		//adding the resources that the active player wants
-		active.changeResource(WOOD, wood_recieve);
-		active.changeResource(WHEAT, wheat_recieve);
-		active.changeResource(STONE, stone_recieve);
-		active.changeResource(SHEEP, sheep_recieve);
-		active.changeResource(BRICK, brick_recieve);
+		//adding the resources that the g->p[g->activePlayer]    (active)    player wants
+		g->p[g->activePlayer].changeResource(WOOD, wood_recieve);
+		g->p[g->activePlayer].changeResource(WHEAT, wheat_recieve);
+		g->p[g->activePlayer].changeResource(STONE, stone_recieve);
+		g->p[g->activePlayer].changeResource(SHEEP, sheep_recieve);
+		g->p[g->activePlayer].changeResource(BRICK, brick_recieve);
 
-		//adding the resources to the trader that the active player gave
-		trader.changeResource(WOOD, wood_give);
-		trader.changeResource(WHEAT, wheat_give);
-		trader.changeResource(STONE, stone_give);
-		trader.changeResource(SHEEP, sheep_give);
-		trader.changeResource(BRICK, brick_give);
+		//adding the resources to the g->p[a_trader_num] (trader)that the active player gave
+		g->p[a_trader_num].changeResource(WOOD, wood_give);
+		g->p[a_trader_num].changeResource(WHEAT, wheat_give);
+		g->p[a_trader_num].changeResource(STONE, stone_give);
+		g->p[a_trader_num].changeResource(SHEEP, sheep_give);
+		g->p[a_trader_num].changeResource(BRICK, brick_give);
 
-		//taking away the resources that the trader is giving to the active player
-		trader.changeResource(WOOD, -wood_recieve);
-		trader.changeResource(WHEAT, -wheat_recieve);
-		trader.changeResource(STONE, -stone_recieve);
-		trader.changeResource(SHEEP, -sheep_recieve);
-		trader.changeResource(BRICK, -brick_recieve);
+		//taking away the resources that the g->p[a_trader_num](trader) is giving to the active player
+		g->p[a_trader_num].changeResource(WOOD, -wood_recieve);
+		g->p[a_trader_num].changeResource(WHEAT, -wheat_recieve);
+		g->p[a_trader_num].changeResource(STONE, -stone_recieve);
+		g->p[a_trader_num].changeResource(SHEEP, -sheep_recieve);
+		g->p[a_trader_num].changeResource(BRICK, -brick_recieve);
 
 		//resetting everything so its ready for the next trade
 		wood_give = 0;
@@ -123,8 +149,6 @@ bool TradeBank::trade()
 		sheep_recieve = 0;
 		brick_recieve = 0;
 	
-		//active = NULL;
-		//trader = NULL;
 		active_set = false;
 		trader_set = false;
 		return true;

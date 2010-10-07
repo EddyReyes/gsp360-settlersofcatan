@@ -196,7 +196,7 @@ void map::handleInput_TRADE(SDL_Event e, Game * g)
 	static int woodtrader = 0;
 	static int sheeptrader = 0;
 
-	int playerNumber = 0;
+	static int playerNumber = 0;
 
 	switch(e.type)
 	{
@@ -227,53 +227,76 @@ void map::handleInput_TRADE(SDL_Event e, Game * g)
 			case SDLK_c:	playerNumber = 2; break;
 			case SDLK_v:	playerNumber = 3; break;
 
-			//bool TradeBank::setGiveResources(Game* g, int a_wood, int a_wheat, int a_stone, int a_sheep, int a_brick);
-			//bool TradeBank::setRecieveResources(Game* g, int a_trader_num, int a_wood, int a_wheat, int a_stone, int a_sheep, int a_brick);
+			//setting the resources for trading seems to crash the game, but i dont know why
+			//i also couldnt close the console window
+			//now it seems that just trying to trade crashes, but the console window closes now
 
-				//setting the resources for trading seems to crash the game, but i dont know why
-				//i also couldnt close the console window
-			case SDLK_j:/*	
-				if(tradebank->setGiveResources(g, woodactive, wheatactive, stoneactive, sheepactive, brickactive))
-					cout << "Active Player set!!" << endl;
+				//(g, playerNumber, woodtrader, wheattrader, stonetrader, sheeptrader, bricktrader)
+			case SDLK_j:
+				if(tradebank->setGiveResources(g, int(playerNumber), int(woodactive), int(wheatactive), int(stoneactive), int(sheepactive), int(brickactive)))
+					cout << "******Active Player set*******" << endl;
 				else
-					cout << "Active Player not set!!" << endl;
-				break;*/
+					cout << "Active Player not set" << endl;
+				break;
 
-			case SDLK_k:/*	
-				if(tradebank->setRecieveResources(g, playerNumber, woodtrader, wheattrader, stonetrader, sheeptrader, bricktrader))
-					cout << "Trader Set!!" << endl;
+			case SDLK_k:
+				if(tradebank->setRecieveResources(g, int(playerNumber), int(woodtrader), int(wheattrader), int(stonetrader), int(sheeptrader), int(bricktrader)))
+					cout << "****Trader Set******" << endl;
 				else
-					cout << "Trader not set!!!" << endl;
-				break;*/
+					cout << "Trader not set" << endl;
+				break;
 
 			case SDLK_l:	
-				//if(tradebank->trade())
+				if(tradebank->trade(g, int(playerNumber)))
 				{
+					brickactive = 0;
 					woodactive = 0;
-					wheatactive = 0;
 					stoneactive = 0;
 					sheepactive = 0;
-					brickactive = 0;
+					wheatactive = 0;
 
+					bricktrader = 0;
 					woodtrader = 0;
-					wheattrader = 0;
 					stonetrader = 0;
 					sheeptrader = 0;
-					bricktrader = 0;
+					wheattrader = 0;
+
+					cout << "Trade Successful!!" << endl;
 				}
+				else
+					cout << "IT DIDNT WORK!" << endl;
+				break;
+			case SDLK_o:
+				brickactive = 0;
+				woodactive = 0;
+				stoneactive = 0;
+				sheepactive = 0;
+				wheatactive = 0;
+
+				bricktrader = 0;
+				woodtrader = 0;
+				stonetrader = 0;
+				sheeptrader = 0;
+				wheattrader = 0;
+
+				cout << "RESOURCES RESET!!!" << endl;
 				break;
 			case SDLK_p:
-				cout << woodactive << endl;
-				cout << wheatactive << endl;
-				cout << stoneactive << endl;
-				cout << sheepactive << endl; 
-				cout << brickactive << endl; 
+				cout << "woodactive:" << woodactive << endl;
+				cout << "wheatactive:" << wheatactive << endl;
+				cout << "stoneactive:" << stoneactive << endl;
+				cout << "sheepactive:" << sheepactive << endl; 
+				cout << "brickactive:" << brickactive << endl;
 
-				cout << woodtrader << endl; 
-				cout << wheattrader << endl; 
-				cout << stonetrader << endl; 
-				cout << sheeptrader << endl; 
-				cout << bricktrader << endl; break;
+				cout << "woodtrader:" << woodtrader << endl;
+				cout << "wheattrader:" << wheattrader << endl;
+				cout << "stonetrader:" << stonetrader << endl;
+				cout << "sheeptrader:" << sheeptrader << endl; 
+				cout << "bricktrader:" << bricktrader << endl; 
+
+				cout << "activePlayer from game" << g->activePlayer << endl;
+				cout << "trader player num" << playerNumber << endl;
+				break;
 			}
 			break;
 	}

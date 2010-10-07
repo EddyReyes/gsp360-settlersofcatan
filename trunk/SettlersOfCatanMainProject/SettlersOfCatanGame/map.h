@@ -42,6 +42,7 @@ private:
 	SDL_Surface *stoneTile;
 	SDL_Surface *wheatTile;
 	SDL_Surface *chitTile[10];
+	SDL_Surface *thief;
 
 
 
@@ -138,6 +139,7 @@ public:
 	void map::drawPlayerTag(SDL_Surface * screen, Game * g);
 	void map::drawWinScreen(SDL_Surface * screen);
 	void map::drawResourceGrab(SDL_Surface * screen);
+	void map::drawCenterSelectron(SDL_Surface * screen);
 	void map::shutdownImages(void);
 
 
@@ -162,6 +164,7 @@ public:
 	void map::handleInput_FREETWOROADS(SDL_Event e, Game * g);
 	void map::handleInput_FREETWORESOURCES(SDL_Event e, Game * g);
 	void map::handleInput_PICKMONOPOLY(SDL_Event e, Game * g);
+	void map::handleInput_SETTHETHIEF(SDL_Event e, Game * g);
 
 	//=======MAP TTFs====================
 	TTF_Font *font;

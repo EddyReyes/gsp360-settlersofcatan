@@ -269,10 +269,13 @@ void map::whichCenterIsWithin(int const & x, int const & y, int radius)
 
 bool map::constructThiefOnMap(Game * g)
 {
+	cout << "got to a " << endl;
 	if (myCenters[centerSelectron].thiefHere == false)
 	{
+		cout << "got to b " << endl;
 		for (int i = 0; i < 19; ++i)
 		{
+			cout << "got to c" << i << endl;
 			myCenters[i].thiefHere = false;
 		}
 		myCenters[centerSelectron].thiefHere = true;

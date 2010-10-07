@@ -16,6 +16,9 @@ map::map()
 	//=========INIT TIME IN DVC
 	dvc.initTimeDVC();
 
+	//==========soundQueue
+	soundQueue = 20;
+
 	//=====NODE ASSIGNMENT==================
 	int count;
 	mapState = map::TURNONESETTLEMENT;

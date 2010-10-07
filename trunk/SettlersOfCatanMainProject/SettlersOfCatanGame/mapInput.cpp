@@ -72,6 +72,7 @@ void map::handleInput_BEGINTURN(SDL_Event e, Game * g)
 void map::handleInput_MAP(SDL_Event e, Game * g)
 {
 	placeholderFREE = 2; // POOR PLACEMENT, BUT IT MUST BE DONE!
+	soundQueue = 20;
 	switch(e.type)
 	{
 		case SDL_KEYDOWN:

@@ -103,7 +103,7 @@ public:
 	Node * getNode(Node * population, int popCount, int ID);
 	int getEdge(Edge * population, int popCount, int start, Node * from);
 	int getEdgeFromCount(Edge * population, int popCount, Node * from);
-	int randomHarbor(int resource[]);
+	char randomHarbor(int resource[]);
 	void setHarbor(Node* harbor);
 	void initializeCenters(void);
 

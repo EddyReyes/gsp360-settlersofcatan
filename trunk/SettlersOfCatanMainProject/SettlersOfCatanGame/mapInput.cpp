@@ -199,6 +199,18 @@ void map::handleInput_TRADE(SDL_Event e, Game * g)
 
 	static int playerNumber = 0;*/
 
+	/*
+	q, w, e, r, t add 1 to the resources that the current player is willing to trade, they are lined up with the pictures
+	a, s, d, f, g add 1 to the resources that the player wants
+	z, x, c, v select the player you want to trade with, z = 1, x = 2, c = 3, v = 4
+	j sets the resources the player will give into the trade bank
+	k sets the resources the player will recieve into the trade bank
+	l completes the trade ( j and k need to be pressed before l should work
+	p prints out what is in the trade bank on the console, dont need this anymore, since now the numbers show up on the trade screen
+	o resets the resources that will go into the trade bank to 0
+	i trades with the bank (i just put a null character in for harbor type for now, but that should be able to take something later
+	*/
+
 	switch(e.type)
 	{
 		case SDL_KEYDOWN:

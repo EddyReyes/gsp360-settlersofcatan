@@ -132,8 +132,12 @@ void map::playMonopolyCard(char type, Game * g)
 	int amount = 0;
 	for (int i = 0; i < g->numPlayers; ++i)
 	{
+		cout << "stage 1" << endl;
 		amount += g->p[i].getResource(type);
+		cout << "stage 2" << endl;
 		g->p[i].changeResource(type, - (g->p[i].getResource(type)));
+		cout << "stage 3" << endl;
 	}
 	g->p[g->activePlayer].changeResource(type, amount);
+	cout << "stage 4" << endl;
 }

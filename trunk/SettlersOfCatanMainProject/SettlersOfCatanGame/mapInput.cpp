@@ -14,7 +14,7 @@ void map::handleInput(SDL_Event e, Game * g)
 		case map::BUILDCARD:			handleInput_BUILDCARD(e, g);			break;
 		case map::RESOURCELIST:			handleInput_RESOURCELIST(e, g);			break;
 		case map::DEVHAND:				handleInput_DEVHAND(e, g);				break;
-		case map::TRADE:				handleInput_TRADE(e, g);				break;
+		//case map::TRADE:				handleInput_TRADE(e, g);				break;
 		case map::BUILDROAD:			handleInput_BUILDROAD(e, g);			break;
 		case map::BUILDSETTLEMENT:		handleInput_BUILDSETTLEMENT(e, g);		break;
 		case map::BUILDCITY:			handleInput_BUILDCITY(e, g);			break;
@@ -25,6 +25,9 @@ void map::handleInput(SDL_Event e, Game * g)
 		case map::FREETWORESOURCES:		handleInput_FREETWORESOURCES(e, g);		break;
 		case map::FREETWOROADS:			handleInput_FREETWOROADS(e, g);			break;
 		case map::SETTHETHIEF:			handleInput_SETTHETHIEF(e, g);			break;
+		case map::TRADEBANKHARBORSCREEN:	handleInput_TRADEBANKHARBORSCREEN(e, g);	break;
+		case map::TRADETARGET:			handleInput_TRADETARGET(e, g);			break;
+		case map::TRADEPLAYERSCREEN:	handleInput_TRADEPLAYERSCREEN(e, g);	break;
 		case map::ENDTURN:														break;
 		}
 }
@@ -82,7 +85,7 @@ void map::handleInput_MAP(SDL_Event e, Game * g)
 			case SDLK_2:	mapState= map::BUILDCARD;		break;
 			case SDLK_3:	mapState= map::RESOURCELIST;	break;
 			case SDLK_4:	mapState= map::DEVHAND;			break;
-			case SDLK_5:	mapState= map::TRADE;			break;
+			case SDLK_5:	mapState= map::TRADETARGET;			break;
 			case SDLK_0:	mapState= map::ENDTURN;			break;
 				//Dice roll can go here <--------------------
 				// kyle:: actually I'd recommend putting it in handleInput_BEGINTURN, 
@@ -103,7 +106,7 @@ void map::handleInput_BUILDCARD(SDL_Event e, Game * g)
 			case SDLK_1:	mapState= map::MAP;				break;
 			case SDLK_3:	mapState= map::RESOURCELIST;	break;
 			case SDLK_4:	mapState= map::DEVHAND;			break;
-			case SDLK_5:	mapState= map::TRADE;			break;
+			case SDLK_5:	mapState= map::TRADETARGET;			break;
 			case SDLK_0:	mapState= map::ENDTURN;			break;
 			case SDLK_r:	if (g->p[g->activePlayer].checkBuildSomething('R', &dvc) == true)
 							{
@@ -136,7 +139,7 @@ void map::handleInput_RESOURCELIST(SDL_Event e, Game * g)
 			case SDLK_1:	mapState= map::MAP;				break;
 			case SDLK_2:	mapState= map::BUILDCARD;		break;
 			case SDLK_4:	mapState= map::DEVHAND;			break;
-			case SDLK_5:	mapState= map::TRADE;			break;
+			case SDLK_5:	mapState= map::TRADETARGET;			break;
 			}
 	}
 }
@@ -151,7 +154,7 @@ void map::handleInput_DEVHAND(SDL_Event e, Game * g)
 			case SDLK_1:	mapState= map::MAP;				break;
 			case SDLK_2:	mapState= map::BUILDCARD;		break;
 			case SDLK_3:	mapState= map::RESOURCELIST;	break;
-			case SDLK_5:	mapState= map::TRADE;			break;
+			case SDLK_5:	mapState= map::TRADETARGET;			break;
 			case SDLK_m:	if (g->p[g->activePlayer].playDevCard('M'))
 							{
 								mapState = map::PICKMONOPOLY;
@@ -182,34 +185,242 @@ void map::handleInput_DEVHAND(SDL_Event e, Game * g)
 	}
 }
 
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+void map::handleInput_TRADETARGET(SDL_Event e, Game * g)
+{
+	switch(e.type)
+	{
+		case SDL_KEYDOWN:
+			switch(e.key.keysym.sym)
+			{
+			case SDLK_1:					
+				if (g->activePlayer != 0)
+				{	
+					g->playerNumber = 0;	
+					mapState= map::TRADEPLAYERSCREEN;			
+				}
+				break;
+			case SDLK_2:				
+				if (g->activePlayer != 1)
+				{	
+					g->playerNumber = 1;	
+					mapState= map::TRADEPLAYERSCREEN;			
+				}
+				break;
+			case SDLK_3:				
+				if (g->activePlayer != 2)
+				{	
+					g->playerNumber = 2;	
+					mapState= map::TRADEPLAYERSCREEN;			
+				}
+				break;
+			case SDLK_4:
+				if (g->activePlayer != 2)
+				{	
+					if (g->numPlayers == 4)
+					{	
+						g->playerNumber = 3;
+						mapState= map::TRADEPLAYERSCREEN;			
+					}
+				}
+				break;
+			case SDLK_i:	mapState = map::TRADEBANKHARBORSCREEN;			break;
+			case SDLK_0:	mapState = map::MAP;	break;
+			}
+	}
+}
+
+void map::handleInput_TRADEPLAYERSCREEN(SDL_Event e, Game * g)
+{
+	switch(e.type)
+	{
+		case SDL_KEYDOWN:
+			switch(e.key.keysym.sym)
+			{
+			case SDLK_0:				mapState= map::MAP;				break;
+			
+			//i think we could do something like this, it seems to add to the numbers, then when its traded, just set them back to 0
+			case SDLK_q:	g->brickactive++; cout << "+1 Brick Active Player" << endl; break;
+			case SDLK_w:	g->woodactive++; cout << "+1 Wood Active Player" << endl; break;
+			case SDLK_e:	g->stoneactive++; cout << "+1 Stone Active Player" << endl; break;
+			case SDLK_r:	g->sheepactive++; cout << "+1 Sheep Active Player" << endl; break;
+			case SDLK_t:	g->wheatactive++; cout << "+1 Wheat Active Player" << endl; break;
+
+			case SDLK_a:	g->bricktrader++; cout << "+1 Brick Trade Player or Bank" << endl; break;
+			case SDLK_s:	g->woodtrader++; cout << "+1 Wood Trade Player or Bank" << endl; break;
+			case SDLK_d:	g->stonetrader++; cout << "+1 Stone Trade Player or Bank" << endl; break;
+			case SDLK_f:	g->sheeptrader++; cout << "+1 Sheep Trade Player or Bank" << endl; break;
+			case SDLK_g:	g->wheattrader++; cout << "+1 Wheat Trade Player or Bank" << endl; break;
+
+			case SDLK_RETURN: 
+				if	(
+					(tradebank->setGiveResources(g, int(g->playerNumber), int(g->woodactive), int(g->wheatactive), int(g->stoneactive), int(g->sheepactive), int(g->brickactive)))
+					&&
+					(tradebank->setRecieveResources(g, int(g->playerNumber), int(g->woodtrader), int(g->wheattrader), int(g->stonetrader), int(g->sheeptrader), int(g->bricktrader)))
+					)
+				{
+					//cout << "shit is set" << endl;
+					if(tradebank->trade(g, int(g->playerNumber)))
+					{
+						g->brickactive = 0;
+						g->woodactive = 0;
+						g->stoneactive = 0;
+						g->sheepactive = 0;
+						g->wheatactive = 0;
+
+						g->bricktrader = 0;
+						g->woodtrader = 0;
+						g->stonetrader = 0;
+						g->sheeptrader = 0;
+						g->wheattrader = 0;
+
+						cout << "Trade with Player Successful!!" << endl;
+					}
+					else
+						//cout << "IT DIDNT WORK!" << endl;
+				}
+				break;
+			case SDLK_BACKSPACE:
+				g->brickactive = 0;
+				g->woodactive = 0;
+				g->stoneactive = 0;
+				g->sheepactive = 0;
+				g->wheatactive = 0;
+
+				g->bricktrader = 0;
+				g->woodtrader = 0;
+				g->stonetrader = 0;
+				g->sheeptrader = 0;
+				g->wheattrader = 0;
+				break;
+			}
+	}
+}
+
+void map::handleInput_TRADEBANKHARBORSCREEN(SDL_Event e, Game * g)
+{
+	switch(e.type)
+	{
+		case SDL_KEYDOWN:
+			switch(e.key.keysym.sym)
+			{
+			case SDLK_0:	mapState= map::MAP;				break;
+			case SDLK_q:	g->brickactive++; cout << "+1 Brick Active Player" << endl; break;
+			case SDLK_w:	g->woodactive++; cout << "+1 Wood Active Player" << endl; break;
+			case SDLK_e:	g->stoneactive++; cout << "+1 Stone Active Player" << endl; break;
+			case SDLK_r:	g->sheepactive++; cout << "+1 Sheep Active Player" << endl; break;
+			case SDLK_t:	g->wheatactive++; cout << "+1 Wheat Active Player" << endl; break;
+			case SDLK_BACKSPACE: 
+				g->brickactive = 0;
+				g->woodactive = 0;
+				g->stoneactive = 0;
+				g->sheepactive = 0;
+				g->wheatactive = 0;
+				g->bricktrader = 0;
+				g->woodtrader = 0;
+				g->stonetrader = 0;
+				g->sheeptrader = 0;
+				g->wheattrader = 0;
+				break;
+			case SDLK_RETURN:
+				//trading with the bank or harbor
+				//player sets the resource to something other than 0
+				//and sets the number of the amount to recieve to the number they want
+				char tgive = ' ';
+				char trecieve = ' ';
+				int numget = 0;
+
+				if(g->woodactive != 0)
+					tgive = WOOD;
+				else if(g->wheatactive != 0)
+					tgive = WHEAT;
+				else if(g->stoneactive != 0)
+					tgive = WHEAT;
+				else if(g->sheepactive !=0)
+					tgive = SHEEP;
+				else if(g->brickactive != 0)
+					tgive = BRICK;
+
+				if(g->woodtrader != 0)
+				{
+					trecieve = WOOD;
+					numget = g->woodtrader;
+				}					
+				else if(g->wheattrader != 0)
+				{
+					trecieve = WHEAT;
+					numget = g->wheattrader;
+				}
+				else if(g->stonetrader != 0)
+				{
+					trecieve = STONE;
+					numget = g->stonetrader;
+				}
+				else if(g->sheeptrader != 0)
+				{
+					trecieve = SHEEP;
+					numget = g->sheeptrader;
+				}
+				else if(g->bricktrader != 0)
+				{
+					trecieve = BRICK;
+					numget = g->bricktrader;
+				}
+
+				if(tradebank->tradeWithBank(' ', g, trecieve, tgive, numget))
+					cout << "Trade with Bank/Harbor Successful!" << endl;
+				else
+					cout << "Trade with Bank/Harbor Failed!" << endl;
+
+				g->brickactive = 0;
+				g->woodactive = 0;
+				g->stoneactive = 0;
+				g->sheepactive = 0;
+				g->wheatactive = 0;
+
+				g->bricktrader = 0;
+				g->woodtrader = 0;
+				g->stonetrader = 0;
+				g->sheeptrader = 0;
+				g->wheattrader = 0;
+				
+				cout << "Resources Reset!" << endl;
+				break;
+			}
+	}
+}
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/*
 void map::handleInput_TRADE(SDL_Event e, Game * g)
 {
 	//this moved to game so it can be printed to the screen
-	/*static int wheatactive = 0;
-	static int stoneactive = 0;
-	static int brickactive = 0;
-	static int woodactive = 0;
-	static int sheepactive = 0;
+	//static int wheatactive = 0;
+	//static int stoneactive = 0;
+	//static int brickactive = 0;
+	//static int woodactive = 0;
+	//static int sheepactive = 0;
 
-	static int wheattrader = 0;
-	static int stonetrader = 0;
-	static int bricktrader = 0;
-	static int woodtrader = 0;
-	static int sheeptrader = 0;
+	//static int wheattrader = 0;
+	//static int stonetrader = 0;
+	//static int bricktrader = 0;
+	//static int woodtrader = 0;
+	//static int sheeptrader = 0;
 
-	static int playerNumber = 0;*/
+	//static int playerNumber = 0;
 
-	/*
-	q, w, e, r, t add 1 to the resources that the current player is willing to trade, they are lined up with the pictures
-	a, s, d, f, g add 1 to the resources that the player wants
-	z, x, c, v select the player you want to trade with, z = 1, x = 2, c = 3, v = 4
-	j sets the resources the player will give into the trade bank
-	k sets the resources the player will recieve into the trade bank
-	l completes the trade ( j and k need to be pressed before l should work
-	p prints out what is in the trade bank on the console, dont need this anymore, since now the numbers show up on the trade screen
-	o resets the resources that will go into the trade bank to 0
-	i trades with the bank (i just put a null character in for harbor type for now, but that should be able to take something later
-	*/
+
+	//q, w, e, r, t add 1 to the resources that the current player is willing to trade, they are lined up with the pictures
+	//a, s, d, f, g add 1 to the resources that the player wants
+	//z, x, c, v select the player you want to trade with, z = 1, x = 2, c = 3, v = 4
+	//j sets the resources the player will give into the trade bank
+	//k sets the resources the player will recieve into the trade bank
+	//l completes the trade ( j and k need to be pressed before l should work
+	//p prints out what is in the trade bank on the console, dont need this anymore, since now the numbers show up on the trade screen
+	//o resets the resources that will go into the trade bank to 0
+	//i trades with the bank (i just put a null character in for harbor type for now, but that should be able to take something later
+
 
 	switch(e.type)
 	{
@@ -388,6 +599,7 @@ void map::handleInput_TRADE(SDL_Event e, Game * g)
 			break;
 	}
 }
+*/
 
 void map::handleInput_BUILDROAD(SDL_Event e, Game * g)
 {

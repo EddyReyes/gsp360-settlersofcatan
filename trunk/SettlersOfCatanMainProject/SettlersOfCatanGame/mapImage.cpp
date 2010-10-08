@@ -18,30 +18,34 @@ void map::draw(SDL_Surface * screen, Game * g)
 			drawPlayerTag(screen, g);
 			break;
 
-		case map::MAP:				drawBoard(screen);			drawPlayerTag(screen, g);		break; 
-		case map::BUILDCARD:		drawBuildCard(screen);		drawPlayerTag(screen, g);		break;
-		case map::RESOURCELIST:		drawResourceList(screen, g);drawPlayerTag(screen, g);		break;
-		case map::DEVHAND:			drawDevHand(screen, g);		drawPlayerTag(screen, g);		break;
-		case map::TRADE:			drawtradeCard(screen, g);	drawPlayerTag(screen, g);		break;
-		case map::BUILDROAD:		drawBoard(screen);			drawPlayerTag(screen, g);
+		case map::MAP:				drawBoard(screen);			drawPlayerTag(screen, g);		drawInstructions(screen, g);break; 
+		case map::BUILDCARD:		drawBuildCard(screen);		drawPlayerTag(screen, g);		drawInstructions(screen, g);break;
+		case map::RESOURCELIST:		drawResourceList(screen, g);drawPlayerTag(screen, g);		drawInstructions(screen, g);break;
+		case map::DEVHAND:			drawDevHand(screen, g);		drawPlayerTag(screen, g);		drawInstructions(screen, g);break;
+		case map::TRADE:			drawtradeCard(screen, g);	drawPlayerTag(screen, g);		drawInstructions(screen, g);break;
+		case map::BUILDROAD:		drawBoard(screen);			drawPlayerTag(screen, g);drawInstructions(screen, g);
 									drawRoadSelectron(screen);		break;
-		case map::BUILDSETTLEMENT:	drawBoard(screen);			drawPlayerTag(screen, g);
+		case map::BUILDSETTLEMENT:	drawBoard(screen);			drawPlayerTag(screen, g);drawInstructions(screen, g);
 									drawNodeSelectron(screen);		break;
-		case map::BUILDCITY:		drawBoard(screen);			drawPlayerTag(screen, g);
+		case map::BUILDCITY:		drawBoard(screen);			drawPlayerTag(screen, g);drawInstructions(screen, g);
 									drawNodeSelectron(screen);		break;
-		case map::TURNONESETTLEMENT:		drawBoard(screen);	drawPlayerTag(screen, g);
+		case map::TURNONESETTLEMENT:		drawBoard(screen);	drawPlayerTag(screen, g);drawInstructions(screen, g);
 									drawNodeSelectron(screen);		break;
-		case map::TURNONEROAD:		drawBoard(screen);			drawPlayerTag(screen, g);
+		case map::TURNONEROAD:		drawBoard(screen);			drawPlayerTag(screen, g);drawInstructions(screen, g);
 									drawRoadSelectron(screen);		break;
-		case map::TURNTWOSETTLEMENT:		drawBoard(screen);	drawPlayerTag(screen, g);
+		case map::TURNTWOSETTLEMENT:		drawBoard(screen);	drawPlayerTag(screen, g);drawInstructions(screen, g);
 									drawNodeSelectron(screen);		break;
-		case map::TURNTWOROAD:		drawBoard(screen);			drawPlayerTag(screen, g);
+		case map::TURNTWOROAD:		drawBoard(screen);			drawPlayerTag(screen, g);drawInstructions(screen, g);
 									drawRoadSelectron(screen);		break;
-		case map::FREETWORESOURCES:	drawResourceGrab(screen);	drawPlayerTag(screen, g);	break;
-		case map::FREETWOROADS:		drawBoard(screen); drawRoadSelectron(screen); drawPlayerTag(screen, g);  break;
-		case map::SOMEONEWON:		drawWinScreen(screen);		drawPlayerTag(screen, g);		break;
-		case map::PICKMONOPOLY:		drawResourceGrab(screen); drawPlayerTag(screen, g); break;
-		case map::SETTHETHIEF:		drawBoard(screen);	drawCenterSelectron(screen);		drawPlayerTag(screen, g); break;
+		case map::FREETWORESOURCES:	drawResourceGrab(screen);	drawPlayerTag(screen, g);drawInstructions(screen, g);							break;
+		case map::FREETWOROADS:		drawBoard(screen); drawRoadSelectron(screen); drawPlayerTag(screen, g);	drawInstructions(screen, g);		break;
+		case map::SOMEONEWON:		drawWinScreen(screen);		drawPlayerTag(screen, g);	drawInstructions(screen, g);						break;
+		case map::PICKMONOPOLY:		drawResourceGrab(screen); drawPlayerTag(screen, g);	drawInstructions(screen, g);							break;
+		case map::SETTHETHIEF:		drawBoard(screen);				drawThiefExplanation(screen, g);drawInstructions(screen, g);
+									drawCenterSelectron(screen);	drawPlayerTag(screen, g);		break;
+		case map::TRADETARGET:		drawPickTradeTarget(screen, g);	drawPlayerTag(screen, g);	drawInstructions(screen, g);					break;
+		case map::TRADEPLAYERSCREEN:		drawtradeCard(screen, g); drawPlayerTag(screen, g);	drawInstructions(screen, g);	break;
+		case map::TRADEBANKHARBORSCREEN:	drawtradeCard(screen, g); drawPlayerTag(screen, g);	drawInstructions(screen, g);	break;
 	}
 	// this is where drawControls(screen) would go, because then it would print on every map screen in addition to the other draw functions.
 }
@@ -50,6 +54,10 @@ void map::draw(SDL_Surface * screen, Game * g)
 
 void map::loadImages()
 {
+	extraTradeRules = load_image( "extraTradeRules.bmp" );
+	standardLegend = load_image( "standardLegend.bmp" );
+	cancelLegend = load_image( "cancelLegend.bmp" );
+	pickToTrade = load_image( "placeholderPickTradeScreen.bmp" );
 	thief = load_image( "placeholderThief.bmp ");
 	font = TTF_OpenFont( "SNAP.ttf", 72);
 	tradeCard = load_image( "tradeCard.bmp" );
@@ -89,6 +97,10 @@ void map::loadImages()
 
 void map::initializeImages()
 {
+	extraTradeRules = NULL;
+	standardLegend = NULL;
+	cancelLegend = NULL;
+	pickToTrade = NULL;
 	thief = NULL;
 	dice.loadImages();
 	font = NULL;
@@ -113,6 +125,15 @@ void map::initializeImages()
 		cityTile[i] = NULL;
 		roadTile[i] = NULL;
 	}
+}
+
+void map::drawPickTradeTarget(SDL_Surface * screen, Game * g)
+{
+		apply_surface(	0,
+						0,
+						pickToTrade,
+						screen,
+						NULL );
 }
 
 void map::drawNodeSelectron(SDL_Surface * screen)
@@ -294,7 +315,47 @@ void map::drawBoard(SDL_Surface * screen)
 
 void map::drawWinScreen(SDL_Surface * screen)
 {
+	font = TTF_OpenFont( "SNAP.ttf", 20);
+	textColor.r = 0;
+	textColor.g = 255;
+	textColor.b = 0;
+	char * buffer = "WINNER!";
+	resourceListMsg[0] = TTF_RenderText_Solid( font, buffer, textColor );
+	apply_surface( 300, 270, resourceListMsg[0], screen, NULL );
+	SDL_FreeSurface(resourceListMsg[0]);
+}
 
+void map::drawThiefExplanation(SDL_Surface * screen, Game * g)
+{
+	font = TTF_OpenFont( "SNAP.ttf", 20);
+	switch(g->activePlayer)
+	{
+	case 0: 
+		textColor.r = 255;
+		textColor.g = 0;
+		textColor.b = 0;
+		break;
+	case 1:
+		textColor.r = 0;
+		textColor.g = 0;
+		textColor.b = 255;
+		break;
+	case 2:
+		textColor.r = 255;
+		textColor.g = 255;
+		textColor.b = 255;
+		break;
+	case 3:
+		textColor.r = 255;
+		textColor.g = 133;
+		textColor.b = 0;
+		break;
+	}
+
+	char * buffer = "Place the Thief!";
+	resourceListMsg[0] = TTF_RenderText_Solid( font, buffer, textColor );
+	apply_surface( 300, 1, resourceListMsg[0], screen, NULL );
+	SDL_FreeSurface(resourceListMsg[0]);
 }
 
 void map::drawBuildCard(SDL_Surface * screen)
@@ -510,11 +571,106 @@ void map::drawtradeCard(SDL_Surface * screen, Game* g)
 		apply_surface( 150 + spacingX*i, 475, resourceListMsg[i], screen, NULL );
 		SDL_FreeSurface(resourceListMsg[i]);
 	}
+
+	switch(g->activePlayer)
+	{
+	case 0: 
+		textColor.r = 255;
+		textColor.g = 0;
+		textColor.b = 0;
+		break;
+	case 1:
+		textColor.r = 0;
+		textColor.g = 0;
+		textColor.b = 255;
+		break;
+	case 2:
+		textColor.r = 255;
+		textColor.g = 255;
+		textColor.b = 255;
+		break;
+	case 3:
+		textColor.r = 255;
+		textColor.g = 133;
+		textColor.b = 0;
+		break;
+	}
+	for (int i = 0; i < 5; ++i)
+	{
+		char buffer [1024];
+
+		char * resAndAmt = "%c";
+		char amountResourceStuff;
+		switch(i)
+		{
+			case 0:	amountResourceStuff = 'Q'; break;
+			case 1:	amountResourceStuff = 'W'; break;
+			case 2:	amountResourceStuff = 'E'; break;
+			case 3:	amountResourceStuff = 'R'; break;
+			case 4:	amountResourceStuff = 'T'; break;
+		}
+		sprintf(buffer, resAndAmt, amountResourceStuff);
+		resourceListMsg[i] = TTF_RenderText_Solid( font, buffer, textColor );
+		apply_surface( 150 + spacingX*i, 270, resourceListMsg[i], screen, NULL );
+		SDL_FreeSurface(resourceListMsg[i]);
+	}
+
+	switch(g->playerNumber)
+	{
+	case 0: 
+		textColor.r = 255;
+		textColor.g = 0;
+		textColor.b = 0;
+		break;
+	case 1:
+		textColor.r = 0;
+		textColor.g = 0;
+		textColor.b = 255;
+		break;
+	case 2:
+		textColor.r = 255;
+		textColor.g = 255;
+		textColor.b = 255;
+		break;
+	case 3:
+		textColor.r = 255;
+		textColor.g = 133;
+		textColor.b = 0;
+		break;
+	}
+	for (int i = 0; i < 5; ++i)
+	{
+		char buffer [1024];
+
+		char * resAndAmt = "%c";
+		char amountResourceStuff;
+		switch(i)
+		{
+			case 0:	amountResourceStuff = 'A'; break;
+			case 1:	amountResourceStuff = 'S'; break;
+			case 2:	amountResourceStuff = 'D'; break;
+			case 3:	amountResourceStuff = 'F'; break;
+			case 4:	amountResourceStuff = 'G'; break;
+		}
+		sprintf(buffer, resAndAmt, amountResourceStuff);
+		resourceListMsg[i] = TTF_RenderText_Solid( font, buffer, textColor );
+		apply_surface( 150 + spacingX*i, 505, resourceListMsg[i], screen, NULL );
+		SDL_FreeSurface(resourceListMsg[i]);
+	}
+
 }
 
 void map::drawDiceRoll(SDL_Surface * screen, Game * g)
 {
 	dice.drawDiceScreen(screen, dice1, dice2);
+	font = TTF_OpenFont( "SNAP.ttf", 20);
+	textColor.r = 0;
+	textColor.g = 255;
+	textColor.b = 0;
+	char * buffer = "Press Space to Continue!";
+	resourceListMsg[0] = TTF_RenderText_Solid( font, buffer, textColor );
+	apply_surface( 250, 400, resourceListMsg[0], screen, NULL );
+	SDL_FreeSurface(resourceListMsg[0]);
 }
 
 //function to load images
@@ -558,9 +714,119 @@ void map::apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destinat
 	SDL_BlitSurface( source, clip, destination, &offset ); 
 }
 
+void map::drawFreeRoadInstructions(SDL_Surface * screen, Game * g)
+{
+	font = TTF_OpenFont( "SNAP.ttf", 20);
+	switch(g->activePlayer)
+	{
+	case 0: 
+		textColor.r = 255;
+		textColor.g = 0;
+		textColor.b = 0;
+		break;
+	case 1:
+		textColor.r = 0;
+		textColor.g = 0;
+		textColor.b = 255;
+		break;
+	case 2:
+		textColor.r = 255;
+		textColor.g = 255;
+		textColor.b = 255;
+		break;
+	case 3:
+		textColor.r = 255;
+		textColor.g = 133;
+		textColor.b = 0;
+		break;
+	}
+	char * buffer = "Place your free road!";
+	playerTag = TTF_RenderText_Solid( font, buffer, textColor );
+	apply_surface( 277, 1, playerTag, screen, NULL );
+	SDL_FreeSurface(playerTag);
+}
+
+void map::drawFreeSettlementInstructions(SDL_Surface * screen, Game * g)
+{
+	font = TTF_OpenFont( "SNAP.ttf", 20);
+	switch(g->activePlayer)
+	{
+	case 0: 
+		textColor.r = 255;
+		textColor.g = 0;
+		textColor.b = 0;
+		break;
+	case 1:
+		textColor.r = 0;
+		textColor.g = 0;
+		textColor.b = 255;
+		break;
+	case 2:
+		textColor.r = 255;
+		textColor.g = 255;
+		textColor.b = 255;
+		break;
+	case 3:
+		textColor.r = 255;
+		textColor.g = 133;
+		textColor.b = 0;
+		break;
+	}
+	char * buffer = "Place your free settlement!";
+	playerTag = TTF_RenderText_Solid( font, buffer, textColor );
+	apply_surface( 250, 1, playerTag, screen, NULL );
+	SDL_FreeSurface(playerTag);
+}
+
+void map::drawExtraTradeRules(SDL_Surface * screen, Game * g)
+{
+	apply_surface(700, 400, extraTradeRules, screen, NULL);
+}
+
+void map::drawCancelInstructions(SDL_Surface * screen, Game * g)
+{
+	apply_surface(700, 0, cancelLegend, screen, NULL);
+}
+
+void map::drawStandardInstructions(SDL_Surface * screen, Game * g)
+{
+	apply_surface(700, 0, standardLegend, screen, NULL);
+}
+
+void map::drawInstructions(SDL_Surface * screen, Game * g)
+{
+	switch(mapState)
+	{
+		case map::MAP:						drawStandardInstructions(screen, g);break; 
+		case map::BUILDCARD:				drawStandardInstructions(screen, g);break;
+		case map::RESOURCELIST:				drawStandardInstructions(screen, g);break;
+		case map::DEVHAND:					drawStandardInstructions(screen, g);break;
+		case map::TRADE:					drawStandardInstructions(screen, g);break;
+		case map::BUILDROAD:				drawCancelInstructions(screen, g);	break;
+		case map::BUILDSETTLEMENT:			drawCancelInstructions(screen, g);	break;
+		case map::BUILDCITY:				drawCancelInstructions(screen, g);	break;
+		case map::TURNONESETTLEMENT:		drawFreeSettlementInstructions(screen, g);break;
+		case map::TURNONEROAD:				drawFreeRoadInstructions(screen, g);break;
+		case map::TURNTWOSETTLEMENT:		drawFreeSettlementInstructions(screen, g);break;
+		case map::TURNTWOROAD:				drawFreeRoadInstructions(screen, g);break;
+		case map::FREETWORESOURCES:			break;
+		case map::FREETWOROADS:				drawFreeRoadInstructions(screen, g);break;
+		case map::SOMEONEWON:				break;
+		case map::PICKMONOPOLY:				break;
+		case map::SETTHETHIEF:				break;
+		case map::TRADETARGET:				drawCancelInstructions(screen, g); drawExtraTradeRules(screen, g);	break;
+		case map::TRADEPLAYERSCREEN:		drawCancelInstructions(screen, g); drawExtraTradeRules(screen, g);	break;
+		case map::TRADEBANKHARBORSCREEN:	drawCancelInstructions(screen, g); drawExtraTradeRules(screen, g);	break;
+	}
+}
+
 
 void map::shutdownImages()
 {
+	SDL_FreeSurface(extraTradeRules);
+	SDL_FreeSurface(standardLegend);
+	SDL_FreeSurface(cancelLegend);
+	SDL_FreeSurface(pickToTrade);
 	SDL_FreeSurface(playerTag);
 	SDL_FreeSurface(thief);
 	SDL_FreeSurface(tradeCard);

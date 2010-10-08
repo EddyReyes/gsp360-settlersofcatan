@@ -28,6 +28,7 @@ void map::handleInput(SDL_Event e, Game * g)
 		case map::TRADEBANKHARBORSCREEN:	handleInput_TRADEBANKHARBORSCREEN(e, g);	break;
 		case map::TRADETARGET:			handleInput_TRADETARGET(e, g);			break;
 		case map::TRADEPLAYERSCREEN:	handleInput_TRADEPLAYERSCREEN(e, g);	break;
+		case map::PICKMONOPOLY:			handleInput_PICKMONOPOLY(e, g);	break;
 		case map::ENDTURN:														break;
 		}
 }

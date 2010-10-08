@@ -169,7 +169,7 @@ map::map()
 
 	Edge * tempEdges;
 
-	tempEdges = new Edge [1000];
+	tempEdges = new Edge [200];
 
 	for(int i = 0; i < count; ++i)
 	{

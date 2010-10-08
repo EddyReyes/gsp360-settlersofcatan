@@ -43,7 +43,10 @@ private:
 	SDL_Surface *wheatTile;
 	SDL_Surface *chitTile[10];
 	SDL_Surface *thief;
-
+	SDL_Surface *pickToTrade;
+	SDL_Surface *standardLegend;
+	SDL_Surface *cancelLegend;
+	SDL_Surface *extraTradeRules;
 
 
 	//=== map-only load_image and apply_surface
@@ -89,6 +92,9 @@ public:
 	static const int FREETWORESOURCES = 14;
 	static const int PICKMONOPOLY = 15;
 	static const int SETTHETHIEF = 16;
+	static const int TRADETARGET = 17;
+	static const int TRADEPLAYERSCREEN = 18;
+	static const int TRADEBANKHARBORSCREEN = 19;
 	static const int SOMEONEWON = 20;
 	static const int ENDTURN = 99; // play state (mainly to trigger the changing of players in game.cpp)
 	static const int NOT_A_PLAYER = 4; // play state (mainly to trigger the changing of players in game.cpp)
@@ -140,6 +146,14 @@ public:
 	void map::drawWinScreen(SDL_Surface * screen);
 	void map::drawResourceGrab(SDL_Surface * screen);
 	void map::drawCenterSelectron(SDL_Surface * screen);
+	void map::drawPickTradeTarget(SDL_Surface * screen, Game * g);
+	void map::drawThiefExplanation(SDL_Surface * screen, Game * g);
+	void map::drawCancelInstructions(SDL_Surface * screen, Game * g);
+	void map::drawStandardInstructions(SDL_Surface * screen, Game * g);
+	void map::drawInstructions(SDL_Surface * screen, Game * g);
+	void map::drawFreeSettlementInstructions(SDL_Surface * screen, Game * g);
+	void map::drawFreeRoadInstructions(SDL_Surface * screen, Game * g);
+	void map::drawExtraTradeRules(SDL_Surface * screen, Game * g);
 	void map::shutdownImages(void);
 
 
@@ -153,7 +167,7 @@ public:
 	void map::handleInput_BUILDCARD(SDL_Event e, Game * g);
 	void map::handleInput_RESOURCELIST(SDL_Event e, Game * g);
 	void map::handleInput_DEVHAND(SDL_Event e, Game * g);
-	void map::handleInput_TRADE(SDL_Event e, Game * g);
+	//void map::handleInput_TRADE(SDL_Event e, Game * g);
 	void map::handleInput_BUILDROAD(SDL_Event e, Game * g);
 	void map::handleInput_BUILDSETTLEMENT(SDL_Event e, Game * g);
 	void map::handleInput_BUILDCITY(SDL_Event e, Game * g);
@@ -165,6 +179,9 @@ public:
 	void map::handleInput_FREETWORESOURCES(SDL_Event e, Game * g);
 	void map::handleInput_PICKMONOPOLY(SDL_Event e, Game * g);
 	void map::handleInput_SETTHETHIEF(SDL_Event e, Game * g);
+	void map::handleInput_TRADETARGET(SDL_Event e, Game * g);
+	void map::handleInput_TRADEPLAYERSCREEN(SDL_Event e, Game * g);
+	void map::handleInput_TRADEBANKHARBORSCREEN(SDL_Event e, Game * g);
 
 	//=======MAP TTFs====================
 	TTF_Font *font;

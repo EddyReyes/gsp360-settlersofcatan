@@ -278,7 +278,7 @@ void map::handleInput_TRADEPLAYERSCREEN(SDL_Event e, Game * g)
 						cout << "Trade with Player Successful!!" << endl;
 					}
 					else
-						//cout << "IT DIDNT WORK!" << endl;
+						cout << "IT DIDNT WORK!" << endl;
 				}
 				break;
 			case SDLK_BACKSPACE:

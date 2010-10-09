@@ -113,19 +113,23 @@ void map::handleInput_BUILDCARD(SDL_Event e, Game * g)
 							{
 								mapState = map::BUILDROAD;	break;
 							}
+							else{break;}
 			case SDLK_s:	if (g->p[g->activePlayer].checkBuildSomething('S', &dvc) == true)
 							{
 								mapState = map::BUILDSETTLEMENT;	break;
 							}
+							else{break;}
 			case SDLK_c:	if (g->p[g->activePlayer].checkBuildSomething('C', &dvc) == true)
 							{
 								mapState = map::BUILDCITY;	break;
 							}
+							else{break;}
 			case SDLK_d:	if (g->p[g->activePlayer].checkBuildSomething('D', &dvc) == true)
 							{
 								g->p[g->activePlayer].actuallyBuildSomething('D', &rsc, &dvc);
 								mapState = map::MAP;	break;
 							}
+							else{break;}
 			}
 	}
 }
@@ -163,6 +167,7 @@ void map::handleInput_DEVHAND(SDL_Event e, Game * g)
 							break;
 			case SDLK_s:	if (g->p[g->activePlayer].playDevCard('S'))
 							{
+								calcLargestArmy(g);
 								mapState = map::SETTHETHIEF;
 							}
 							break;

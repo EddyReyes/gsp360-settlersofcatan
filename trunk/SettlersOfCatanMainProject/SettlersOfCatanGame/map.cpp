@@ -337,7 +337,6 @@ void map::initializeCenters(void)
 
 char map::randomHarbor(int resource[])
 {
-	srand(0);
 	int num;
 	char type = ' ';
 	bool acceptable = false;

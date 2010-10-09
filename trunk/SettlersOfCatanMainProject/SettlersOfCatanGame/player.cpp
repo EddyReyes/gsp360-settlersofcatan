@@ -8,6 +8,12 @@ player::player(void)
 	numUnusedRoads = 15; numUnusedSettlements = 5; numUnusedCities = 4;
 	hasLongestRoad = false;
 	hasLargestArmy = false;
+	ownsThreeForOneHarbor = false;
+	ownsBrickHarbor = false;
+	ownsWheatHarbor = false;
+	ownsStoneHarbor = false;
+	ownsSheepHarbor = false;
+	ownsWoodHarbor = false;
 }
 
 int player::getResource(char type)

@@ -10,7 +10,7 @@ class Node
 {
 public:
 	int ID;
-	int harborType;
+	char harborType;
 	int cityType;
 	int owner;
 	int x;

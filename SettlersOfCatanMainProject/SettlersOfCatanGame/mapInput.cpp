@@ -825,6 +825,7 @@ void map::handleInput_SETTHETHIEF(SDL_Event e, Game * g)
 				case SDL_BUTTON_LEFT:	
 					if (constructThiefOnMap(g) == true)
 					{ 
+						thiefIsRolled(g);
 						mapState = map::MAP;
 					} 
 					break;

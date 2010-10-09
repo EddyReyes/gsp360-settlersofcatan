@@ -406,8 +406,6 @@ void map::handleInput_TRADEBANKHARBORSCREEN(SDL_Event e, Game * g)
 					cout << "Trade with Bank/Harbor Failed!" << endl;
 
 				tradebank->ResetBank();
-				tradebank->harbor_type = ' ';
-				cout << "Harbor Type Reset" << endl;
 
 				break;
 			}

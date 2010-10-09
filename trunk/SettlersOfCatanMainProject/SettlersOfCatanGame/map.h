@@ -114,6 +114,8 @@ public:
 	void setHarbor(Node* harbor);
 	void initializeCenters(void);
 
+	map::~map();
+
 
 	//====CONSTRUCTION DEVICS HANDLED IN THE mapConstruct.cpp FILE=============
 	int nodeSelectron;

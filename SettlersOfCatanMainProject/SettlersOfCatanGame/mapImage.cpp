@@ -539,11 +539,6 @@ void map::drawtradeCard(SDL_Surface * screen, Game* g)
 		int amountResourceStuff;
 		switch(i)
 		{
-			/*case 0:	amountResourceStuff = g->brickactive; break;
-			case 1:	amountResourceStuff = g->woodactive; break;
-			case 2:	amountResourceStuff = g->stoneactive; break;
-			case 3:	amountResourceStuff = g->sheepactive; break;
-			case 4:	amountResourceStuff = g->wheatactive; break;*/
 			case 0:	amountResourceStuff = tradebank->temp_brick_give; break;
 			case 1:	amountResourceStuff = tradebank->temp_wood_give; break;
 			case 2:	amountResourceStuff = tradebank->temp_stone_give; break;
@@ -552,7 +547,7 @@ void map::drawtradeCard(SDL_Surface * screen, Game* g)
 		}
 		sprintf(buffer, resAndAmt, amountResourceStuff);
 		resourceListMsg[i] = TTF_RenderText_Solid( font, buffer, textColor );
-		apply_surface( 150 + spacingX*i, 300, resourceListMsg[i], screen, NULL );
+		apply_surface( 150 + spacingX*i, 337, resourceListMsg[i], screen, NULL );
 		SDL_FreeSurface(resourceListMsg[i]);
 	}
 
@@ -573,7 +568,7 @@ void map::drawtradeCard(SDL_Surface * screen, Game* g)
 		}
 		sprintf(buffer, resAndAmt, amountResourceStuff);
 		resourceListMsg[i] = TTF_RenderText_Solid( font, buffer, textColor );
-		apply_surface( 150 + spacingX*i, 475, resourceListMsg[i], screen, NULL );
+		apply_surface( 150 + spacingX*i, 454, resourceListMsg[i], screen, NULL );
 		SDL_FreeSurface(resourceListMsg[i]);
 	}
 
@@ -616,7 +611,7 @@ void map::drawtradeCard(SDL_Surface * screen, Game* g)
 		}
 		sprintf(buffer, resAndAmt, amountResourceStuff);
 		resourceListMsg[i] = TTF_RenderText_Solid( font, buffer, textColor );
-		apply_surface( 150 + spacingX*i, 270, resourceListMsg[i], screen, NULL );
+		apply_surface( 150 + spacingX*i, 272, resourceListMsg[i], screen, NULL );
 		SDL_FreeSurface(resourceListMsg[i]);
 	}
 
@@ -659,7 +654,7 @@ void map::drawtradeCard(SDL_Surface * screen, Game* g)
 		}
 		sprintf(buffer, resAndAmt, amountResourceStuff);
 		resourceListMsg[i] = TTF_RenderText_Solid( font, buffer, textColor );
-		apply_surface( 150 + spacingX*i, 505, resourceListMsg[i], screen, NULL );
+		apply_surface( 150 + spacingX*i, 511, resourceListMsg[i], screen, NULL );
 		SDL_FreeSurface(resourceListMsg[i]);
 	}
 

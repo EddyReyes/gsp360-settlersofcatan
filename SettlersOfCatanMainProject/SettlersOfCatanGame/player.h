@@ -28,6 +28,12 @@ public:
 	int numUnusedSettlements;
 	int numUnusedCities;
 	int ID;
+	bool ownsThreeForOneHarbor;
+	bool ownsBrickHarbor;
+	bool ownsWheatHarbor;
+	bool ownsStoneHarbor;
+	bool ownsSheepHarbor;
+	bool ownsWoodHarbor;
 	player::player(void);
 	//void player::setPlayer(char a_color);
 	void player::drawResource(rsc* resDeck, char type, int num);

@@ -31,6 +31,7 @@ TradeBank::TradeBank()
 	temp_brick_recieve = 0;
 
 	playerNumber = 0;
+	harbor_type = ' ';
 }
 
 bool TradeBank::setGiveResources(Game* g)
@@ -141,6 +142,77 @@ bool TradeBank::trade(Game* g)
 	return false;
 }
 
+bool TradeBank::tradeWithBank(Game* g, char choice_recieve, char choice_give, int num_recieve)
+{
+	switch(harbor_type)
+	{
+	case WOOD:
+		if(g->p[g->activePlayer].getResource(WOOD) >= 2 * num_recieve)
+		{
+			g->p[g->activePlayer].drawResource(&g->underlyingBoard->rsc, choice_recieve, num_recieve);
+			g->p[g->activePlayer].changeResource(WOOD, -2 * num_recieve);
+			g->underlyingBoard->rsc.returnToResourcePool(WOOD, 2 * num_recieve);
+			return true;
+		}
+		break;
+	case WHEAT:
+		if(g->p[g->activePlayer].getResource(WHEAT) >= 2 * num_recieve)
+		{
+			g->p[g->activePlayer].drawResource(&g->underlyingBoard->rsc, choice_recieve, num_recieve);
+			g->p[g->activePlayer].changeResource(WHEAT, -2 * num_recieve);
+			g->underlyingBoard->rsc.returnToResourcePool(WHEAT, 2 * num_recieve);
+			return true;
+		}
+		break;
+	case STONE:
+		if(g->p[g->activePlayer].getResource(STONE) >= 2 * num_recieve)
+		{
+			g->p[g->activePlayer].drawResource(&g->underlyingBoard->rsc, choice_recieve, num_recieve);
+			g->p[g->activePlayer].changeResource(STONE, -2 * num_recieve);
+			g->underlyingBoard->rsc.returnToResourcePool(STONE, 2 * num_recieve);
+			return true;
+		}
+		break;
+	case BRICK:
+		if(g->p[g->activePlayer].getResource(BRICK) >= 2 * num_recieve)
+		{
+			g->p[g->activePlayer].drawResource(&g->underlyingBoard->rsc, choice_recieve, num_recieve);
+			g->p[g->activePlayer].changeResource(BRICK, -2 * num_recieve);
+			g->underlyingBoard->rsc.returnToResourcePool(BRICK, 2 * num_recieve);
+			return true;
+		}
+		break;
+	case SHEEP:
+		if(g->p[g->activePlayer].getResource(SHEEP) >= 2 * num_recieve)
+		{
+			g->p[g->activePlayer].drawResource(&g->underlyingBoard->rsc, choice_recieve, num_recieve);
+			g->p[g->activePlayer].changeResource(SHEEP, -2 * num_recieve);
+			g->underlyingBoard->rsc.returnToResourcePool(SHEEP, 2 * num_recieve);
+			return true;
+		}
+		break;
+	case THREE_TO_ONE:
+		if(g->p[g->activePlayer].getResource(choice_give) >= 3 * num_recieve)
+		{
+			g->p[g->activePlayer].drawResource(&g->underlyingBoard->rsc, choice_recieve, num_recieve);
+			g->p[g->activePlayer].changeResource(choice_give, -3 * num_recieve);
+			g->underlyingBoard->rsc.returnToResourcePool(choice_give, 3 * num_recieve);
+			return true;
+		}
+	case BANK:
+		if(g->p[g->activePlayer].getResource(choice_give) >= 4 * num_recieve)
+		{
+			g->p[g->activePlayer].drawResource(&g->underlyingBoard->rsc, choice_recieve, num_recieve);
+			g->p[g->activePlayer].changeResource(choice_give, -4 * num_recieve);
+			g->underlyingBoard->rsc.returnToResourcePool(choice_give, 4 * num_recieve);
+			return true;
+		}
+	default:
+		break;
+	};
+	return false;
+}
+
 void TradeBank::ResetBank()
 {
 	//resetting everything so its ready for the next trade
@@ -173,6 +245,8 @@ void TradeBank::ResetBank()
 
 	cout << "Trade Bank Reset!" << endl;
 }
+
+
 
 bool TradeBank::setGiveResources(Game* g, int a_trader_num, int a_wood, int a_wheat, int a_stone, int a_sheep, int a_brick)
 {
@@ -377,17 +451,5 @@ bool TradeBank::tradeWithBank(char harbor_type, Game* g, char choice_recieve, ch
 			return true;
 		}
 	};
-	return false;
-}
-
-bool TradeBank::tradeWithBank(Game* g, char choice_recieve, char choice_give, int num_recieve)
-{
-	if(g->p[g->activePlayer].getResource(choice_give) >= 4 * num_recieve)
-	{
-		g->p[g->activePlayer].drawResource(&g->underlyingBoard->rsc, choice_recieve, num_recieve);
-		g->p[g->activePlayer].changeResource(choice_give, -4 * num_recieve);
-		g->underlyingBoard->rsc.returnToResourcePool(choice_give, 4 * num_recieve);
-		return true;
-	}
 	return false;
 }

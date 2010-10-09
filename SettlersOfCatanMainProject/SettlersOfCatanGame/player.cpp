@@ -166,7 +166,7 @@ void player::actuallyBuildSomething(char type, rsc* rsc, dvc* dvc) //ADD roads,s
 					rsc->returnToResourcePool(BRICK, 1);
 					rsc->returnToResourcePool(WHEAT, 1);
 				break;
-		case 'C':	numUnusedCities--; 
+		case 'C':	numUnusedCities--; numUnusedSettlements++; 
 					wheat -= 2;
 					stone -= 3;
 					rsc->returnToResourcePool(WHEAT, 2);

@@ -54,12 +54,12 @@ void map::draw(SDL_Surface * screen, Game * g)
 
 void map::loadImages()
 {
+	font = TTF_OpenFont( "SNAP.ttf", 72);
 	extraTradeRules = load_image( "extraTradeRules.bmp" );
 	standardLegend = load_image( "standardLegend.bmp" );
 	cancelLegend = load_image( "cancelLegend.bmp" );
 	pickToTrade = load_image( "placeholderPickTradeScreen.bmp" );
 	thief = load_image( "placeholderThief.bmp ");
-	font = TTF_OpenFont( "SNAP.ttf", 72);
 	tradeCard = load_image( "tradeCard.bmp" );
 	DevHand = load_image( "DevHand.bmp" );
 	resourceCard = load_image( "resourceCard.bmp" );
@@ -323,6 +323,7 @@ void map::drawWinScreen(SDL_Surface * screen)
 	resourceListMsg[0] = TTF_RenderText_Solid( font, buffer, textColor );
 	apply_surface( 300, 270, resourceListMsg[0], screen, NULL );
 	SDL_FreeSurface(resourceListMsg[0]);
+	TTF_CloseFont(font);
 }
 
 void map::drawVictoryPoints(SDL_Surface * screen, Game * g)
@@ -363,6 +364,7 @@ void map::drawVictoryPoints(SDL_Surface * screen, Game * g)
 	resourceListMsg[0] = TTF_RenderText_Solid( font, buffer, textColor );
 	apply_surface( 225, 160, resourceListMsg[0], screen, NULL );
 	SDL_FreeSurface(resourceListMsg[0]);
+	TTF_CloseFont(font);
 }
 
 
@@ -397,6 +399,7 @@ void map::drawThiefExplanation(SDL_Surface * screen, Game * g)
 	resourceListMsg[0] = TTF_RenderText_Solid( font, buffer, textColor );
 	apply_surface( 300, 1, resourceListMsg[0], screen, NULL );
 	SDL_FreeSurface(resourceListMsg[0]);
+	TTF_CloseFont(font);
 }
 
 void map::drawBuildCard(SDL_Surface * screen)
@@ -412,6 +415,7 @@ void map::drawResourceList(SDL_Surface * screen, Game * g)
 	int spacingX = 103;
 
 	font = TTF_OpenFont( "SNAP.ttf", 72);
+
 	textColor.r = 0;
 	textColor.g = 0;
 	textColor.b = 0;
@@ -436,6 +440,7 @@ void map::drawResourceList(SDL_Surface * screen, Game * g)
 		apply_surface( 160 + spacingX*i, 420, resourceListMsg[i], screen, NULL );
 		SDL_FreeSurface(resourceListMsg[i]);
 	}
+	TTF_CloseFont(font);
 }
 
 void map::drawResourceGrab(SDL_Surface * screen)
@@ -469,6 +474,7 @@ void map::drawResourceGrab(SDL_Surface * screen)
 		apply_surface( 160 + spacingX*i, 420, resourceListMsg[i], screen, NULL );
 		SDL_FreeSurface(resourceListMsg[i]);
 	}
+	TTF_CloseFont(font);
 }
 
 void map::drawPlayerTag(SDL_Surface * screen, Game * g)
@@ -504,6 +510,7 @@ void map::drawPlayerTag(SDL_Surface * screen, Game * g)
 	playerTag = TTF_RenderText_Solid( font, buffer, textColor );
 	apply_surface( 30, 20, playerTag, screen, NULL );
 	SDL_FreeSurface(playerTag);
+	TTF_CloseFont(font);
 }
 
 void map::drawDevHand(SDL_Surface * screen, Game * g)
@@ -557,6 +564,7 @@ void map::drawDevHand(SDL_Surface * screen, Game * g)
 		apply_surface( 150 + spacingX*i, 360, resourceListMsg[i], screen, NULL );
 		SDL_FreeSurface(resourceListMsg[i]);
 	}
+	TTF_CloseFont(font);
 }
 
 void map::drawtradeCard(SDL_Surface * screen, Game* g)
@@ -698,6 +706,7 @@ void map::drawtradeCard(SDL_Surface * screen, Game* g)
 		apply_surface( 150 + spacingX*i, 511, resourceListMsg[i], screen, NULL );
 		SDL_FreeSurface(resourceListMsg[i]);
 	}
+	TTF_CloseFont(font);
 
 }
 
@@ -712,6 +721,7 @@ void map::drawDiceRoll(SDL_Surface * screen, Game * g)
 	resourceListMsg[0] = TTF_RenderText_Solid( font, buffer, textColor );
 	apply_surface( 250, 400, resourceListMsg[0], screen, NULL );
 	SDL_FreeSurface(resourceListMsg[0]);
+	TTF_CloseFont(font);
 }
 
 //function to load images
@@ -785,6 +795,7 @@ void map::drawFreeRoadInstructions(SDL_Surface * screen, Game * g)
 	playerTag = TTF_RenderText_Solid( font, buffer, textColor );
 	apply_surface( 277, 1, playerTag, screen, NULL );
 	SDL_FreeSurface(playerTag);
+	TTF_CloseFont(font);
 }
 
 void map::drawFreeSettlementInstructions(SDL_Surface * screen, Game * g)
@@ -817,6 +828,7 @@ void map::drawFreeSettlementInstructions(SDL_Surface * screen, Game * g)
 	playerTag = TTF_RenderText_Solid( font, buffer, textColor );
 	apply_surface( 250, 1, playerTag, screen, NULL );
 	SDL_FreeSurface(playerTag);
+	TTF_CloseFont(font);
 }
 
 void map::drawExtraTradeRules(SDL_Surface * screen, Game * g)

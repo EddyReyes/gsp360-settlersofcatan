@@ -19,14 +19,32 @@ private:
 	int sheep_recieve;
 	int brick_recieve;
 
-	player active;
-	player trader;
-
 	bool active_set;
 	bool trader_set;
 
 public:
+	int temp_wood_give;
+	int temp_wheat_give;
+	int temp_stone_give;
+	int temp_sheep_give;
+	int temp_brick_give;
+
+	int temp_wood_recieve;
+	int temp_wheat_recieve;
+	int temp_stone_recieve;
+	int temp_sheep_recieve;
+	int temp_brick_recieve;
+
+	int playerNumber;//trader player number
+
 	TradeBank();
+	//new functions, that use things in the trade bank
+	bool TradeBank::setGiveResources(Game* g);
+	bool TradeBank::setRecieveResources(Game* g);
+	bool TradeBank::trade(Game* g);
+
+	void TradeBank::ResetBank();
+
 	bool TradeBank::setGiveResources(Game* g, int a_trader_num, int a_wood, int a_wheat, int a_stone, int a_sheep, int a_brick);
 	bool TradeBank::setRecieveResources(Game* g, int a_trader_num, int a_wood, int a_wheat, int a_stone, int a_sheep, int a_brick);
 	bool TradeBank::trade(Game* g, int a_trader_num);

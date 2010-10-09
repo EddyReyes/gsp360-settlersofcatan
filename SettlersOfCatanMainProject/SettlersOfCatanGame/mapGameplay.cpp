@@ -105,15 +105,15 @@ void map::thiefIsRolled(Game* g)//, int numPlayers)//since this is in the game c
 				char stolenType = ' ';
 				int randCard = (rand() % totalCards) + 1;
 
-				if(randCard < g->p[i].getResource(WHEAT))
+				if(randCard < g->p[i].getResource(WHEAT) && g->p[i].getResource(WHEAT) > 0)
 					stolenType = WHEAT;
-				else if(randCard < g->p[i].getResource(WHEAT) + g->p[i].getResource(WOOD))
+				else if(randCard < g->p[i].getResource(WHEAT) + g->p[i].getResource(WOOD)  && g->p[i].getResource(WOOD) > 0)
 					stolenType = WOOD;
-				else if(randCard < g->p[i].getResource(WHEAT) + g->p[i].getResource(WOOD) + g->p[i].getResource(BRICK))
+				else if(randCard < g->p[i].getResource(WHEAT) + g->p[i].getResource(WOOD) + g->p[i].getResource(BRICK) && g->p[i].getResource(BRICK) > 0)
 					stolenType = BRICK;
-				else if(randCard < g->p[i].getResource(WHEAT) + g->p[i].getResource(WOOD) + g->p[i].getResource(BRICK) + g->p[i].getResource(STONE))
+				else if(randCard < g->p[i].getResource(WHEAT) + g->p[i].getResource(WOOD) + g->p[i].getResource(BRICK) + g->p[i].getResource(STONE) && g->p[i].getResource(STONE) > 0)
 					stolenType = STONE;
-				else
+				else if(g->p[i].getResource(SHEEP) > 0)
 					stolenType = SHEEP;
 
 				g->underlyingBoard->rsc.returnToResourcePool(stolenType, 1);

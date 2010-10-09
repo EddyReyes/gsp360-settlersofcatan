@@ -198,30 +198,30 @@ void map::handleInput_TRADETARGET(SDL_Event e, Game * g)
 			case SDLK_1:					
 				if (g->activePlayer != 0)
 				{	
-					g->playerNumber = 0;	
+					tradebank->playerNumber = 0;
 					mapState= map::TRADEPLAYERSCREEN;			
 				}
 				break;
 			case SDLK_2:				
 				if (g->activePlayer != 1)
 				{	
-					g->playerNumber = 1;	
+					tradebank->playerNumber = 1;
 					mapState= map::TRADEPLAYERSCREEN;			
 				}
 				break;
 			case SDLK_3:				
 				if (g->activePlayer != 2)
 				{	
-					g->playerNumber = 2;	
+					tradebank->playerNumber = 2;
 					mapState= map::TRADEPLAYERSCREEN;			
 				}
 				break;
 			case SDLK_4:
-				if (g->activePlayer != 2)
+				if (g->activePlayer != 3)
 				{	
 					if (g->numPlayers == 4)
-					{	
-						g->playerNumber = 3;
+					{
+						tradebank->playerNumber = 3;
 						mapState= map::TRADEPLAYERSCREEN;			
 					}
 				}
@@ -239,61 +239,36 @@ void map::handleInput_TRADEPLAYERSCREEN(SDL_Event e, Game * g)
 		case SDL_KEYDOWN:
 			switch(e.key.keysym.sym)
 			{
-			case SDLK_0:				mapState= map::MAP;				break;
+			case SDLK_0:	mapState= map::MAP;				break;
+			case SDLK_1:	mapState= map::MAP;				break;
+			case SDLK_2:	mapState= map::BUILDCARD;		break;
+			case SDLK_3:	mapState= map::RESOURCELIST;	break;
+			case SDLK_4:	mapState= map::DEVHAND;			break;
 			
 			//i think we could do something like this, it seems to add to the numbers, then when its traded, just set them back to 0
-			case SDLK_q:	g->brickactive++; cout << "+1 Brick Active Player" << endl; break;
-			case SDLK_w:	g->woodactive++; cout << "+1 Wood Active Player" << endl; break;
-			case SDLK_e:	g->stoneactive++; cout << "+1 Stone Active Player" << endl; break;
-			case SDLK_r:	g->sheepactive++; cout << "+1 Sheep Active Player" << endl; break;
-			case SDLK_t:	g->wheatactive++; cout << "+1 Wheat Active Player" << endl; break;
+			case SDLK_q:	tradebank->temp_brick_give++; cout << "+1 Temp Brick Give" << endl; break;
+			case SDLK_w:	tradebank->temp_wood_give++; cout << "+1 Temp Wood Give" << endl; break;
+			case SDLK_e:	tradebank->temp_stone_give++; cout << "+1 Temp Stone Give" << endl; break;
+			case SDLK_r:	tradebank->temp_sheep_give++; cout << "+1 Temp Sheep Give" << endl; break;
+			case SDLK_t:	tradebank->temp_wheat_give++; cout << "+1 Temp Wheat Give" << endl; break;
 
-			case SDLK_a:	g->bricktrader++; cout << "+1 Brick Trade Player or Bank" << endl; break;
-			case SDLK_s:	g->woodtrader++; cout << "+1 Wood Trade Player or Bank" << endl; break;
-			case SDLK_d:	g->stonetrader++; cout << "+1 Stone Trade Player or Bank" << endl; break;
-			case SDLK_f:	g->sheeptrader++; cout << "+1 Sheep Trade Player or Bank" << endl; break;
-			case SDLK_g:	g->wheattrader++; cout << "+1 Wheat Trade Player or Bank" << endl; break;
+			case SDLK_a:	tradebank->temp_brick_recieve++; cout << "+1 Temp Brick Recieve" << endl; break;
+			case SDLK_s:	tradebank->temp_wood_recieve++; cout << "+1 Temp Wood Receive" << endl; break;
+			case SDLK_d:	tradebank->temp_stone_recieve++; cout << "+1 Temp Stone Recieve" << endl; break;
+			case SDLK_f:	tradebank->temp_sheep_recieve++; cout << "+1 Temp Sheep Recieve" << endl; break;
+			case SDLK_g:	tradebank->temp_wheat_recieve++; cout << "+1 Temp Wheat Recieve" << endl; break;
 
 			case SDLK_RETURN: 
-				if	(
-					(tradebank->setGiveResources(g, int(g->playerNumber), int(g->woodactive), int(g->wheatactive), int(g->stoneactive), int(g->sheepactive), int(g->brickactive)))
-					&&
-					(tradebank->setRecieveResources(g, int(g->playerNumber), int(g->woodtrader), int(g->wheattrader), int(g->stonetrader), int(g->sheeptrader), int(g->bricktrader)))
-					)
+				if(tradebank->setGiveResources(g) && tradebank->setRecieveResources(g))
 				{
-					//cout << "shit is set" << endl;
-					if(tradebank->trade(g, int(g->playerNumber)))
-					{
-						g->brickactive = 0;
-						g->woodactive = 0;
-						g->stoneactive = 0;
-						g->sheepactive = 0;
-						g->wheatactive = 0;
-
-						g->bricktrader = 0;
-						g->woodtrader = 0;
-						g->stonetrader = 0;
-						g->sheeptrader = 0;
-						g->wheattrader = 0;
-
+					if(tradebank->trade(g))
 						cout << "Trade with Player Successful!!" << endl;
-					}
 					else
 						cout << "IT DIDNT WORK!" << endl;
 				}
 				break;
 			case SDLK_BACKSPACE:
-				g->brickactive = 0;
-				g->woodactive = 0;
-				g->stoneactive = 0;
-				g->sheepactive = 0;
-				g->wheatactive = 0;
-
-				g->bricktrader = 0;
-				g->woodtrader = 0;
-				g->stonetrader = 0;
-				g->sheeptrader = 0;
-				g->wheattrader = 0;
+				tradebank->ResetBank();
 				break;
 			}
 	}
@@ -307,66 +282,68 @@ void map::handleInput_TRADEBANKHARBORSCREEN(SDL_Event e, Game * g)
 			switch(e.key.keysym.sym)
 			{
 			case SDLK_0:	mapState= map::MAP;				break;
-			case SDLK_q:	g->brickactive++; cout << "+1 Brick Active Player" << endl; break;
-			case SDLK_w:	g->woodactive++; cout << "+1 Wood Active Player" << endl; break;
-			case SDLK_e:	g->stoneactive++; cout << "+1 Stone Active Player" << endl; break;
-			case SDLK_r:	g->sheepactive++; cout << "+1 Sheep Active Player" << endl; break;
-			case SDLK_t:	g->wheatactive++; cout << "+1 Wheat Active Player" << endl; break;
+			case SDLK_1:	mapState= map::MAP;				break;
+			case SDLK_2:	mapState= map::BUILDCARD;		break;
+			case SDLK_3:	mapState= map::RESOURCELIST;	break;
+			case SDLK_4:	mapState= map::DEVHAND;			break;
+
+			case SDLK_q:	tradebank->temp_brick_give++; cout << "+1 Temp Brick Give" << endl; break;
+			case SDLK_w:	tradebank->temp_wood_give++; cout << "+1 Temp Wood Give" << endl; break;
+			case SDLK_e:	tradebank->temp_stone_give++; cout << "+1 Temp Stone Give" << endl; break;
+			case SDLK_r:	tradebank->temp_sheep_give++; cout << "+1 Temp Sheep Give" << endl; break;
+			case SDLK_t:	tradebank->temp_wheat_give++; cout << "+1 Temp Wheat Give" << endl; break;
+
+			case SDLK_a:	tradebank->temp_brick_recieve++; cout << "+1 Temp Brick Recieve" << endl; break;
+			case SDLK_s:	tradebank->temp_wood_recieve++; cout << "+1 Temp Wood Receive" << endl; break;
+			case SDLK_d:	tradebank->temp_stone_recieve++; cout << "+1 Temp Stone Recieve" << endl; break;
+			case SDLK_f:	tradebank->temp_sheep_recieve++; cout << "+1 Temp Sheep Recieve" << endl; break;
+			case SDLK_g:	tradebank->temp_wheat_recieve++; cout << "+1 Temp Wheat Recieve" << endl; break;
 			case SDLK_BACKSPACE: 
-				g->brickactive = 0;
-				g->woodactive = 0;
-				g->stoneactive = 0;
-				g->sheepactive = 0;
-				g->wheatactive = 0;
-				g->bricktrader = 0;
-				g->woodtrader = 0;
-				g->stonetrader = 0;
-				g->sheeptrader = 0;
-				g->wheattrader = 0;
+				tradebank->ResetBank();
 				break;
 			case SDLK_RETURN:
 				//trading with the bank or harbor
-				//player sets the resource to something other than 0
+				//player sets the resource they are going to give to something other than 0
 				//and sets the number of the amount to recieve to the number they want
 				char tgive = ' ';
 				char trecieve = ' ';
 				int numget = 0;
 
-				if(g->woodactive != 0)
+				if(tradebank->temp_wood_give != 0)
 					tgive = WOOD;
-				else if(g->wheatactive != 0)
+				else if(tradebank->temp_wheat_give != 0)
 					tgive = WHEAT;
-				else if(g->stoneactive != 0)
+				else if(tradebank->temp_stone_give != 0)
 					tgive = WHEAT;
-				else if(g->sheepactive !=0)
+				else if(tradebank->temp_sheep_give !=0)
 					tgive = SHEEP;
-				else if(g->brickactive != 0)
+				else if(tradebank->temp_brick_give != 0)
 					tgive = BRICK;
 
-				if(g->woodtrader != 0)
+				if(tradebank->temp_wood_recieve != 0)
 				{
 					trecieve = WOOD;
-					numget = g->woodtrader;
+					numget = tradebank->temp_wood_recieve;
 				}					
-				else if(g->wheattrader != 0)
+				else if(tradebank->temp_wheat_recieve != 0)
 				{
 					trecieve = WHEAT;
-					numget = g->wheattrader;
+					numget = tradebank->temp_wheat_recieve;
 				}
-				else if(g->stonetrader != 0)
+				else if(tradebank->temp_stone_recieve != 0)
 				{
 					trecieve = STONE;
-					numget = g->stonetrader;
+					numget = tradebank->temp_stone_recieve;
 				}
-				else if(g->sheeptrader != 0)
+				else if(tradebank->temp_sheep_recieve != 0)
 				{
 					trecieve = SHEEP;
-					numget = g->sheeptrader;
+					numget = tradebank->temp_sheep_recieve;
 				}
-				else if(g->bricktrader != 0)
+				else if(tradebank->temp_brick_recieve != 0)
 				{
 					trecieve = BRICK;
-					numget = g->bricktrader;
+					numget = tradebank->temp_brick_recieve;
 				}
 
 				if(tradebank->tradeWithBank(' ', g, trecieve, tgive, numget))
@@ -374,19 +351,8 @@ void map::handleInput_TRADEBANKHARBORSCREEN(SDL_Event e, Game * g)
 				else
 					cout << "Trade with Bank/Harbor Failed!" << endl;
 
-				g->brickactive = 0;
-				g->woodactive = 0;
-				g->stoneactive = 0;
-				g->sheepactive = 0;
-				g->wheatactive = 0;
+				tradebank->ResetBank();
 
-				g->bricktrader = 0;
-				g->woodtrader = 0;
-				g->stonetrader = 0;
-				g->sheeptrader = 0;
-				g->wheattrader = 0;
-				
-				cout << "Resources Reset!" << endl;
 				break;
 			}
 	}

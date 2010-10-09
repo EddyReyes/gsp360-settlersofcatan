@@ -539,11 +539,16 @@ void map::drawtradeCard(SDL_Surface * screen, Game* g)
 		int amountResourceStuff;
 		switch(i)
 		{
-			case 0:	amountResourceStuff = g->brickactive; break;
+			/*case 0:	amountResourceStuff = g->brickactive; break;
 			case 1:	amountResourceStuff = g->woodactive; break;
 			case 2:	amountResourceStuff = g->stoneactive; break;
 			case 3:	amountResourceStuff = g->sheepactive; break;
-			case 4:	amountResourceStuff = g->wheatactive; break;
+			case 4:	amountResourceStuff = g->wheatactive; break;*/
+			case 0:	amountResourceStuff = tradebank->temp_brick_give; break;
+			case 1:	amountResourceStuff = tradebank->temp_wood_give; break;
+			case 2:	amountResourceStuff = tradebank->temp_stone_give; break;
+			case 3:	amountResourceStuff = tradebank->temp_sheep_give; break;
+			case 4:	amountResourceStuff = tradebank->temp_wheat_give; break;
 		}
 		sprintf(buffer, resAndAmt, amountResourceStuff);
 		resourceListMsg[i] = TTF_RenderText_Solid( font, buffer, textColor );
@@ -560,11 +565,11 @@ void map::drawtradeCard(SDL_Surface * screen, Game* g)
 		int amountResourceStuff;
 		switch(i)
 		{
-			case 0:	amountResourceStuff = g->bricktrader; break;
-			case 1:	amountResourceStuff = g->woodtrader; break;
-			case 2:	amountResourceStuff = g->stonetrader; break;
-			case 3:	amountResourceStuff = g->sheeptrader; break;
-			case 4:	amountResourceStuff = g->wheattrader; break;
+			case 0:	amountResourceStuff = tradebank->temp_brick_recieve; break;
+			case 1:	amountResourceStuff = tradebank->temp_wood_recieve; break;
+			case 2:	amountResourceStuff = tradebank->temp_stone_recieve; break;
+			case 3:	amountResourceStuff = tradebank->temp_sheep_recieve; break;
+			case 4:	amountResourceStuff = tradebank->temp_wheat_recieve; break;
 		}
 		sprintf(buffer, resAndAmt, amountResourceStuff);
 		resourceListMsg[i] = TTF_RenderText_Solid( font, buffer, textColor );
@@ -615,7 +620,7 @@ void map::drawtradeCard(SDL_Surface * screen, Game* g)
 		SDL_FreeSurface(resourceListMsg[i]);
 	}
 
-	switch(g->playerNumber)
+	switch(tradebank->playerNumber)
 	{
 	case 0: 
 		textColor.r = 255;

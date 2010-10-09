@@ -475,3 +475,10 @@ void map::setHarbor(Node* harbor)
 		
 	}
 }
+
+map::~map()
+{
+	delete tradebank;
+	//delete font;//this gives s warning, but it builds
+	//im not sure if we need to delete font though, or how to do it the right way
+}

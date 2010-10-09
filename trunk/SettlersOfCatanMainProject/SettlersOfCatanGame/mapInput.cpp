@@ -226,7 +226,61 @@ void map::handleInput_TRADETARGET(SDL_Event e, Game * g)
 					}
 				}
 				break;
-			case SDLK_i:	mapState = map::TRADEBANKHARBORSCREEN;			break;
+			case SDLK_i:
+				tradebank->harbor_type = BANK;
+				mapState = map::TRADEBANKHARBORSCREEN;			
+				break;
+			
+			case SDLK_b:
+				if(g->p[g->activePlayer].ownsBrickHarbor)
+				{
+					tradebank->harbor_type = BRICK;
+					mapState = map::TRADEBANKHARBORSCREEN;	
+				}
+				else
+					cout << "You dont own this harbor type: brick" << endl;
+				break;
+			
+			case SDLK_l:
+				if(g->p[g->activePlayer].ownsWoodHarbor)
+				{
+					tradebank->harbor_type = WOOD;
+					mapState = map::TRADEBANKHARBORSCREEN;			
+				}
+				else
+					cout << "You dont own this harbor type: wood" << endl;
+				break;
+			
+			case SDLK_s:	
+				if(g->p[g->activePlayer].ownsStoneHarbor)
+				{
+					tradebank->harbor_type = STONE;
+					mapState = map::TRADEBANKHARBORSCREEN;	
+				}
+				else
+					cout << "You dont own this harbor type: stone" << endl;
+				break;
+			
+			case SDLK_e:	
+				if(g->p[g->activePlayer].ownsSheepHarbor)
+				{
+					tradebank->harbor_type = SHEEP;
+					mapState = map::TRADEBANKHARBORSCREEN;	
+				}
+				else
+					cout << "You dont own this harbor type: sheep" << endl;
+				break;
+			
+			case SDLK_w:	
+				if(g->p[g->activePlayer].ownsWheatHarbor)
+				{
+					tradebank->harbor_type = WHEAT;
+					mapState = map::TRADEBANKHARBORSCREEN;		
+				}
+				else
+					cout << "You dont own this harbor type: wheat" << endl;
+				break;
+			
 			case SDLK_0:	mapState = map::MAP;	break;
 			}
 	}
@@ -308,6 +362,7 @@ void map::handleInput_TRADEBANKHARBORSCREEN(SDL_Event e, Game * g)
 				char tgive = ' ';
 				char trecieve = ' ';
 				int numget = 0;
+				char htype = ' ';
 
 				if(tradebank->temp_wood_give != 0)
 					tgive = WOOD;
@@ -346,12 +401,14 @@ void map::handleInput_TRADEBANKHARBORSCREEN(SDL_Event e, Game * g)
 					numget = tradebank->temp_brick_recieve;
 				}
 
-				if(tradebank->tradeWithBank(' ', g, trecieve, tgive, numget))
+				if(tradebank->tradeWithBank(g, trecieve, tgive, numget))
 					cout << "Trade with Bank/Harbor Successful!" << endl;
 				else
 					cout << "Trade with Bank/Harbor Failed!" << endl;
 
 				tradebank->ResetBank();
+				tradebank->harbor_type = ' ';
+				cout << "Harbor Type Reset" << endl;
 
 				break;
 			}

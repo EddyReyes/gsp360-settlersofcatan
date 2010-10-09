@@ -58,15 +58,15 @@ void map::steal(Game* g, int victim)
 		int stolenCard = rand() % totalCards + 1;
 		char stolenType = ' ';
 
-		if(stolenCard < g->p[victim].getResource(WHEAT))
+		if(stolenCard < g->p[victim].getResource(WHEAT) && g->p[victim].getResource(WHEAT) > 0)
 			stolenType = WHEAT;
-		else if(stolenCard < g->p[victim].getResource(WHEAT) + g->p[victim].getResource(WOOD))
+		else if(stolenCard < g->p[victim].getResource(WHEAT) + g->p[victim].getResource(WOOD)  && g->p[victim].getResource(WOOD) > 0)
 			stolenType = WOOD;
-		else if(stolenCard < g->p[victim].getResource(WHEAT) + g->p[victim].getResource(WOOD) + g->p[victim].getResource(BRICK))
+		else if(stolenCard < g->p[victim].getResource(WHEAT) + g->p[victim].getResource(WOOD) + g->p[victim].getResource(BRICK) && g->p[victim].getResource(BRICK) > 0)
 			stolenType = BRICK;
-		else if(stolenCard < g->p[victim].getResource(WHEAT) + g->p[victim].getResource(WOOD) + g->p[victim].getResource(BRICK) + g->p[victim].getResource(STONE))
+		else if(stolenCard < g->p[victim].getResource(WHEAT) + g->p[victim].getResource(WOOD) + g->p[victim].getResource(BRICK) + g->p[victim].getResource(STONE) && g->p[victim].getResource(STONE) > 0)
 			stolenType = STONE;
-		else
+		else if(g->p[victim].getResource(SHEEP) > 0)
 			stolenType = SHEEP;
 
 		g->p[g->activePlayer].changeResource(stolenType, 1);

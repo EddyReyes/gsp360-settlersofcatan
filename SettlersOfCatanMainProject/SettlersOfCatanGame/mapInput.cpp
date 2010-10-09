@@ -226,8 +226,12 @@ void map::handleInput_TRADETARGET(SDL_Event e, Game * g)
 					}
 				}
 				break;
+
 			case SDLK_i:
-				tradebank->harbor_type = BANK;
+				if(g->p[g->activePlayer].ownsThreeForOneHarbor)
+					tradebank->harbor_type = THREE_TO_ONE;
+				else
+					tradebank->harbor_type = BANK;
 				mapState = map::TRADEBANKHARBORSCREEN;			
 				break;
 			
@@ -341,11 +345,54 @@ void map::handleInput_TRADEBANKHARBORSCREEN(SDL_Event e, Game * g)
 			case SDLK_3:	mapState= map::RESOURCELIST;	break;
 			case SDLK_4:	mapState= map::DEVHAND;			break;
 
-			case SDLK_q:	if (g->p[g->activePlayer].brick > 0 + tradebank->temp_brick_give){tradebank->temp_brick_give++; cout << "+1 Temp Brick Give" << endl;} break;
-			case SDLK_w:	if (g->p[g->activePlayer].wood > 0 + tradebank->temp_wood_give){tradebank->temp_wood_give++; cout << "+1 Temp Wood Give" << endl;} break;
-			case SDLK_e:	if (g->p[g->activePlayer].stone > 0 + tradebank->temp_stone_give){tradebank->temp_stone_give++; cout << "+1 Temp Stone Give" << endl;} break;
-			case SDLK_r:	if (g->p[g->activePlayer].sheep > 0 + tradebank->temp_sheep_give){tradebank->temp_sheep_give++; cout << "+1 Temp Sheep Give" << endl;} break;
-			case SDLK_t:	if (g->p[g->activePlayer].wheat > 0 + tradebank->temp_wheat_give){tradebank->temp_wheat_give++; cout << "+1 Temp Wheat Give" << endl;} break;
+			case SDLK_q:	
+				if(tradebank->harbor_type == BANK || tradebank->harbor_type == BRICK || tradebank->harbor_type == THREE_TO_ONE)
+				{
+					if(g->p[g->activePlayer].brick > 0 + tradebank->temp_brick_give)
+					{
+						tradebank->temp_brick_give++; 
+						cout << "+1 Temp Brick Give" << endl;
+					} 
+				}
+				break;
+			case SDLK_w:	
+				if(tradebank->harbor_type == BANK || tradebank->harbor_type == WOOD || tradebank->harbor_type == THREE_TO_ONE)
+				{
+					if(g->p[g->activePlayer].wood > 0 + tradebank->temp_wood_give)
+					{
+						tradebank->temp_wood_give++; 
+						cout << "+1 Temp Wood Give" << endl;
+					} 
+				}
+				break;
+			case SDLK_e:
+				if(tradebank->harbor_type == BANK || tradebank->harbor_type == STONE || tradebank->harbor_type == THREE_TO_ONE)
+				{
+					if(g->p[g->activePlayer].stone > 0 + tradebank->temp_stone_give)
+					{
+						tradebank->temp_stone_give++;
+						cout << "+1 Temp Stone Give" << endl;
+					}
+				}
+				break;
+			case SDLK_r:	
+				if(tradebank->harbor_type == BANK || tradebank->harbor_type == SHEEP || tradebank->harbor_type == THREE_TO_ONE)
+				{
+					if(g->p[g->activePlayer].sheep > 0 + tradebank->temp_sheep_give)
+					{
+						tradebank->temp_sheep_give++; cout << "+1 Temp Sheep Give" << endl;
+					} 
+				}
+				break;
+			case SDLK_t:
+				if(tradebank->harbor_type == BANK || tradebank->harbor_type == WHEAT || tradebank->harbor_type == THREE_TO_ONE)
+				{
+					if(g->p[g->activePlayer].wheat > 0 + tradebank->temp_wheat_give)
+					{
+						tradebank->temp_wheat_give++; cout << "+1 Temp Wheat Give" << endl;
+					}
+				}
+				break;
 
 			case SDLK_a:	tradebank->temp_brick_recieve++; cout << "+1 Temp Brick Recieve" << endl; break;
 			case SDLK_s:	tradebank->temp_wood_recieve++; cout << "+1 Temp Wood Receive" << endl; break;

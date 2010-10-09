@@ -168,6 +168,7 @@ void map::handleInput_DEVHAND(SDL_Event e, Game * g)
 			case SDLK_s:	if (g->p[g->activePlayer].playDevCard('S'))
 							{
 								calcLargestArmy(g);
+								calculateVictoryPoints(g);
 								mapState = map::SETTHETHIEF;
 							}
 							break;

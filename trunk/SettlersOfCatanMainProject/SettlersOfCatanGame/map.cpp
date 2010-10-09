@@ -48,6 +48,7 @@ map::map()
 	for (int i = 0; i < 54; ++i)
 	{
 		setHarbor(&myNodes[i]);
+		cout << i << '\t' << myNodes[i].harborType << endl;
 	}
 		
 

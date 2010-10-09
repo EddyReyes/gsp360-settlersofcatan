@@ -219,18 +219,27 @@ bool map::constructSettlementOnMapAnywhere(Game * g)
 			}
 		}
 	}
-	if (buildable == true && myNodes[nodeSelectron].owner == 4)
+	if (buildable == true && myNodes[nodeSelectron].owner == NOT_A_PLAYER)
 	{
 		myNodes[nodeSelectron].owner = g->p[g->activePlayer].ID;
 		myNodes[nodeSelectron].cityType = 1;
 		switch(myNodes[nodeSelectron].harborType)
 		{
-			case BRICK: g->p[g->activePlayer].ownsBrickHarbor = true; break;
-			case WOOD: g->p[g->activePlayer].ownsWoodHarbor = true; break;
-			case STONE: g->p[g->activePlayer].ownsStoneHarbor = true; break;
-			case SHEEP: g->p[g->activePlayer].ownsSheepHarbor = true; break;
-			case WHEAT: g->p[g->activePlayer].ownsWheatHarbor = true; break;
-			case THREE_TO_ONE: g->p[g->activePlayer].ownsThreeForOneHarbor = true; break;
+			/*case BRICK: g->p[g->activePlayer].ownsBrickHarbor = true; cout << g->activePlayer << " brick" << endl; break;
+			case WOOD: g->p[g->activePlayer].ownsWoodHarbor = true; cout << g->activePlayer << " wood" << endl; break;
+			case STONE: g->p[g->activePlayer].ownsStoneHarbor = true; cout << g->activePlayer << " stone" << endl; break;
+			case SHEEP: g->p[g->activePlayer].ownsSheepHarbor = true; cout << g->activePlayer << " sheep" << endl; break;
+			case WHEAT: g->p[g->activePlayer].ownsWheatHarbor = true; cout << g->activePlayer << " wheat" << endl; break;
+			case THREE_TO_ONE: g->p[g->activePlayer].ownsThreeForOneHarbor = true; cout << g->activePlayer << " 3to1" << endl; break;*/
+
+			case NULL: g->p[g->activePlayer].ownsBrickHarbor = true; cout << g->activePlayer << " not a harbor" << endl; break;
+			case BRICK: g->p[g->activePlayer].ownsBrickHarbor = true; cout << g->activePlayer << " brick" << endl; break;
+			case WOOD: g->p[g->activePlayer].ownsWoodHarbor = true; cout << g->activePlayer << " wood" << endl; break;
+			case STONE: g->p[g->activePlayer].ownsStoneHarbor = true; cout << g->activePlayer << " stone" << endl; break;
+			case SHEEP: g->p[g->activePlayer].ownsSheepHarbor = true; cout << g->activePlayer << " sheep" << endl; break;
+			case WHEAT: g->p[g->activePlayer].ownsWheatHarbor = true; cout << g->activePlayer << " wheat" << endl; break;
+			case THREE_TO_ONE: g->p[g->activePlayer].ownsThreeForOneHarbor = true; cout << g->activePlayer << " 3to1" << endl; break;
+			default: cout << "none" << endl; break;
 		}
 		if( overallTurn == 2 )
 		{

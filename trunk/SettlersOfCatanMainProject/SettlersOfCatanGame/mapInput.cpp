@@ -362,7 +362,6 @@ void map::handleInput_TRADEBANKHARBORSCREEN(SDL_Event e, Game * g)
 				char tgive = ' ';
 				char trecieve = ' ';
 				int numget = 0;
-				char htype = ' ';
 
 				if(tradebank->temp_wood_give != 0)
 					tgive = WOOD;

@@ -20,7 +20,7 @@ void map::draw(SDL_Surface * screen, Game * g)
 
 		case map::MAP:				drawBoard(screen);			drawPlayerTag(screen, g);		drawInstructions(screen, g);break; 
 		case map::BUILDCARD:		drawBuildCard(screen);		drawPlayerTag(screen, g);		drawInstructions(screen, g);break;
-		case map::RESOURCELIST:		drawResourceList(screen, g);drawPlayerTag(screen, g);		drawInstructions(screen, g);break;
+		case map::RESOURCELIST:		drawResourceList(screen, g);drawPlayerTag(screen, g);		drawInstructions(screen, g); drawVictoryPoints(screen, g);break;
 		case map::DEVHAND:			drawDevHand(screen, g);		drawPlayerTag(screen, g);		drawInstructions(screen, g);break;
 		case map::TRADE:			drawtradeCard(screen, g);	drawPlayerTag(screen, g);		drawInstructions(screen, g);break;
 		case map::BUILDROAD:		drawBoard(screen);			drawPlayerTag(screen, g);drawInstructions(screen, g);
@@ -324,6 +324,47 @@ void map::drawWinScreen(SDL_Surface * screen)
 	apply_surface( 300, 270, resourceListMsg[0], screen, NULL );
 	SDL_FreeSurface(resourceListMsg[0]);
 }
+
+void map::drawVictoryPoints(SDL_Surface * screen, Game * g)
+{
+	font = TTF_OpenFont( "SNAP.ttf", 20);
+	switch(g->activePlayer)
+	{
+	case 0: 
+		textColor.r = 255;
+		textColor.g = 0;
+		textColor.b = 0;
+		break;
+	case 1:
+		textColor.r = 0;
+		textColor.g = 0;
+		textColor.b = 255;
+		break;
+	case 2:
+		textColor.r = 255;
+		textColor.g = 255;
+		textColor.b = 255;
+		break;
+	case 3:
+		textColor.r = 255;
+		textColor.g = 133;
+		textColor.b = 0;
+		break;
+	}
+
+	char buffer [1024];
+
+	char * resAndAmt = "You Have %d Victory Points!";
+	int amountResourceStuff;
+
+	amountResourceStuff = g->p[g->activePlayer].currentVictoryPoints;
+
+	sprintf(buffer, resAndAmt, amountResourceStuff);
+	resourceListMsg[0] = TTF_RenderText_Solid( font, buffer, textColor );
+	apply_surface( 225, 160, resourceListMsg[0], screen, NULL );
+	SDL_FreeSurface(resourceListMsg[0]);
+}
+
 
 void map::drawThiefExplanation(SDL_Surface * screen, Game * g)
 {

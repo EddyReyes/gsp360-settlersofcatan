@@ -7,13 +7,13 @@ class player
 {
 private:
 	char color;
-	int currentVictoryPoints;
 	int usedSoldiers;
 	int usedVictoryPoints;
 	bool hasLongestRoad;
 	bool hasLargestArmy;
 
 public: 
+	int currentVictoryPoints;
 	int inHandVictoryPoints;
 	int inHandSoldiers;
 	int inHandMonopolies;

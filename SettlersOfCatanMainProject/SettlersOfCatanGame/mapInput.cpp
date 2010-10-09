@@ -798,6 +798,7 @@ void map::handleInput_TURNTWOROAD(SDL_Event e, Game * g)
 					if (constructRoadOnMap(g) == true)
 					{ 
 						g->p[g->activePlayer].freeBuildSomething('R', &rsc, &dvc);
+						if (calculateVictoryPoints(g)){}
 						mapState = map::ENDTURN;
 					} 
 					break;

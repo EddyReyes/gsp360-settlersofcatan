@@ -156,6 +156,7 @@ public:
 	void map::drawFreeSettlementInstructions(SDL_Surface * screen, Game * g);
 	void map::drawFreeRoadInstructions(SDL_Surface * screen, Game * g);
 	void map::drawExtraTradeRules(SDL_Surface * screen, Game * g);
+	void map::drawVictoryPoints(SDL_Surface * screen, Game * g);
 	void map::shutdownImages(void);
 
 

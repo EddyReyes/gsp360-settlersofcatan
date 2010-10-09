@@ -223,6 +223,15 @@ bool map::constructSettlementOnMapAnywhere(Game * g)
 	{
 		myNodes[nodeSelectron].owner = g->p[g->activePlayer].ID;
 		myNodes[nodeSelectron].cityType = 1;
+		switch(myNodes[nodeSelectron].harborType)
+		{
+			case BRICK: g->p[g->activePlayer].ownsBrickHarbor = true; break;
+			case WOOD: g->p[g->activePlayer].ownsWoodHarbor = true; break;
+			case STONE: g->p[g->activePlayer].ownsStoneHarbor = true; break;
+			case SHEEP: g->p[g->activePlayer].ownsSheepHarbor = true; break;
+			case WHEAT: g->p[g->activePlayer].ownsWheatHarbor = true; break;
+			case THREE_TO_ONE: g->p[g->activePlayer].ownsThreeForOneHarbor = true; break;
+		}
 		if( overallTurn == 2 )
 		{
 			for (int i = 0; i < 19; ++i)

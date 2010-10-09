@@ -225,14 +225,6 @@ bool map::constructSettlementOnMapAnywhere(Game * g)
 		myNodes[nodeSelectron].cityType = 1;
 		switch(myNodes[nodeSelectron].harborType)
 		{
-			/*case BRICK: g->p[g->activePlayer].ownsBrickHarbor = true; cout << g->activePlayer << " brick" << endl; break;
-			case WOOD: g->p[g->activePlayer].ownsWoodHarbor = true; cout << g->activePlayer << " wood" << endl; break;
-			case STONE: g->p[g->activePlayer].ownsStoneHarbor = true; cout << g->activePlayer << " stone" << endl; break;
-			case SHEEP: g->p[g->activePlayer].ownsSheepHarbor = true; cout << g->activePlayer << " sheep" << endl; break;
-			case WHEAT: g->p[g->activePlayer].ownsWheatHarbor = true; cout << g->activePlayer << " wheat" << endl; break;
-			case THREE_TO_ONE: g->p[g->activePlayer].ownsThreeForOneHarbor = true; cout << g->activePlayer << " 3to1" << endl; break;*/
-
-			case NULL: g->p[g->activePlayer].ownsBrickHarbor = true; cout << g->activePlayer << " not a harbor" << endl; break;
 			case BRICK: g->p[g->activePlayer].ownsBrickHarbor = true; cout << g->activePlayer << " brick" << endl; break;
 			case WOOD: g->p[g->activePlayer].ownsWoodHarbor = true; cout << g->activePlayer << " wood" << endl; break;
 			case STONE: g->p[g->activePlayer].ownsStoneHarbor = true; cout << g->activePlayer << " stone" << endl; break;

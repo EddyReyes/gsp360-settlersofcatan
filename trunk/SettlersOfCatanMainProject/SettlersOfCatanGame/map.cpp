@@ -45,11 +45,8 @@ map::map()
 		myNodes[i].cityType = 0;
 	}
 
-	for (int i = 0; i < 54; ++i)
-	{
-		setHarbor(&myNodes[i]);
-		cout << i << '\t' << myNodes[i].harborType << endl;
-	}
+	//for (int i = 0; i < 54; ++i)
+		setHarbor(myNodes);
 		
 
 	//===========SETTING THE NODES IN TERMS OF PIXELS=========================

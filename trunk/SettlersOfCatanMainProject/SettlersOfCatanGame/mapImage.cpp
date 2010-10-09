@@ -903,9 +903,12 @@ void map::shutdownImages()
 		SDL_FreeSurface(cityTile[i]);
 		SDL_FreeSurface(roadTile[i]);
 	}
-	for (int i = 0; i < 5; ++i)
-	{
-		SDL_FreeSurface(resourceListMsg[i]);
-	}
-	TTF_CloseFont(font);
+
+	//THIS FUNCTIONS ARE TRYING TO FREE SURFACES THAT HAVE ALREADY BEEN FREED! THAT MEANS DURING THE CLOSING OF THE APPLICATION IT BREAKS BECAUSE FREEDOM HAS ALREADY BEEN ESTABLISHED!
+	//for (int i = 0; i < 5; ++i)
+	//{
+	//	SDL_FreeSurface(resourceListMsg[i]);
+	//}
+
+	//TTF_CloseFont(font);
 }

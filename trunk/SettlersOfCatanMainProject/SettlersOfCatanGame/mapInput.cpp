@@ -178,7 +178,11 @@ void map::handleInput_DEVHAND(SDL_Event e, Game * g)
 							break;
 			case SDLK_v:	if (g->p[g->activePlayer].playDevCard('V'))
 							{
-								mapState= map::MAP;
+								if (calculateVictoryPoints(g))
+								{
+									mapState= map::SOMEONEWON;
+								}
+								else {mapState= map::MAP;}
 							}
 							break;
 							
@@ -867,6 +871,11 @@ void map::handleInput_FREETWOROADS(SDL_Event e, Game * g)
 					{ 
 						g->p[g->activePlayer].freeBuildSomething('R', &rsc, &dvc);
 						placeholderFREE--;
+						if (calculateVictoryPoints(g))
+						{
+							mapState= map::SOMEONEWON;
+						}
+						else {}
 					} 
 					break;
 			}

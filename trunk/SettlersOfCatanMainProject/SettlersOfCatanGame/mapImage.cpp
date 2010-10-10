@@ -275,6 +275,43 @@ void map::drawBoard(SDL_Surface * screen)
 		}
 	}
 
+	//===========================================
+	font = TTF_OpenFont( "SNAP.ttf", 30);
+	textColor.r = 0;
+	textColor.g = 255;
+	textColor.b = 0;
+	for (int i = 0; i < 54; ++i)
+	{
+		if (myNodes[i].harborType == THREE_TO_ONE)
+		{
+			char * buffer = "3";
+			resourceListMsg[0] = TTF_RenderText_Solid( font, buffer, textColor );
+			apply_surface( myNodes[i].pixelX, myNodes[i].pixelY, resourceListMsg[0], screen, NULL );
+			SDL_FreeSurface(resourceListMsg[0]);
+		}
+		else if(myNodes[i].harborType != NULL)
+		{
+			char buffer [1024];
+
+			char * resAndAmt = "%c";
+			char amountResourceStuff;
+			switch(myNodes[i].harborType)
+			{
+				case BRICK:	amountResourceStuff = 'B' ; break;
+				case WOOD:	amountResourceStuff = 'L' ; break;
+				case STONE:	amountResourceStuff = 'S' ; break;
+				case SHEEP:	amountResourceStuff = 'E' ; break;
+				case WHEAT:	amountResourceStuff = 'W' ; break;
+			}
+			sprintf(buffer, resAndAmt, amountResourceStuff);
+			resourceListMsg[0] = TTF_RenderText_Solid( font, buffer, textColor );
+			apply_surface( myNodes[i].pixelX, myNodes[i].pixelY, resourceListMsg[0], screen, NULL );
+			SDL_FreeSurface(resourceListMsg[0]);
+		}
+	}
+	TTF_CloseFont(font);
+	//==========================
+
 	for (int i = 0; i < 54; ++i)
 	{
 		if (myNodes[i].owner != 4)

@@ -2,8 +2,6 @@
 
 //THIS IS A LIST OF DRAW FUNCTIONS. IT WILL CALL DIFFERENT FUNCTIONS BASED ON THE CURRENT GAME STATE.
 
-//NOTE, WE SHOULD PROBABLY MAKE A UNIVERSAL drawControls(screen) FUNCTION. WE'LL TALK ABOUT THAT LATER.
-
 void map::draw(SDL_Surface * screen, Game * g)
 {
 	switch(mapState)
@@ -47,7 +45,6 @@ void map::draw(SDL_Surface * screen, Game * g)
 		case map::TRADEPLAYERSCREEN:		drawtradeCard(screen, g); drawPlayerTag(screen, g);	drawInstructions(screen, g);	break;
 		case map::TRADEBANKHARBORSCREEN:	drawtradeCard(screen, g); drawPlayerTag(screen, g);	drawInstructions(screen, g);	break;
 	}
-	// this is where drawControls(screen) would go, because then it would print on every map screen in addition to the other draw functions.
 }
 
 // THESE ARE ALL THE IMAGES LOADED THROUGH map.h AND ITS CPPS
@@ -283,9 +280,6 @@ void map::drawBoard(SDL_Surface * screen)
 	int harborPrintX, harborPrintY;
 	for (int i = 0; i < 54; ++i)
 	{
-
-		//if	(myNodes[i].pixelY > 440){harborPrintY = myNodes[i].pixelY + 20;}
-		//else if (myNodes[i].pixelY <= 200){	harborPrintY = myNodes[i].pixelY - 20;}
 		if	(myNodes[i].pixelY > 400)
 		{
 			harborPrintY = myNodes[i].pixelY + 11;

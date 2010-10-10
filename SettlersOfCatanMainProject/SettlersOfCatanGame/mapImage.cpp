@@ -51,7 +51,9 @@ void map::draw(SDL_Surface * screen, Game * g)
 
 void map::loadImages()
 {
+	font = TTF_OpenFont( "arial.ttf", 72);
 	font = TTF_OpenFont( "SNAP.ttf", 72);
+	background1 = load_image( "background1.bmp" );
 	extraTradeRules = load_image( "extraTradeRules.bmp" );
 	standardLegend = load_image( "standardLegend.bmp" );
 	cancelLegend = load_image( "cancelLegend.bmp" );
@@ -97,6 +99,7 @@ void map::initializeImages()
 	extraTradeRules = NULL;
 	standardLegend = NULL;
 	cancelLegend = NULL;
+	background1 = NULL;
 	pickToTrade = NULL;
 	thief = NULL;
 	dice.loadImages();
@@ -172,6 +175,9 @@ void map::drawCenterSelectron(SDL_Surface * screen)
 
 void map::drawBoard(SDL_Surface * screen)
 {
+	//Draw the main background screen
+	apply_surface( 0, 0, background1, screen, NULL );
+
 	int x = 0;
 	for (int i = 0; i < 19; ++i)
 	{
@@ -273,7 +279,7 @@ void map::drawBoard(SDL_Surface * screen)
 	}
 
 	//===========================================
-	font = TTF_OpenFont( "SNAP.ttf", 20);
+	font = TTF_OpenFont( "arial.ttf", 24);
 	textColor.r = 100;
 	textColor.g = 100;
 	textColor.b = 200;
@@ -370,7 +376,9 @@ void map::drawBoard(SDL_Surface * screen)
 
 void map::drawWinScreen(SDL_Surface * screen)
 {
-	font = TTF_OpenFont( "SNAP.ttf", 20);
+	//font change by Greg ALL SNAP TO ARIAL FONT
+	font = TTF_OpenFont( "arial.ttf", 24);
+	//font = TTF_OpenFont( "SNAP.ttf", 20);
 	textColor.r = 0;
 	textColor.g = 255;
 	textColor.b = 0;
@@ -383,7 +391,7 @@ void map::drawWinScreen(SDL_Surface * screen)
 
 void map::drawVictoryPoints(SDL_Surface * screen, Game * g)
 {
-	font = TTF_OpenFont( "SNAP.ttf", 20);
+	font = TTF_OpenFont( "arial.ttf", 20);
 	switch(g->activePlayer)
 	{
 	case 0: 
@@ -417,7 +425,7 @@ void map::drawVictoryPoints(SDL_Surface * screen, Game * g)
 
 	sprintf(buffer, resAndAmt, amountResourceStuff);
 	resourceListMsg[0] = TTF_RenderText_Solid( font, buffer, textColor );
-	apply_surface( 225, 160, resourceListMsg[0], screen, NULL );
+	apply_surface( 270, 160, resourceListMsg[0], screen, NULL );
 	SDL_FreeSurface(resourceListMsg[0]);
 	TTF_CloseFont(font);
 }
@@ -425,7 +433,7 @@ void map::drawVictoryPoints(SDL_Surface * screen, Game * g)
 
 void map::drawThiefExplanation(SDL_Surface * screen, Game * g)
 {
-	font = TTF_OpenFont( "SNAP.ttf", 20);
+	font = TTF_OpenFont( "arial.ttf", 20);
 	switch(g->activePlayer)
 	{
 	case 0: 
@@ -469,8 +477,7 @@ void map::drawResourceList(SDL_Surface * screen, Game * g)
 	char * specResTypes[5] = {"Brick", "Wood", "Stone", "Sheep", "Wheat"};
 	int spacingX = 103;
 
-	font = TTF_OpenFont( "SNAP.ttf", 72);
-
+	font = TTF_OpenFont( "arial.ttf", 72);
 	textColor.r = 0;
 	textColor.g = 0;
 	textColor.b = 0;
@@ -505,7 +512,8 @@ void map::drawResourceGrab(SDL_Surface * screen)
 	char * specResTypes[5] = {"Brick", "Wood", "Stone", "Sheep", "Wheat"};
 	int spacingX = 103;
 
-	font = TTF_OpenFont( "SNAP.ttf", 72);
+	font = TTF_OpenFont( "arial.ttf", 72);
+
 	textColor.r = 0;
 	textColor.g = 0;
 	textColor.b = 0;
@@ -535,7 +543,8 @@ void map::drawResourceGrab(SDL_Surface * screen)
 void map::drawPlayerTag(SDL_Surface * screen, Game * g)
 {
 	char buffer [1024];
-	font = TTF_OpenFont( "SNAP.ttf", 40);
+	/*font = TTF_OpenFont( "SNAP.ttf", 40);*/
+	font = TTF_OpenFont( "arial.ttf", 40);
 	switch(g->activePlayer)
 	{
 	case 0: 
@@ -574,7 +583,8 @@ void map::drawDevHand(SDL_Surface * screen, Game * g)
 	char * specResTypes[5] = {"Brick", "Wood", "Stone", "Sheep", "Wheat"};
 	int spacingX = 105;
 
-	font = TTF_OpenFont( "SNAP.ttf", 72);
+	font = TTF_OpenFont( "arial.ttf", 72);
+	//font = TTF_OpenFont( "SNAP.ttf", 72);
 	textColor.r = 0;
 	textColor.g = 0;
 	textColor.b = 0;
@@ -628,8 +638,9 @@ void map::drawtradeCard(SDL_Surface * screen, Game* g)
 
 	char * specResTypes[5] = {"Brick", "Wood", "Stone", "Sheep", "Wheat"};
 	int spacingX = 105;
-
-	font = TTF_OpenFont( "SNAP.ttf", 72);
+	
+	font = TTF_OpenFont( "arial.ttf", 72);
+	//font = TTF_OpenFont( "SNAP.ttf", 72);
 	textColor.r = 0;
 	textColor.g = 0;
 	textColor.b = 0;
@@ -768,7 +779,8 @@ void map::drawtradeCard(SDL_Surface * screen, Game* g)
 void map::drawDiceRoll(SDL_Surface * screen, Game * g)
 {
 	dice.drawDiceScreen(screen, dice1, dice2);
-	font = TTF_OpenFont( "SNAP.ttf", 20);
+	//font = TTF_OpenFont( "SNAP.ttf", 20);
+	font = TTF_OpenFont( "arial.ttf", 20);
 	textColor.r = 0;
 	textColor.g = 255;
 	textColor.b = 0;
@@ -822,7 +834,7 @@ void map::apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destinat
 
 void map::drawFreeRoadInstructions(SDL_Surface * screen, Game * g)
 {
-	font = TTF_OpenFont( "SNAP.ttf", 20);
+	font = TTF_OpenFont( "arial.ttf", 20);
 	switch(g->activePlayer)
 	{
 	case 0: 
@@ -855,7 +867,7 @@ void map::drawFreeRoadInstructions(SDL_Surface * screen, Game * g)
 
 void map::drawFreeSettlementInstructions(SDL_Surface * screen, Game * g)
 {
-	font = TTF_OpenFont( "SNAP.ttf", 20);
+	font = TTF_OpenFont( "arial.ttf", 20);
 	switch(g->activePlayer)
 	{
 	case 0: 

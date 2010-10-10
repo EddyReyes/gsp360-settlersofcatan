@@ -35,6 +35,7 @@ Dice::Dice(void)
 
 void Dice::shutdownImages()
 {
+	SDL_FreeSurface(d_background);
 	SDL_FreeSurface(diceDisplay);
 	SDL_FreeSurface(diceRoll);
 	SDL_FreeSurface(message);
@@ -85,11 +86,13 @@ void Dice::apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destina
 //Image Loader
 void Dice::loadImages()
 {
+	d_background = load_image( "d_background.bmp" );
 	diceDisplay = load_image( "dice_display.bmp" );
 	diceRoll = load_image( "dice_roll.bmp" );
 
 	//Open the font
-	font = TTF_OpenFont( "SNAP.ttf", 18);
+	
+	font = TTF_OpenFont( "arial.ttf", 18);
 
 	//set transparency: image then color
 	setTransparentColor(diceRoll, 0xFFFFFF);
@@ -161,6 +164,9 @@ void Dice::loadImages()
 
 void Dice::drawDiceScreen(SDL_Surface * screen, int dice1, int dice2)
 {
+	//Draw Background for dice roll
+	apply_surface( 0, 0, d_background, screen, NULL );
+
 	/*
 		//this is for animation through time
 		static bool restartTime = true;

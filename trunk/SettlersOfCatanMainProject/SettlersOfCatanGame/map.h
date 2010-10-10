@@ -81,7 +81,7 @@ public:
 	static const int BUILDCARD = 2; // play state
 	static const int RESOURCELIST = 3; // play state
 	static const int DEVHAND = 4; // play state
-	static const int TRADE = 5; // play state
+	//static const int TRADE = 5; // play state
 	static const int BUILDROAD = 6; // play state
 	static const int BUILDSETTLEMENT = 7; // play state
 	static const int BUILDCITY = 8; // play state

@@ -20,7 +20,7 @@ void map::draw(SDL_Surface * screen, Game * g)
 		case map::BUILDCARD:		drawBuildCard(screen);		drawPlayerTag(screen, g);		drawInstructions(screen, g);break;
 		case map::RESOURCELIST:		drawResourceList(screen, g);drawPlayerTag(screen, g);		drawInstructions(screen, g); drawVictoryPoints(screen, g);break;
 		case map::DEVHAND:			drawDevHand(screen, g);		drawPlayerTag(screen, g);		drawInstructions(screen, g);break;
-		case map::TRADE:			drawtradeCard(screen, g);	drawPlayerTag(screen, g);		drawInstructions(screen, g);break;
+//		case map::TRADE:			drawtradeCard(screen, g);	drawPlayerTag(screen, g);		drawInstructions(screen, g);break;
 		case map::BUILDROAD:		drawBoard(screen);			drawPlayerTag(screen, g);drawInstructions(screen, g);
 									drawRoadSelectron(screen);		break;
 		case map::BUILDSETTLEMENT:	drawBoard(screen);			drawPlayerTag(screen, g);drawInstructions(screen, g);
@@ -280,8 +280,8 @@ void map::drawBoard(SDL_Surface * screen)
 
 	//===========================================
 	font = TTF_OpenFont( "arial.ttf", 24);
-	textColor.r = 100;
-	textColor.g = 100;
+	textColor.r = 200;
+	textColor.g = 200;
 	textColor.b = 200;
 	int harborPrintX, harborPrintY;
 	for (int i = 0; i < 54; ++i)
@@ -921,7 +921,7 @@ void map::drawInstructions(SDL_Surface * screen, Game * g)
 		case map::BUILDCARD:				drawStandardInstructions(screen, g);break;
 		case map::RESOURCELIST:				drawStandardInstructions(screen, g);break;
 		case map::DEVHAND:					drawStandardInstructions(screen, g);break;
-		case map::TRADE:					drawStandardInstructions(screen, g);break;
+//		case map::TRADE:					drawStandardInstructions(screen, g);break;
 		case map::BUILDROAD:				drawCancelInstructions(screen, g);	break;
 		case map::BUILDSETTLEMENT:			drawCancelInstructions(screen, g);	break;
 		case map::BUILDCITY:				drawCancelInstructions(screen, g);	break;
@@ -946,6 +946,7 @@ void map::shutdownImages()
 	SDL_FreeSurface(extraTradeRules);
 	SDL_FreeSurface(standardLegend);
 	SDL_FreeSurface(cancelLegend);
+	SDL_FreeSurface(background1);
 	SDL_FreeSurface(pickToTrade);
 	SDL_FreeSurface(playerTag);
 	SDL_FreeSurface(thief);

@@ -9,27 +9,26 @@ void map::handleInput(SDL_Event e, Game * g)
 {
 		switch(mapState)
 		{
-		case map::BEGINTURN:			handleInput_BEGINTURN(e, g);			break;		
-		case map::MAP:					handleInput_MAP(e, g);					break;
-		case map::BUILDCARD:			handleInput_BUILDCARD(e, g);			break;
-		case map::RESOURCELIST:			handleInput_RESOURCELIST(e, g);			break;
-		case map::DEVHAND:				handleInput_DEVHAND(e, g);				break;
-		//case map::TRADE:				handleInput_TRADE(e, g);				break;
-		case map::BUILDROAD:			handleInput_BUILDROAD(e, g);			break;
-		case map::BUILDSETTLEMENT:		handleInput_BUILDSETTLEMENT(e, g);		break;
-		case map::BUILDCITY:			handleInput_BUILDCITY(e, g);			break;
-		case map::TURNONESETTLEMENT:	handleInput_TURNONESETTLEMENT(e, g);	break;
-		case map::TURNONEROAD:			handleInput_TURNONEROAD(e, g);			break;
-		case map::TURNTWOSETTLEMENT:	handleInput_TURNTWOSETTLEMENT(e, g);	break;
-		case map::TURNTWOROAD:			handleInput_TURNTWOROAD(e, g);			break;
-		case map::FREETWORESOURCES:		handleInput_FREETWORESOURCES(e, g);		break;
-		case map::FREETWOROADS:			handleInput_FREETWOROADS(e, g);			break;
-		case map::SETTHETHIEF:			handleInput_SETTHETHIEF(e, g);			break;
-		case map::TRADEBANKHARBORSCREEN:	handleInput_TRADEBANKHARBORSCREEN(e, g);	break;
-		case map::TRADETARGET:			handleInput_TRADETARGET(e, g);			break;
-		case map::TRADEPLAYERSCREEN:	handleInput_TRADEPLAYERSCREEN(e, g);	break;
-		case map::PICKMONOPOLY:			handleInput_PICKMONOPOLY(e, g);	break;
-		case map::ENDTURN:														break;
+			case map::BEGINTURN:			handleInput_BEGINTURN(e, g);			break;		
+			case map::MAP:					handleInput_MAP(e, g);					break;
+			case map::BUILDCARD:			handleInput_BUILDCARD(e, g);			break;
+			case map::RESOURCELIST:			handleInput_RESOURCELIST(e, g);			break;
+			case map::DEVHAND:				handleInput_DEVHAND(e, g);				break;
+			case map::BUILDROAD:			handleInput_BUILDROAD(e, g);			break;
+			case map::BUILDSETTLEMENT:		handleInput_BUILDSETTLEMENT(e, g);		break;
+			case map::BUILDCITY:			handleInput_BUILDCITY(e, g);			break;
+			case map::TURNONESETTLEMENT:	handleInput_TURNONESETTLEMENT(e, g);	break;
+			case map::TURNONEROAD:			handleInput_TURNONEROAD(e, g);			break;
+			case map::TURNTWOSETTLEMENT:	handleInput_TURNTWOSETTLEMENT(e, g);	break;
+			case map::TURNTWOROAD:			handleInput_TURNTWOROAD(e, g);			break;
+			case map::FREETWORESOURCES:		handleInput_FREETWORESOURCES(e, g);		break;
+			case map::FREETWOROADS:			handleInput_FREETWOROADS(e, g);			break;
+			case map::SETTHETHIEF:			handleInput_SETTHETHIEF(e, g);			break;
+			case map::TRADEBANKHARBORSCREEN:	handleInput_TRADEBANKHARBORSCREEN(e, g);	break;
+			case map::TRADETARGET:			handleInput_TRADETARGET(e, g);			break;
+			case map::TRADEPLAYERSCREEN:	handleInput_TRADEPLAYERSCREEN(e, g);	break;
+			case map::PICKMONOPOLY:			handleInput_PICKMONOPOLY(e, g);	break;
+			case map::ENDTURN:														break;
 		}
 }
 

@@ -145,11 +145,14 @@ void map::handleInput_RESOURCELIST(SDL_Event e, Game * g)
 			case SDLK_2:	mapState= map::BUILDCARD;		break;
 			case SDLK_4:	mapState= map::DEVHAND;			break;
 			case SDLK_5:	mapState= map::TRADETARGET;			break;
+				//DONT BE CHEATING DAWG
+				/*
 			case SDLK_j:	g->p[g->activePlayer].changeResource(WOOD, 99);	
 				g->p[g->activePlayer].changeResource(BRICK, 99);
 				g->p[g->activePlayer].changeResource(STONE, 99);
 				g->p[g->activePlayer].changeResource(SHEEP, 99);	
 				g->p[g->activePlayer].changeResource(WHEAT, 99);	break;
+				*/
 
 			}
 	}
@@ -431,7 +434,7 @@ void map::handleInput_TRADEBANKHARBORSCREEN(SDL_Event e, Game * g)
 				else if(tradebank->temp_wheat_give != 0)
 					tgive = WHEAT;
 				else if(tradebank->temp_stone_give != 0)
-					tgive = WHEAT;
+					tgive = STONE;
 				else if(tradebank->temp_sheep_give !=0)
 					tgive = SHEEP;
 				else if(tradebank->temp_brick_give != 0)

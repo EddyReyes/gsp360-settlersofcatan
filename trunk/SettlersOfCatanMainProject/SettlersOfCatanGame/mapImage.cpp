@@ -276,20 +276,43 @@ void map::drawBoard(SDL_Surface * screen)
 	}
 
 	//===========================================
-	font = TTF_OpenFont( "SNAP.ttf", 30);
-	textColor.r = 0;
-	textColor.g = 255;
-	textColor.b = 0;
+	font = TTF_OpenFont( "SNAP.ttf", 20);
+	textColor.r = 100;
+	textColor.g = 100;
+	textColor.b = 200;
+	int harborPrintX, harborPrintY;
 	for (int i = 0; i < 54; ++i)
 	{
-		if (myNodes[i].harborType == THREE_TO_ONE)
+
+		//if	(myNodes[i].pixelY > 440){harborPrintY = myNodes[i].pixelY + 20;}
+		//else if (myNodes[i].pixelY <= 200){	harborPrintY = myNodes[i].pixelY - 20;}
+		if	(myNodes[i].pixelY > 400)
 		{
-			char * buffer = "3";
-			resourceListMsg[0] = TTF_RenderText_Solid( font, buffer, textColor );
-			apply_surface( myNodes[i].pixelX, myNodes[i].pixelY, resourceListMsg[0], screen, NULL );
-			SDL_FreeSurface(resourceListMsg[0]);
+			harborPrintY = myNodes[i].pixelY + 11;
 		}
-		else if(myNodes[i].harborType != NULL)
+		else if (myNodes[i].pixelY <= 100)
+		{	
+			harborPrintY = myNodes[i].pixelY - 11;
+		}
+		else
+		{
+			harborPrintY = myNodes[i].pixelY;
+		}
+
+		if	(myNodes[i].pixelX > 600)
+		{
+			harborPrintX = myNodes[i].pixelX + 11;
+		}
+		else if (myNodes[i].pixelX <= 200)
+		{	
+			harborPrintX = myNodes[i].pixelX - 11;
+		}
+		else
+		{
+			harborPrintX = myNodes[i].pixelX;
+		}
+
+		if(myNodes[i].harborType != NULL)
 		{
 			char buffer [1024];
 
@@ -297,6 +320,7 @@ void map::drawBoard(SDL_Surface * screen)
 			char amountResourceStuff;
 			switch(myNodes[i].harborType)
 			{
+			case THREE_TO_ONE: amountResourceStuff = '3'; break;
 				case BRICK:	amountResourceStuff = 'B' ; break;
 				case WOOD:	amountResourceStuff = 'L' ; break;
 				case STONE:	amountResourceStuff = 'S' ; break;
@@ -305,7 +329,7 @@ void map::drawBoard(SDL_Surface * screen)
 			}
 			sprintf(buffer, resAndAmt, amountResourceStuff);
 			resourceListMsg[0] = TTF_RenderText_Solid( font, buffer, textColor );
-			apply_surface( myNodes[i].pixelX, myNodes[i].pixelY, resourceListMsg[0], screen, NULL );
+			apply_surface( harborPrintX, harborPrintY, resourceListMsg[0], screen, NULL );
 			SDL_FreeSurface(resourceListMsg[0]);
 		}
 	}

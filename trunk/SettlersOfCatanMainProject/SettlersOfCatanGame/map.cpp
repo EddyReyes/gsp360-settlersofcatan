@@ -449,7 +449,7 @@ void map::setHarbor(Node* harbor)
 			type = randomHarbor(resource);
 			harbor[i].harborType = type;
 			break;
-		case 49:
+		case 48:
 			harbor[i].harborType = harbor[43].harborType;
 			break;
 		case 46:

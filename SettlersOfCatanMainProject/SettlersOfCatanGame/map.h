@@ -80,7 +80,7 @@ public:
 	static const int BUILDCARD = 2; // play state
 	static const int RESOURCELIST = 3; // play state
 	static const int DEVHAND = 4; // play state
-	static const int TRADE = 5; // play state
+	//static const int TRADE = 5; // play state
 	static const int BUILDROAD = 6; // play state
 	static const int BUILDSETTLEMENT = 7; // play state
 	static const int BUILDCITY = 8; // play state
@@ -170,7 +170,6 @@ public:
 	void map::handleInput_BUILDCARD(SDL_Event e, Game * g);
 	void map::handleInput_RESOURCELIST(SDL_Event e, Game * g);
 	void map::handleInput_DEVHAND(SDL_Event e, Game * g);
-	//void map::handleInput_TRADE(SDL_Event e, Game * g);
 	void map::handleInput_BUILDROAD(SDL_Event e, Game * g);
 	void map::handleInput_BUILDSETTLEMENT(SDL_Event e, Game * g);
 	void map::handleInput_BUILDCITY(SDL_Event e, Game * g);

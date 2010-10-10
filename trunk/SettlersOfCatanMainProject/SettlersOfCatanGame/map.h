@@ -30,6 +30,7 @@ private:
 	SDL_Surface *tradeCard;
 	SDL_Surface *buildCard;
 	SDL_Surface *resourceCard;
+	SDL_Surface *background1;
 	SDL_Surface *roadTile[4];
 	SDL_Surface *settlementTile[4];
 	SDL_Surface *cityTile[4];
@@ -80,7 +81,7 @@ public:
 	static const int BUILDCARD = 2; // play state
 	static const int RESOURCELIST = 3; // play state
 	static const int DEVHAND = 4; // play state
-	//static const int TRADE = 5; // play state
+	static const int TRADE = 5; // play state
 	static const int BUILDROAD = 6; // play state
 	static const int BUILDSETTLEMENT = 7; // play state
 	static const int BUILDCITY = 8; // play state

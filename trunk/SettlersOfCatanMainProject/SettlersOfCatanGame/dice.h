@@ -18,7 +18,7 @@ class Dice
 	//Instructions
 	SDL_Surface *message;
 	//The dice	
-	SDL_Surface *background;
+	SDL_Surface *d_background;
 	SDL_Surface *diceDisplay;
 	SDL_Surface *diceRoll;
 

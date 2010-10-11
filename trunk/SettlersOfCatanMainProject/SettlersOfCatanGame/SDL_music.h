@@ -24,6 +24,7 @@ public:
 	/*void playWAV();*/
 	
 	void play_diceWAV();
+	void play_musicWAV();
 	void stopMusic();
 
 };

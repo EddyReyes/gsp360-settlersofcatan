@@ -43,11 +43,11 @@ void Game::draw(SDL_Surface * screen)
 	switch(gameState)
 	{
 	case Game::MENU:
-					
+				
 		SDL_FillRect(screen, 0, 0);
 		m.draw(screen);
 		SDL_Flip(screen);
-
+	
 		break;
 
 	case Game::GAME:
@@ -132,20 +132,22 @@ void Game::update(int ms)
 
 void Game::menuInput(SDL_Event & e)
 {
-	////////
-	////this will be moving into menu
+	//this will be moving into menu
 	switch(e.type)
 	{
 	case SDL_KEYDOWN:
 		int num = 0;
 		switch(e.key.keysym.sym)
 		{
+
 		case SDLK_3:	num = 3;	break;
 		case SDLK_4:	num = 4;	break;
 		}
 		if(num >= 3)
 		{
 			initGame(num);
+			////Theme////
+			gameSound->play_musicWAV();
 			gameState = Game::GAME;
 		}
 		break;

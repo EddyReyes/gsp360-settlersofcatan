@@ -20,6 +20,7 @@ Game::Game()
 	rand();
 	ownerLargestArmy = NULL;
 	ownerLongestRoad = NULL;
+	playMusic = true;
 }
 
 void Game::initGame(int const & a_numPlayers)
@@ -172,6 +173,26 @@ void Game::input(SDL_Event & e)
 		break;
 	case Game::GAME:
 		gameInput(e);
+	switch(e.type)
+	{
+	case SDL_KEYDOWN:
+		switch(e.key.keysym.sym)
+		{
+
+		case SDLK_m:
+			if(playMusic == false)
+			{
+				gameSound->play_musicWAV();
+				playMusic = true;
+			}
+			else
+			{
+				gameSound->stopMusic();
+				playMusic = false;
+			}
+			break;
+		}
+	}/////////////////////////////////
 		break;
 	}
 }

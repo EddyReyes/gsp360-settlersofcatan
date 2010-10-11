@@ -36,6 +36,9 @@ private:
 	Uint32 timer;
 	Uint32 changeTime;
 
+	//=======playmusic stuff
+	bool playMusic;
+
 	void Game::initGame(int const & a_numPlayers);
 
 public:

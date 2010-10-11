@@ -41,6 +41,7 @@ private:
 public:
 	//sound
 	Music * gameSound;
+	int MainSoundQueue;
 
 	//map
 	map * underlyingBoard;

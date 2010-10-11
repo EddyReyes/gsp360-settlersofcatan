@@ -14,12 +14,16 @@ class Music
 {
 private:
 
+void loadSounds();
 public:
+
 	//Music constructor
 	Music();
 	//Music Deconstructor
 	~Music();
-	void playWAV();
+	/*void playWAV();*/
+	
+	void play_diceWAV();
 	void stopMusic();
 
 };

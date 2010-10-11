@@ -9,7 +9,7 @@ void map::draw(SDL_Surface * screen, Game * g)
 		case map::BEGINTURN:
 			if (soundQueue == 20)
 			{
-				g->gameSound->playWAV();
+				g->gameSound->play_diceWAV();
 				soundQueue--;
 			}
 			drawDiceRoll(screen, g);	

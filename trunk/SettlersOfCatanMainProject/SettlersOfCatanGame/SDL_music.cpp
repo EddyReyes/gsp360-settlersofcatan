@@ -34,9 +34,13 @@ void Music::stopMusic()
 {
 	//Free the sound effects 
 	Mix_FreeChunk( _dice); 
-	//Mix_FreeChunk( _cheer); 
-	//Mix_FreeChunk( _beat); 
-	/*Quit SDL_mixer;*/
+	Mix_FreeMusic( _music); 
+
+	//Stop the music
+     Mix_HaltMusic();
+	 _dice = NULL; 
+	 _music = NULL; 
 	Mix_CloseAudio(); 
+
 }
 

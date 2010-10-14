@@ -35,6 +35,7 @@ void Game::initGame(int const & a_numPlayers)
 }
 void Game::shutdown(void)
 {
+	gameSound->stopMusic();
 	underlyingBoard->shutdownImages();
 	m.shutdownImages();
 }

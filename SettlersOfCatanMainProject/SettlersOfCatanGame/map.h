@@ -26,6 +26,7 @@ class map
 private:
 	//===surfaces used for images===============
 	SDL_Surface *playerTag;
+	SDL_Surface *SettlersWinner;
 	SDL_Surface *resourceListMsg[5];
 	SDL_Surface *tradeCard;
 	SDL_Surface *buildCard;

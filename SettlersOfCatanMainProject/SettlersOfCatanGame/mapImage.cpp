@@ -37,7 +37,20 @@ void map::draw(SDL_Surface * screen, Game * g)
 									drawRoadSelectron(screen);		break;
 		case map::FREETWORESOURCES:	drawResourceGrab(screen);	drawPlayerTag(screen, g);drawInstructions(screen, g);							break;
 		case map::FREETWOROADS:		drawBoard(screen); drawRoadSelectron(screen); drawPlayerTag(screen, g);	drawInstructions(screen, g);		break;
-		case map::SOMEONEWON:		drawWinScreen(screen);		drawPlayerTag(screen, g);	drawInstructions(screen, g);						break;
+		
+		//Victory Case***************************************
+		//more new Greg Code
+		case map::SOMEONEWON:
+			if (soundQueue == 20)
+			{
+				g->gameSound->play_cheerWAV();
+				soundQueue--;
+			}		
+			drawWinScreen(screen);		
+			drawPlayerTag(screen, g);	
+			drawInstructions(screen, g);						
+		break;
+
 		case map::PICKMONOPOLY:		drawResourceGrab(screen); drawPlayerTag(screen, g);	drawInstructions(screen, g);							break;
 		case map::SETTHETHIEF:		drawBoard(screen);				drawThiefExplanation(screen, g);drawInstructions(screen, g);
 									drawCenterSelectron(screen);	drawPlayerTag(screen, g);		break;
@@ -55,6 +68,7 @@ void map::loadImages()
 	font = TTF_OpenFont( "SNAP.ttf", 72);
 	background1 = load_image( "background1.bmp" );
 	extraTradeRules = load_image( "extraTradeRules.bmp" );
+	SettlersWinner = load_image( "SettlersWinner.bmp" );
 	standardLegend = load_image( "standardLegend.bmp" );
 	cancelLegend = load_image( "cancelLegend.bmp" );
 	pickToTrade = load_image( "placeholderPickTradeScreen.bmp" );
@@ -96,6 +110,7 @@ void map::loadImages()
 
 void map::initializeImages()
 {
+	SettlersWinner = NULL;
 	extraTradeRules = NULL;
 	standardLegend = NULL;
 	cancelLegend = NULL;
@@ -376,15 +391,18 @@ void map::drawBoard(SDL_Surface * screen)
 
 void map::drawWinScreen(SDL_Surface * screen)
 {
+	//here's where I can add a win screen
+	//
 	//font change by Greg ALL SNAP TO ARIAL FONT
-	font = TTF_OpenFont( "arial.ttf", 24);
-	//font = TTF_OpenFont( "SNAP.ttf", 20);
+	font = TTF_OpenFont( "arial.ttf", 72);
 	textColor.r = 0;
 	textColor.g = 255;
 	textColor.b = 0;
 	char * buffer = "WINNER!";
 	resourceListMsg[0] = TTF_RenderText_Solid( font, buffer, textColor );
-	apply_surface( 300, 270, resourceListMsg[0], screen, NULL );
+	apply_surface( 300, 500, resourceListMsg[0],screen, NULL );
+	//SDL_Delay(9000);
+	apply_surface( 30,30, SettlersWinner,screen, NULL );
 	SDL_FreeSurface(resourceListMsg[0]);
 	TTF_CloseFont(font);
 }
@@ -543,7 +561,6 @@ void map::drawResourceGrab(SDL_Surface * screen)
 void map::drawPlayerTag(SDL_Surface * screen, Game * g)
 {
 	char buffer [1024];
-	/*font = TTF_OpenFont( "SNAP.ttf", 40);*/
 	font = TTF_OpenFont( "arial.ttf", 40);
 	switch(g->activePlayer)
 	{
@@ -584,7 +601,7 @@ void map::drawDevHand(SDL_Surface * screen, Game * g)
 	int spacingX = 105;
 
 	font = TTF_OpenFont( "arial.ttf", 72);
-	//font = TTF_OpenFont( "SNAP.ttf", 72);
+
 	textColor.r = 0;
 	textColor.g = 0;
 	textColor.b = 0;
@@ -640,7 +657,7 @@ void map::drawtradeCard(SDL_Surface * screen, Game* g)
 	int spacingX = 105;
 	
 	font = TTF_OpenFont( "arial.ttf", 72);
-	//font = TTF_OpenFont( "SNAP.ttf", 72);
+
 	textColor.r = 0;
 	textColor.g = 0;
 	textColor.b = 0;
@@ -944,6 +961,7 @@ void map::drawInstructions(SDL_Surface * screen, Game * g)
 void map::shutdownImages()
 {
 	SDL_FreeSurface(extraTradeRules);
+	SDL_FreeSurface(SettlersWinner);
 	SDL_FreeSurface(standardLegend);
 	SDL_FreeSurface(cancelLegend);
 	SDL_FreeSurface(background1);

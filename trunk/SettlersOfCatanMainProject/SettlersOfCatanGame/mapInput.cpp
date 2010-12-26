@@ -146,13 +146,13 @@ void map::handleInput_RESOURCELIST(SDL_Event e, Game * g)
 			case SDLK_4:	mapState= map::DEVHAND;			break;
 			case SDLK_5:	mapState= map::TRADETARGET;			break;
 				//DONT BE CHEATING DAWG
-				/*
+				
 			case SDLK_j:	g->p[g->activePlayer].changeResource(WOOD, 99);	
 				g->p[g->activePlayer].changeResource(BRICK, 99);
 				g->p[g->activePlayer].changeResource(STONE, 99);
 				g->p[g->activePlayer].changeResource(SHEEP, 99);	
 				g->p[g->activePlayer].changeResource(WHEAT, 99);	break;
-				*/
+				
 
 			}
 	}

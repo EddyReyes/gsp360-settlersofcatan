@@ -48,8 +48,9 @@ int main(int argc, char ** argv)
 				{
 				case SDLK_ESCAPE:
 
-					running = false;
 					g.shutdown();
+					running = false;
+					
 					break;
 				}
 			 default: g.input(e);

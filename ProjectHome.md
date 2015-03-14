@@ -1,0 +1,1 @@
+We need to make a working version of settlers of Catan for PC that allows for 3 to 4 players
